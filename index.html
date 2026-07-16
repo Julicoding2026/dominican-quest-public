@@ -34,6 +34,8 @@
       min-height: 100vh;
       background: linear-gradient(180deg, rgb(255 250 243 / 0.92), rgb(247 242 234 / 0.96));
       color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     button,
@@ -1014,24 +1016,28 @@
 
     .quantity-stepper {
       display: grid;
-      grid-template-columns: 42px minmax(54px, 1fr) 42px;
+      grid-template-columns: 44px minmax(54px, 1fr) 44px;
       align-items: center;
-      min-height: 42px;
+      min-height: 44px;
       overflow: hidden;
       border: 1px solid #d8d0c3;
       border-radius: 8px;
       background: #fff;
+      touch-action: manipulation;
     }
 
     .quantity-stepper button {
       display: grid;
       place-items: center;
-      min-height: 42px;
+      min-height: 44px;
       border-radius: 0;
       background: #fff;
       color: var(--accent-dark);
       font-size: 18px;
       font-weight: 950;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .quantity-stepper button:hover,
@@ -1048,10 +1054,10 @@
     .quantity-stepper output {
       display: grid;
       place-items: center;
-      min-height: 42px;
+      min-height: 44px;
       border-inline: 1px solid #eee7dc;
       color: var(--ink);
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 950;
     }
 
@@ -2081,6 +2087,7 @@
       border-radius: 8px;
       overflow: hidden;
       background: #fff;
+      touch-action: manipulation;
     }
 
     .drink-stepper button {
@@ -2089,6 +2096,9 @@
       background: #fff;
       color: var(--accent-dark);
       font-size: 16px;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .drink-stepper output {
@@ -2538,6 +2548,19 @@
 
       .drink-total {
         white-space: normal;
+      }
+
+      .drink-stepper {
+        grid-template-columns: 44px 34px 44px;
+      }
+
+      .drink-stepper button {
+        min-height: 44px;
+        font-size: 18px;
+      }
+
+      .drink-stepper output {
+        font-size: 16px;
       }
 
       .vehicle-card.is-muted {
