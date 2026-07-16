@@ -2385,6 +2385,31 @@
       font-weight: 950;
     }
 
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .text-updated {
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    @keyframes highlightPulse {
+      0% { background-color: rgba(88, 48, 224, 0.15); }
+      100% { background-color: transparent; }
+    }
+
+    .highlight-pulse {
+      animation: highlightPulse 1.2s ease-out;
+      border-radius: 6px;
+    }
+
     .whatsapp-chat {
       position: fixed;
       right: max(18px, env(safe-area-inset-right));
@@ -4411,14 +4436,15 @@
       const content = document.createElement("div");
       content.className = "empty-state-content";
       const title = document.createElement("strong");
-      title.className = "empty-state-title";
+      title.className = "empty-state-title text-updated";
       title.textContent = "Why book your transfers with Dominican Quest?";
       content.appendChild(title);
       emptyStateMessages().forEach(([icon, text]) => {
         const line = document.createElement("div");
-        line.className = "empty-state-line";
+        line.className = "empty-state-line highlight-pulse";
         const iconNode = benefitIcon(icon);
         const textNode = document.createElement("span");
+        textNode.className = "text-updated";
         textNode.innerHTML = text;
         line.append(iconNode, textNode);
         content.appendChild(line);
