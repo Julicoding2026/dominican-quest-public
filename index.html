@@ -179,6 +179,7 @@
     }
 
     .mobile-header-actions,
+    .calendar-sheet-backdrop,
     .mobile-menu-backdrop,
     .mobile-menu {
       display: none;
@@ -2707,6 +2708,82 @@
         text-decoration: none;
       }
 
+      .calendar-sheet-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 56;
+        display: block;
+        border: 0;
+        border-radius: 0;
+        background: rgb(23 20 31 / 0.48);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+      }
+
+      .calendar-popover {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        z-index: 57;
+        width: 100%;
+        max-height: min(78dvh, 560px);
+        overflow-y: auto;
+        padding: 18px 18px max(18px, env(safe-area-inset-bottom));
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -22px 54px rgb(23 20 31 / 0.24);
+        opacity: 0;
+        transform: translateY(105%);
+        transition: transform 240ms ease, opacity 220ms ease;
+      }
+
+      .calendar-popover.is-open {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .calendar-head {
+        margin-bottom: 14px;
+      }
+
+      .calendar-month {
+        font-size: 18px;
+      }
+
+      .calendar-day {
+        min-height: 42px;
+        font-size: 14px;
+      }
+
+      .calendar-foot {
+        margin-top: 14px;
+      }
+
+      .calendar-clear,
+      .calendar-today {
+        min-height: 42px;
+        font-size: 14px;
+      }
+
+      body.calendar-sheet-open {
+        overflow: hidden;
+      }
+
+      body.calendar-sheet-open .calendar-sheet-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      body.calendar-sheet-open .whatsapp-chat {
+        opacity: 0;
+        pointer-events: none;
+      }
+
       .time-popover {
         right: 0;
         left: auto;
@@ -2801,6 +2878,8 @@
     </aside>
   </header>
 
+  <button class="calendar-sheet-backdrop" id="calendarSheetBackdrop" type="button" aria-label="Close calendar"></button>
+
   <main>
     <section class="booking-shell">
       <form class="search-panel" id="searchForm">
@@ -2847,7 +2926,7 @@
                   <span id="dateTriggerText">Select date</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
                 </button>
-                <span class="calendar-popover" id="calendarPopover" hidden>
+                <span class="calendar-popover" id="calendarPopover" role="dialog" aria-modal="true" aria-label="Choose pickup date" hidden>
                   <span class="calendar-head">
                     <strong class="calendar-month" id="calendarMonthLabel"></strong>
                     <span class="calendar-nav">
@@ -2912,7 +2991,7 @@
                     <span id="returnDateTriggerText">Select date</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
                   </button>
-                  <span class="calendar-popover" id="returnCalendarPopover" hidden>
+                  <span class="calendar-popover" id="returnCalendarPopover" role="dialog" aria-modal="true" aria-label="Choose return date" hidden>
                     <span class="calendar-head">
                       <strong class="calendar-month" id="returnCalendarMonthLabel"></strong>
                       <span class="calendar-nav">
@@ -3285,6 +3364,7 @@
     const dateTrigger = document.getElementById("dateTrigger");
     const dateTriggerText = document.getElementById("dateTriggerText");
     const calendarPopover = document.getElementById("calendarPopover");
+    const calendarSheetBackdrop = document.getElementById("calendarSheetBackdrop");
     const calendarMonthLabel = document.getElementById("calendarMonthLabel");
     const calendarGrid = document.getElementById("calendarGrid");
     const calendarPrev = document.getElementById("calendarPrev");
@@ -3476,14 +3556,58 @@
       return `${String(hour12).padStart(2, "0")}:${match[2]} ${period}`;
     }
 
+    const calendarSheetTimers = {
+      calendar: null,
+      returnCalendar: null
+    };
+
+    function isMobileCalendarSheet() {
+      return window.matchMedia("(max-width: 860px)").matches;
+    }
+
+    function syncCalendarSheetState() {
+      document.body.classList.toggle("calendar-sheet-open", !calendarPopover.hidden || !returnCalendarPopover.hidden);
+    }
+
+    function setCalendarSheet(popover, trigger, open, timerKey) {
+      const isMobile = isMobileCalendarSheet();
+      if (calendarSheetTimers[timerKey]) {
+        window.clearTimeout(calendarSheetTimers[timerKey]);
+        calendarSheetTimers[timerKey] = null;
+      }
+
+      if (open) {
+        popover.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        syncCalendarSheetState();
+        if (isMobile) {
+          window.requestAnimationFrame(() => popover.classList.add("is-open"));
+        }
+        return;
+      }
+
+      trigger.setAttribute("aria-expanded", "false");
+      popover.classList.remove("is-open");
+      if (isMobile) {
+        calendarSheetTimers[timerKey] = window.setTimeout(() => {
+          popover.hidden = true;
+          calendarSheetTimers[timerKey] = null;
+          syncCalendarSheetState();
+        }, 240);
+      } else {
+        popover.hidden = true;
+        syncCalendarSheetState();
+      }
+    }
+
     function setCalendarOpen(open) {
-      calendarPopover.hidden = !open;
-      dateTrigger.setAttribute("aria-expanded", String(open));
+      if (open) setReturnCalendarOpen(false);
+      setCalendarSheet(calendarPopover, dateTrigger, open, "calendar");
     }
 
     function setReturnCalendarOpen(open) {
-      returnCalendarPopover.hidden = !open;
-      returnDateTrigger.setAttribute("aria-expanded", String(open));
+      if (open) setCalendarOpen(false);
+      setCalendarSheet(returnCalendarPopover, returnDateTrigger, open, "returnCalendar");
     }
 
     function returnMinDate() {
@@ -3904,6 +4028,10 @@
     });
     dateTrigger.addEventListener("click", () => setCalendarOpen(calendarPopover.hidden));
     returnDateTrigger.addEventListener("click", () => setReturnCalendarOpen(returnCalendarPopover.hidden));
+    calendarSheetBackdrop.addEventListener("click", () => {
+      setCalendarOpen(false);
+      setReturnCalendarOpen(false);
+    });
     oneWayTrip.addEventListener("click", () => setTripType("one_way"));
     roundTrip.addEventListener("click", () => setTripType("round_trip"));
     calendarPrev.addEventListener("click", () => {
