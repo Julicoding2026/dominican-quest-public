@@ -2490,6 +2490,23 @@
         justify-items: stretch;
       }
 
+      .vehicle-image,
+      .vehicle-placeholder {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+      }
+
+      .vehicle-image {
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .vehicle-placeholder {
+        min-height: 160px;
+      }
+
       .route-map-preview img {
         height: 200px;
       }
@@ -2525,6 +2542,13 @@
 
       .vehicle-card.is-muted {
         grid-template-columns: 76px minmax(0, 1fr);
+      }
+
+      .vehicle-card.is-muted .vehicle-image,
+      .vehicle-card.is-muted .vehicle-placeholder {
+        height: 76px;
+        min-height: 76px;
+        aspect-ratio: auto;
       }
 
       .vehicle-card.is-muted .vehicle-price {
