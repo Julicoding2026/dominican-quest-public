@@ -1,0 +1,5569 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wedding Transfers | Dominican Quest</title>
+  <link rel="canonical" href="https://bookdominicanquest.com/weddings-transfers.html">
+  <link rel="icon" type="image/png" href="assets/dominican-quest-mark.png">
+  <link rel="apple-touch-icon" href="assets/dominican-quest-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800;900&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17141f;
+      --muted: #716c7c;
+      --line: #ded8ec;
+      --paper: #fff;
+      --bg: #f7f2ea;
+      --panel: #fffaf3;
+      --accent: #673de6;
+      --accent-dark: #5025d1;
+      --violet: #5d3bc4;
+      --danger: #b42318;
+      --faq-content-width: min(920px, 100%);
+      font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, rgb(255 250 243 / 0.92), rgb(247 242 234 / 0.96));
+      color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgb(255 250 243 / 0.94);
+      border-bottom: 1px solid #eadfce;
+      backdrop-filter: blur(12px);
+    }
+
+    .site-header-inner {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) auto minmax(260px, 1fr);
+      align-items: center;
+      gap: 18px;
+      width: min(1180px, calc(100vw - 32px));
+      min-height: 60px;
+      margin: 0 auto;
+      padding: 2px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #080808;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .brand span {
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .brand strong { color: var(--violet); }
+
+    .site-nav {
+      display: inline-flex;
+      align-items: center;
+      justify-self: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.74);
+      box-shadow: 0 8px 18px rgb(103 61 230 / 0.06);
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: #6f687d;
+      font-size: 14px;
+      font-weight: 950;
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
+      color: var(--accent-dark);
+    }
+
+    .nav-link.is-active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 22px rgb(103 61 230 / 0.18);
+    }
+
+    .nav-link svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .header-actions {
+      display: inline-flex;
+      align-items: center;
+      justify-self: end;
+      gap: 12px;
+    }
+
+    .booking-lookup {
+      color: #6f687d;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .booking-lookup:hover,
+    .booking-lookup:focus-visible {
+      color: var(--accent-dark);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .header-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-dark);
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .header-phone svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .mobile-header-actions,
+    .calendar-sheet-backdrop,
+    .mobile-menu-backdrop,
+    .mobile-menu {
+      display: none;
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .booking-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (min-width: 861px) {
+      .booking-shell:has(.results-panel.is-featured-empty) {
+        align-items: stretch;
+      }
+
+      .results-panel.is-featured-empty {
+        align-content: start;
+        min-height: 0;
+      }
+    }
+
+    .trust-section {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .trust-card {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      min-height: 190px;
+      overflow: hidden;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.9);
+      box-shadow: 0 16px 42px rgb(62 48 32 / 0.08);
+    }
+
+    .trust-kicker {
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .review-stars {
+      color: var(--accent-dark);
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .trust-card h2,
+    .trust-card h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .trust-card p,
+    .trust-card blockquote {
+      margin: 0;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.5;
+    }
+
+    .trust-card blockquote strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .tripadvisor-review-card {
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      align-self: end;
+      width: min(100%, 178px);
+      margin: 8px auto 0;
+      padding: 0 12px 6px;
+      border: 1px solid color-mix(in srgb, #00aa6c 28%, #fff 72%);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgb(255 255 255 / 0.96), rgb(248 255 252 / 0.94)),
+        color-mix(in srgb, #00aa6c 6%, #fff 94%);
+      text-align: center;
+      box-shadow: 0 10px 20px rgb(18 18 20 / 0.05);
+    }
+
+    .tripadvisor-review-card img {
+      width: 68px;
+      height: auto;
+      margin-top: -3px;
+    }
+
+    .tripadvisor-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .tripadvisor-rating-dots {
+      color: #00aa6c;
+      font-size: 11px;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .tripadvisor-review-card p {
+      color: #5f586b;
+      font-size: 9px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
+    .review-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 42%, #fff 58%);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .review-link:hover,
+    .review-link:focus-visible {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 22px rgb(103 61 230 / 0.16);
+    }
+
+    .micro-badges {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .micro-badges li {
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      color: #5f586b;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.42;
+    }
+
+    .trust-icon {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 10%, #fff 90%);
+      color: var(--accent-dark);
+    }
+
+    .trust-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .micro-badges strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .why-card {
+      grid-template-rows: auto auto 1fr auto;
+    }
+
+    .booking-guarantee {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      align-self: center;
+      justify-self: center;
+      width: min(100%, 260px);
+      margin: 0 auto;
+      padding: 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 16%, #fff 84%);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
+      text-align: center;
+    }
+
+    .booking-guarantee-icon {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent-dark);
+      box-shadow: 0 8px 18px rgb(103 61 230 / 0.12);
+    }
+
+    .booking-guarantee-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .booking-guarantee strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .booking-guarantee span:last-child {
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .email-link {
+      align-self: end;
+      justify-self: center;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .email-link:hover,
+    .email-link:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .tour-promo {
+      position: relative;
+      overflow: hidden;
+      grid-template-rows: minmax(120px, 1fr) auto auto auto;
+      min-height: 290px;
+      padding-top: 0;
+      border-color: var(--line);
+      background: #fff;
+      box-shadow: 0 16px 42px rgb(62 48 32 / 0.08);
+    }
+
+    .tour-promo::before {
+      content: "";
+      display: block;
+      align-self: stretch;
+      margin: -18px -18px 2px;
+      background: url("assets/saona-island-tour-private.webp") center / cover no-repeat;
+    }
+
+    .tour-promo .trust-kicker,
+    .tour-promo h2,
+    .tour-promo p,
+    .tour-promo .tour-link {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tour-promo .trust-kicker {
+      color: var(--accent-dark);
+    }
+
+    .tour-promo h2 {
+      color: var(--ink);
+    }
+
+    .tour-promo p {
+      color: #5f586b;
+    }
+
+    .tour-link {
+      justify-self: start;
+      color: var(--accent-dark);
+      font-size: 14px;
+      font-weight: 950;
+      text-decoration: none;
+    }
+
+    .tour-link:hover,
+    .tour-link:focus-visible {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .faq-section {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+      margin: 28px auto 0;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.94);
+      box-shadow: 0 18px 50px rgb(62 48 32 / 0.1);
+    }
+
+    .faq-head {
+      display: grid;
+      gap: 5px;
+      width: var(--faq-content-width);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .faq-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .faq-head p {
+      margin: 0;
+      color: #6f687d;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+      width: var(--faq-content-width);
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      position: relative;
+      border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line) 88%);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    .faq-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    .faq-item.is-open {
+      border-color: color-mix(in srgb, var(--accent) 54%, #fff 46%);
+      background: color-mix(in srgb, var(--accent) 6%, #fff 94%);
+      box-shadow: 0 16px 34px rgb(103 61 230 / 0.12);
+    }
+
+    .faq-item.is-open::before {
+      width: 4px;
+    }
+
+    .faq-question {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      min-height: 58px;
+      padding: 0 14px 0 16px;
+      color: var(--ink);
+      background: #fff;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .faq-question:hover,
+    .faq-question:focus-visible {
+      background: color-mix(in srgb, var(--accent) 5%, #fff 95%);
+    }
+
+    .faq-icon {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      min-height: 32px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 9%, #fff 91%);
+      color: var(--accent-dark);
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .faq-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .faq-item.is-open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .faq-item.is-open .faq-question {
+      background: transparent;
+      color: var(--accent-dark);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 220ms ease;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      padding: 0 16px 16px;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.55;
+    }
+
+    .local-identity {
+      display: grid;
+      gap: 8px;
+      width: 100%;
+      margin: 18px auto 0;
+      padding: 20px 24px;
+      border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--line) 86%);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 6%, #fff 94%), rgb(255 255 255 / 0.95));
+      text-align: center;
+      box-shadow: 0 16px 42px rgb(62 48 32 / 0.08);
+    }
+
+    .local-identity h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
+    .local-identity p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.58;
+    }
+
+    .site-footer {
+      margin-top: 0;
+      background: #1e1e24;
+      color: #d8d4df;
+    }
+
+    .site-footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(150px, 0.45fr) minmax(220px, 0.6fr);
+      gap: 34px;
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 34px 0 18px;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+    }
+
+    .footer-brand span {
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .footer-brand strong {
+      color: #a993ff;
+    }
+
+    .footer-about {
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer-about p,
+    .footer-contact li,
+    .footer-bottom {
+      color: #c7c1cf;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+
+    .footer-column h3 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .footer-links,
+    .footer-contact {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-links a,
+    .footer-contact a,
+    .footer-legal a,
+    .footer-social a {
+      color: #d8d4df;
+      font-size: 13px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover,
+    .footer-contact a:hover,
+    .footer-legal a:hover,
+    .footer-social a:hover {
+      color: #a993ff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: rgb(255 255 255 / 0.12);
+    }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 2px;
+    }
+
+    .footer-social,
+    .footer-legal {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .search-panel,
+    .results-panel,
+    .booking-panel,
+    .success-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.92);
+      box-shadow: 0 18px 50px rgb(62 48 32 / 0.11);
+    }
+
+    .search-panel {
+      position: sticky;
+      top: 92px;
+      display: grid;
+      gap: 16px;
+      padding: 18px 18px 7px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .panel-copy,
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .search-grid,
+    .booking-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .datetime-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .trip-type {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .trip-type button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .trip-type button.is-active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 24px rgb(103 61 230 / 0.14);
+    }
+
+    .round-trip-fields {
+      display: contents;
+    }
+
+    .round-trip-fields[hidden] {
+      display: none;
+    }
+
+    .return-passenger-row {
+      display: contents;
+    }
+
+    .search-panel.is-airport-round-trip .return-passenger-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .search-panel.is-airport-round-trip .round-trip-fields {
+      display: block;
+    }
+
+    .search-panel.is-airport-round-trip .round-trip-fields .datetime-row {
+      grid-template-columns: 1fr;
+    }
+
+    .search-panel.is-airport-round-trip .return-time-search-field {
+      display: none;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .field-helper {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .label-text {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 3px;
+    }
+
+    .required-mark {
+      color: var(--danger);
+      font-weight: 950;
+    }
+
+    .conditional-required-mark {
+      display: none;
+    }
+
+    .is-required .conditional-required-mark {
+      display: inline;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #d8d0c3;
+      border-radius: 8px;
+      padding: 10px 11px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    input[type="date"],
+    input[type="time"] {
+      appearance: auto;
+    }
+
+    .place-combobox {
+      position: relative;
+      display: grid;
+    }
+
+    .phone-control {
+      display: grid;
+      grid-template-columns: minmax(112px, 0.28fr) minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .phone-control select,
+    .phone-control input {
+      min-width: 0;
+    }
+
+    .place-combobox input[type="text"] {
+      padding-right: 42px;
+    }
+
+    .place-combobox input[type="text"]:disabled {
+      color: #7a7284;
+      cursor: wait;
+      opacity: 1;
+    }
+
+    .place-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      min-height: 32px;
+      border-radius: 8px;
+      background: transparent;
+      color: #6f687d;
+    }
+
+    .place-icon:hover {
+      background: color-mix(in srgb, var(--accent) 10%, #fff 90%);
+      color: var(--accent-dark);
+    }
+
+    .place-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+    }
+
+    .quantity-stepper {
+      display: grid;
+      grid-template-columns: 44px minmax(54px, 1fr) 44px;
+      align-items: center;
+      min-height: 44px;
+      overflow: hidden;
+      border: 1px solid #d8d0c3;
+      border-radius: 8px;
+      background: #fff;
+      touch-action: manipulation;
+    }
+
+    .quantity-stepper button {
+      display: grid;
+      place-items: center;
+      min-height: 44px;
+      border-radius: 0;
+      background: #fff;
+      color: var(--accent-dark);
+      font-size: 18px;
+      font-weight: 950;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .quantity-stepper button:hover,
+    .quantity-stepper button:focus-visible {
+      background: color-mix(in srgb, var(--accent) 10%, #fff 90%);
+      color: var(--accent);
+    }
+
+    .quantity-stepper button:disabled {
+      color: #b7afc2;
+      cursor: not-allowed;
+    }
+
+    .quantity-stepper output {
+      display: grid;
+      place-items: center;
+      min-height: 44px;
+      border-inline: 1px solid #eee7dc;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .quantity-stepper:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgb(103 61 230 / 0.12);
+    }
+
+    .place-icon .icon-clear {
+      display: none;
+    }
+
+    .place-icon.has-text .icon-search {
+      display: none;
+    }
+
+    .place-icon.has-text .icon-clear {
+      display: block;
+    }
+
+    .place-suggestions {
+      position: absolute;
+      top: calc(100% + 7px);
+      left: 0;
+      right: 0;
+      z-index: 18;
+      max-height: min(340px, 58vh);
+      overflow: auto;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 44px rgb(38 23 61 / 0.2);
+    }
+
+    .place-suggestions[hidden] {
+      display: none;
+    }
+
+    .mobile-place-overlay {
+      display: none;
+    }
+
+    .place-group {
+      display: block;
+      padding: 8px 9px 5px;
+      color: #6f687d;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .place-option,
+    .place-empty {
+      display: grid;
+      width: 100%;
+      min-height: 48px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .place-option:hover,
+    .place-option.is-active {
+      background: color-mix(in srgb, var(--accent) 12%, #fff 88%);
+    }
+
+    .place-option strong {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 950;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .place-option span,
+    .place-empty {
+      color: #6f687d;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    .date-picker {
+      position: relative;
+      display: grid;
+      gap: 6px;
+    }
+
+    .date-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #d8d0c3;
+      border-radius: 8px;
+      padding: 10px 11px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .date-trigger.is-placeholder {
+      color: #6f687d;
+    }
+
+    .date-trigger svg,
+    .calendar-nav button svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .calendar-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 19;
+      width: min(328px, calc(100vw - 48px));
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 44px rgb(38 23 61 / 0.2);
+    }
+
+    .calendar-popover[hidden] {
+      display: none;
+    }
+
+    .calendar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .calendar-month {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 6px;
+    }
+
+    .calendar-nav button {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--accent-dark);
+    }
+
+    .calendar-weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-weekdays {
+      margin-bottom: 6px;
+      color: #5a5268;
+      font-size: 11px;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .calendar-day {
+      min-height: 34px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .calendar-day.is-muted {
+      color: #a8a0b4;
+    }
+
+    .calendar-day:disabled {
+      color: #c8c1d1;
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
+
+    .calendar-day.is-today {
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, #fff 45%);
+    }
+
+    .calendar-day.is-selected {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 18px rgb(103 61 230 / 0.22);
+    }
+
+    .calendar-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .calendar-clear,
+    .calendar-today {
+      min-height: 34px;
+      padding: 0 8px;
+      background: transparent;
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .calendar-today:disabled {
+      color: #aaa2b3;
+      cursor: not-allowed;
+    }
+
+    .time-picker {
+      position: relative;
+      display: grid;
+      gap: 6px;
+    }
+
+    .time-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #d8d0c3;
+      border-radius: 8px;
+      padding: 10px 11px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .time-trigger.is-placeholder {
+      color: #6f687d;
+    }
+
+    .time-trigger svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .time-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 20;
+      width: min(320px, calc(100vw - 48px));
+      padding: 14px 14px 2px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf9;
+      box-shadow: 0 18px 44px rgb(38 23 61 / 0.2);
+    }
+
+    .time-popover[hidden] {
+      display: none;
+    }
+
+    .time-popover-title {
+      display: block;
+      margin-bottom: 16px;
+      color: #42394f;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .time-editor {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 58px;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .time-number-field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .time-number-field input {
+      height: 68px;
+      min-height: 68px;
+      border-color: color-mix(in srgb, var(--accent) 40%, #d8d0c3 60%);
+      border-radius: 8px;
+      background: #fff;
+      color: #2a2440;
+      font-size: 38px;
+      font-weight: 850;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .time-number-field span {
+      color: #42394f;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .time-colon {
+      align-self: center;
+      color: #17141f;
+      font-size: 38px;
+      font-weight: 950;
+      line-height: 1;
+      transform: translateY(-8px);
+    }
+
+    .time-period {
+      display: grid;
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, #d8d0c3 60%);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .time-period button {
+      min-height: 34px;
+      border-radius: 0;
+      background: #fff;
+      color: #42394f;
+      font-weight: 850;
+    }
+
+    .time-period button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .time-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .time-actions-main {
+      display: flex;
+      gap: 8px;
+    }
+
+    .time-reset {
+      min-height: 40px;
+      padding: 0 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .time-reset:hover {
+      color: var(--accent-dark);
+    }
+
+    .time-message {
+      display: block;
+      min-height: 16px;
+      margin-top: 6px;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgb(103 61 230 / 0.15);
+    }
+
+    .primary,
+    .secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 12px 24px rgb(103 61 230 / 0.2);
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .results-panel {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      min-height: 360px;
+    }
+
+    .route-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .route-preview {
+      display: grid;
+      gap: 8px;
+      width: 100%;
+      flex: 1 0 100%;
+      margin-top: 6px;
+    }
+
+    .route-map-preview {
+      display: block;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f6f2fb;
+    }
+
+    .route-map-preview img {
+      display: block;
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      background: #eef4f1;
+    }
+
+    .route-map-legend {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 14px;
+      padding: 10px 11px 11px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .route-map-legend span {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 7px;
+      align-items: start;
+      line-height: 1.3;
+    }
+
+    .route-map-legend strong {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .route-map-fallback {
+      display: block;
+      min-height: 38px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .route-passenger-note {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, #fff 82%);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 7%, #fff 93%);
+      color: #5f586b;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .route-passenger-note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 18px rgb(103 61 230 / 0.18);
+    }
+
+    .route-passenger-note-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .route-passenger-note strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .route-passenger-note button {
+      display: inline;
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--accent-dark);
+      font: inherit;
+      font-weight: 950;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .route-passenger-note button:hover,
+    .route-passenger-note button:focus-visible {
+      color: var(--accent);
+    }
+
+    .vehicle-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .vehicle-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: stretch;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease, padding 160ms ease;
+    }
+
+    .vehicle-card.is-selected {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, #fff 93%), #fff 44%);
+      box-shadow: 0 0 0 3px rgb(103 61 230 / 0.15), 0 18px 34px rgb(103 61 230 / 0.12);
+      padding-top: 34px;
+    }
+
+    .vehicle-card.is-muted {
+      grid-template-columns: 96px minmax(0, 1fr) auto;
+      gap: 12px;
+      opacity: 0.74;
+    }
+
+    .vehicle-card.is-muted .vehicle-image,
+    .vehicle-card.is-muted .vehicle-placeholder {
+      min-height: 76px;
+    }
+
+    .vehicle-card.is-muted .vehicle-description,
+    .vehicle-card.is-muted .vehicle-meta .chip:nth-child(n + 3) {
+      display: none;
+    }
+
+    .vehicle-card.is-muted .vehicle-info h3 {
+      font-size: 15px;
+    }
+
+    .vehicle-card.is-muted .price {
+      font-size: 20px;
+    }
+
+    .vehicle-selected-badge {
+      position: absolute;
+      top: 9px;
+      right: 12px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgb(103 61 230 / 0.2);
+    }
+
+    .vehicle-card.is-selected .vehicle-selected-badge {
+      display: inline-flex;
+    }
+
+    .vehicle-selected-badge svg {
+      width: 13px;
+      height: 13px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .vehicle-card.is-selected .vehicle-select-button {
+      background: color-mix(in srgb, var(--accent) 12%, #fff 88%);
+      color: var(--accent-dark);
+      box-shadow: inset 0 0 0 2px var(--accent);
+      cursor: default;
+    }
+
+    .vehicle-select-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .vehicle-select-button svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .vehicle-image {
+      min-height: 112px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #e5f3eb, #f7efe2);
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vehicle-placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 112px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #e5f3eb, #f7efe2);
+      color: var(--accent-dark);
+      font-weight: 950;
+    }
+
+    .vehicle-info {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    .vehicle-info h3 {
+      font-size: 17px;
+      font-weight: 950;
+    }
+
+    .vehicle-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .vehicle-description {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.42;
+    }
+
+    .vehicle-price {
+      display: grid;
+      justify-items: end;
+      align-content: center;
+      gap: 10px;
+      min-width: 126px;
+    }
+
+    .price {
+      color: var(--accent-dark);
+      font-size: 24px;
+      font-weight: 950;
+    }
+
+    .booking-panel,
+    .success-panel {
+      display: none;
+      padding: 18px;
+    }
+
+    .booking-panel.is-visible,
+    .success-panel.is-visible {
+      display: grid;
+      gap: 14px;
+    }
+
+    .success-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .success-actions[hidden] {
+      display: none;
+    }
+
+    .booking-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+
+    .booking-grid .wide {
+      grid-column: 1 / -1;
+    }
+
+    .trip-summary {
+      display: grid;
+      gap: 7px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 4%, #fff 96%);
+    }
+
+    .trip-summary-title {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .trip-summary-route {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 950;
+      line-height: 1.35;
+    }
+
+    .trip-summary-details {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .trip-summary-price {
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+      line-height: 1.45;
+    }
+
+    .airport-return-details {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 4%, #fff 96%);
+    }
+
+    .airport-return-details[hidden] {
+      display: none;
+    }
+
+    .recommended-pickup {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .recommended-pickup strong {
+      color: var(--accent-dark);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .recommended-pickup button {
+      padding: 0;
+      background: transparent;
+      color: var(--accent-dark);
+      font-size: 12px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .manual-return-pickup[hidden] {
+      display: none;
+    }
+
+    .booking-grid label {
+      align-content: start;
+    }
+
+    .booking-grid input,
+    .booking-grid select {
+      height: 44px;
+      min-height: 44px;
+      line-height: 1.2;
+    }
+
+    .drink-addons {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 4%, #fff 96%);
+      transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .drink-addons:not(.is-open) {
+      cursor: pointer;
+    }
+
+    .drink-addons:not(.is-open):hover {
+      border-color: color-mix(in srgb, var(--accent) 46%, var(--line) 54%);
+      background: color-mix(in srgb, var(--accent) 7%, #fff 93%);
+      box-shadow: 0 12px 28px rgb(103 61 230 / 0.08);
+    }
+
+    .drink-addons-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .drink-addons-intro {
+      display: grid;
+      gap: 2px;
+    }
+
+    .drink-addons-head h3 {
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .drink-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .drink-total {
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .drink-toggle {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--accent);
+      background: #fff;
+      color: var(--accent-dark);
+      font-size: 13px;
+      box-shadow: 0 10px 24px rgb(103 61 230 / 0.08);
+    }
+
+    .drink-toggle:disabled {
+      cursor: default;
+      opacity: 0.74;
+      box-shadow: none;
+    }
+
+    .drink-skip {
+      flex-basis: 100%;
+      padding: 0;
+      background: transparent;
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-align: right;
+    }
+
+    .drink-skip[hidden] {
+      display: none;
+    }
+
+    .drink-summary {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
+    .drink-picker {
+      display: grid;
+      gap: 10px;
+    }
+
+    .drink-picker[hidden] {
+      display: none;
+    }
+
+    .drink-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .drink-tab {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .drink-tab.is-active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 12px 26px rgb(103 61 230 / 0.16);
+    }
+
+    .drink-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .drink-group-title {
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .drink-row {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px;
+      border: 1px solid #e5dff0;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .drink-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #f7f2ff;
+      border: 1px solid #ebe3f8;
+    }
+
+    .drink-row strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .drink-row span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .drink-stepper {
+      display: grid;
+      grid-template-columns: 32px 28px 32px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      touch-action: manipulation;
+    }
+
+    .drink-stepper button {
+      min-height: 32px;
+      border-radius: 0;
+      background: #fff;
+      color: var(--accent-dark);
+      font-size: 16px;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .drink-stepper output {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .status.error { color: var(--danger); }
+    .status.ok { color: var(--accent-dark); }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+      overflow: hidden;
+      border: 1px dashed #d8d0c3;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 850;
+      line-height: 1.5;
+    }
+
+    .empty-state.is-featured {
+      grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr);
+      grid-template-rows: minmax(0, 1fr) auto;
+      align-items: stretch;
+      place-items: stretch;
+      border-style: solid;
+      background: #fff;
+      text-align: left;
+    }
+
+    .empty-state-image-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      background: #f6f2fb;
+    }
+
+    .empty-state-image {
+      display: block;
+      width: 100%;
+      min-height: 300px;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .empty-state-trust-strip {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 18px;
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--accent) 3%, #fff 97%);
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .empty-state-trust-strip span {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .empty-state-trust-strip > span + span::before {
+      content: "";
+      width: 1px;
+      height: 18px;
+      margin-right: 8px;
+      background: rgb(80 37 209 / 0.14);
+    }
+
+    .empty-state-trust-strip strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .empty-state-live-status {
+      display: inline-flex;
+      align-items: center;
+      justify-self: center;
+      gap: 8px;
+      width: fit-content;
+      max-width: calc(100% - 32px);
+      margin: 0 auto;
+      padding: 8px 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, #fff 82%);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 6%, #fff 94%);
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.35;
+      box-shadow: 0 12px 28px rgb(103 61 230 / 0.08);
+    }
+
+    .vehicle-list > .empty-state-live-status {
+      margin-top: 36px;
+    }
+
+    .live-status-dot {
+      position: relative;
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #18b86b;
+      box-shadow: 0 0 0 4px rgb(24 184 107 / 0.12);
+    }
+
+    .live-status-dot::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border: 2px solid rgb(24 184 107 / 0.34);
+      border-radius: inherit;
+      animation: live-status-pulse 2.2s ease-out infinite;
+    }
+
+    @keyframes live-status-pulse {
+      0% {
+        opacity: 0.72;
+        transform: scale(0.78);
+      }
+      78% {
+        opacity: 0;
+        transform: scale(1.9);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.9);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .live-status-dot::after {
+        animation: none;
+      }
+    }
+
+    .empty-state-live-status strong {
+      color: var(--accent-dark);
+      font-weight: 950;
+    }
+
+    .trust-logo {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      height: 20px;
+    }
+
+    .trust-logo svg {
+      display: block;
+      height: 100%;
+      width: auto;
+    }
+
+    .trust-logo img {
+      display: block;
+      height: 100%;
+      width: auto;
+    }
+
+    .trust-logo.tripadvisor svg {
+      width: 88px;
+    }
+
+    .trust-logo.paypal svg {
+      width: 72px;
+    }
+
+    .review-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 8px 14px;
+      border: 1px solid rgb(255 255 255 / 0.34);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.72);
+      color: #1a1a1a;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+      backdrop-filter: blur(8px);
+    }
+
+    .review-badge .stars {
+      color: #ffb800;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 1.2px;
+      line-height: 1;
+    }
+
+    .review-badge .badge-text {
+      color: #1a1a1a;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .empty-state-content {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+      width: min(560px, 100%);
+      text-align: left;
+    }
+
+    .empty-state.is-featured .empty-state-content {
+      width: 100%;
+      padding: 26px;
+    }
+
+    .empty-state-title {
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 950;
+      text-align: left;
+    }
+
+    .empty-state-line {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 9px;
+      align-items: start;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .empty-state-icon {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, #fff 78%);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 9%, #fff 91%);
+      color: var(--accent-dark);
+      box-shadow: 0 6px 14px rgb(103 61 230 / 0.08);
+    }
+
+    .empty-state-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .empty-state-line strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .whatsapp-chat {
+      position: fixed;
+      right: max(18px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 950;
+      box-shadow: 0 18px 36px rgb(103 61 230 / 0.26);
+    }
+
+    .whatsapp-chat svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 860px) {
+      .site-header {
+        z-index: 50;
+      }
+
+      .booking-shell,
+      .trust-section,
+      .vehicle-card,
+      .booking-grid,
+      .site-footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-card {
+        min-height: 0;
+      }
+
+      .faq-section {
+        padding: 18px;
+      }
+
+      .faq-head h2 {
+        font-size: 21px;
+      }
+
+      .local-identity {
+        padding: 18px;
+      }
+
+      .site-footer-inner {
+        gap: 24px;
+      }
+
+      .footer-divider,
+      .footer-bottom {
+        grid-column: auto;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .empty-state.is-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .empty-state-image-wrap,
+      .empty-state-image {
+        min-height: 180px;
+        max-height: 220px;
+      }
+
+      .empty-state.is-featured .empty-state-content {
+        padding: 18px;
+      }
+
+      .empty-state-trust-strip {
+        justify-content: flex-start;
+      }
+
+      .empty-state-trust-strip span {
+        white-space: normal;
+      }
+
+      .empty-state-trust-strip > span + span::before {
+        display: none;
+      }
+
+      .empty-state-live-status {
+        justify-self: stretch;
+        width: auto;
+        max-width: none;
+        margin: 24px 14px 0;
+        border-radius: 12px;
+      }
+
+      .vehicle-list > .empty-state-live-status {
+        margin-top: 34px;
+      }
+
+      .time-editor {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 54px;
+      }
+
+      .search-panel {
+        position: static;
+      }
+
+      .vehicle-price {
+        justify-items: stretch;
+      }
+
+      .vehicle-image,
+      .vehicle-placeholder {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+      }
+
+      .vehicle-image {
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .vehicle-placeholder {
+        min-height: 160px;
+      }
+
+      .route-map-preview img {
+        height: 200px;
+      }
+
+      .route-map-legend {
+        grid-template-columns: 1fr;
+      }
+
+      .drink-addons-head,
+      .drink-row {
+        grid-template-columns: 1fr;
+      }
+
+      .drink-addons-head {
+        display: grid;
+      }
+
+      .drink-actions {
+        justify-content: stretch;
+      }
+
+      .drink-toggle {
+        flex: 1;
+      }
+
+      .drink-skip {
+        text-align: left;
+      }
+
+      .drink-total {
+        white-space: normal;
+      }
+
+      .drink-stepper {
+        grid-template-columns: 44px 34px 44px;
+      }
+
+      .drink-stepper button {
+        min-height: 44px;
+        font-size: 18px;
+      }
+
+      .drink-stepper output {
+        font-size: 16px;
+      }
+
+      .vehicle-card.is-muted {
+        grid-template-columns: 76px minmax(0, 1fr);
+      }
+
+      .vehicle-card.is-muted .vehicle-image,
+      .vehicle-card.is-muted .vehicle-placeholder {
+        height: 76px;
+        min-height: 76px;
+        aspect-ratio: auto;
+      }
+
+      .vehicle-card.is-muted .vehicle-price {
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        justify-items: start;
+      }
+
+      .header-actions {
+        display: none;
+      }
+
+      body.mobile-place-overlay-open {
+        overflow: hidden;
+      }
+
+      .mobile-place-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: none;
+        grid-template-rows: auto minmax(0, 1fr);
+        background: #fff;
+      }
+
+      .mobile-place-overlay.is-open {
+        display: grid;
+      }
+
+      .mobile-place-searchbar {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+        padding: max(10px, env(safe-area-inset-top)) 14px 10px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .mobile-place-back {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        min-height: 44px;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ink);
+        touch-action: manipulation;
+      }
+
+      .mobile-place-back svg {
+        width: 23px;
+        height: 23px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .mobile-place-searchbar input {
+        min-height: 44px;
+        border-radius: 999px;
+        padding: 10px 15px;
+        background: #f8f5ef;
+      }
+
+      .mobile-place-results {
+        min-height: 0;
+        overflow-y: auto;
+        padding: 10px 14px max(28px, env(safe-area-inset-bottom));
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .mobile-place-results .place-group {
+        padding: 14px 4px 7px;
+      }
+
+      .mobile-place-results .place-option,
+      .mobile-place-results .place-empty {
+        min-height: 54px;
+        padding: 10px 4px;
+        border-bottom: 1px solid #eee7dc;
+        border-radius: 0;
+      }
+
+      .mobile-place-results .place-option:hover,
+      .mobile-place-results .place-option:focus-visible {
+        background: transparent;
+      }
+
+      .site-header-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px 12px;
+        min-height: 0;
+        padding: 7px 0 9px;
+      }
+
+      .brand {
+        justify-self: start;
+      }
+
+      .brand img {
+        width: 34px;
+        height: 34px;
+      }
+
+      .brand span {
+        font-size: 17px;
+      }
+
+      .mobile-header-actions {
+        display: inline-flex;
+        align-items: center;
+        justify-self: end;
+        gap: 8px;
+      }
+
+      .mobile-icon-button {
+        display: inline-grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--accent-dark);
+        box-shadow: 0 8px 18px rgb(103 61 230 / 0.08);
+        text-decoration: none;
+      }
+
+      .mobile-icon-button svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .mobile-menu-button {
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .site-nav {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        width: 100%;
+        gap: 4px;
+        padding: 3px;
+      }
+
+      .nav-link {
+        flex: 1;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0 9px;
+        font-size: 13px;
+      }
+
+      .nav-link svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .mobile-menu-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 38;
+        display: block;
+        border: 0;
+        border-radius: 0;
+        background: rgb(23 20 31 / 0.34);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 39;
+        display: grid;
+        align-content: start;
+        gap: 14px;
+        width: min(300px, calc(100vw - 42px));
+        height: 100dvh;
+        padding: max(18px, env(safe-area-inset-top)) 18px 18px;
+        border-left: 1px solid #eadfce;
+        background: var(--panel);
+        box-shadow: -22px 0 46px rgb(23 20 31 / 0.18);
+        transform: translateX(104%);
+        transition: transform 200ms ease;
+      }
+
+      body.mobile-menu-open {
+        overflow: hidden;
+      }
+
+      body.mobile-menu-open .mobile-menu-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      body.mobile-menu-open .mobile-menu {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eadfce;
+      }
+
+      .mobile-menu-head strong {
+        font-family: "Sora", "Manrope", sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .mobile-menu-close {
+        width: 36px;
+        height: 36px;
+      }
+
+      .mobile-menu-links {
+        display: grid;
+        gap: 8px;
+      }
+
+      .mobile-menu-links a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 1px solid #eadfce;
+        border-radius: 8px;
+        background: #fff;
+        color: #342d42;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .calendar-sheet-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 56;
+        display: block;
+        border: 0;
+        border-radius: 0;
+        background: rgb(23 20 31 / 0.48);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+      }
+
+      .calendar-popover {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        z-index: 57;
+        width: 100%;
+        max-height: min(78dvh, 560px);
+        overflow-y: auto;
+        padding: 18px 18px max(18px, env(safe-area-inset-bottom));
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -22px 54px rgb(23 20 31 / 0.24);
+        opacity: 0;
+        transform: translateY(105%);
+        transition: transform 240ms ease, opacity 220ms ease;
+      }
+
+      .calendar-popover.is-open {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .calendar-head {
+        margin-bottom: 14px;
+      }
+
+      .calendar-month {
+        font-size: 18px;
+      }
+
+      .calendar-day {
+        min-height: 42px;
+        font-size: 14px;
+      }
+
+      .calendar-foot {
+        margin-top: 14px;
+      }
+
+      .calendar-clear,
+      .calendar-today {
+        min-height: 42px;
+        font-size: 14px;
+      }
+
+      body.calendar-sheet-open {
+        overflow: hidden;
+      }
+
+      body.calendar-sheet-open .calendar-sheet-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      body.calendar-sheet-open .whatsapp-chat {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .time-popover {
+        right: 0;
+        left: auto;
+      }
+
+      .whatsapp-chat {
+        right: max(27px, calc(env(safe-area-inset-right) + 15px));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        min-height: 46px;
+        padding: 0 14px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .nav-link {
+        gap: 5px;
+        padding: 0 6px;
+        font-size: 12px;
+      }
+
+      .datetime-row {
+        grid-template-columns: 1fr;
+      }
+
+      .time-popover {
+        right: 0;
+        left: 0;
+        width: auto;
+      }
+
+      .whatsapp-chat span {
+        display: none;
+      }
+
+      .whatsapp-chat {
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">
+        <img src="assets/dominican-quest-mark.png" alt="">
+        <span>Dominican <strong>Quest</strong></span>
+      </a>
+      <span class="mobile-header-actions">
+        <button class="mobile-icon-button" id="mobileReloadButton" type="button" aria-label="Reload and reset booking">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 12a8 8 0 1 1-2.34-5.66"/>
+            <path d="M20 4v6h-6"/>
+          </svg>
+        </button>
+        <a class="mobile-icon-button" href="tel:+18497638642" aria-label="Call Dominican Quest at +1 849 763 8642">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.91.33 1.79.62 2.64a2 2 0 0 1-.45 2.11L8 9.75a16 16 0 0 0 6.25 6.25l1.28-1.28a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.64.62A2 2 0 0 1 22 16.92Z"/></svg>
+        </a>
+        <button class="mobile-icon-button mobile-menu-button" id="mobileMenuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+      </span>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+          <span>Home</span>
+        </a>
+        <a class="nav-link is-active" href="/" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 1.5-4.5A2 2 0 0 1 9.4 9h5.2a2 2 0 0 1 1.9 1.5L18 15"/><path d="M5 15h14v4H5zM7 19v1M17 19v1"/></svg>
+          <span>Transfers</span>
+        </a>
+        <a class="nav-link" href="#tours">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M6 6l2 14h8l2-14"/><path d="M9 10h6M10 14h4"/></svg>
+          <span>Tours</span>
+        </a>
+      </nav>
+      <span class="header-actions">
+        <a class="booking-lookup" href="https://wa.me/18497638642?text=Hi%20Dominican%20Quest%2C%20I%20would%20like%20to%20find%20my%20booking.">Find My Booking</a>
+        <a class="header-phone" href="https://wa.me/18497638642" aria-label="Chat with Dominican Quest on WhatsApp at +1 849 763 8642">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 3.5a8.45 8.45 0 0 0-7.25 12.8L3.8 20l3.8-1a8.46 8.46 0 1 0 4.44-15.5Zm4.92 12.1c-.2.56-1.02 1.04-1.66 1.18-.44.1-1.02.18-2.98-.64-2.5-1.04-4.12-3.56-4.24-3.72-.12-.16-1.02-1.36-1.02-2.58 0-1.24.64-1.84.88-2.1.2-.22.52-.32.84-.32h.6c.18 0 .42.04.62.48.24.58.82 2 .88 2.14.08.16.12.34.02.54-.1.22-.16.34-.32.52-.16.18-.32.4-.46.54-.14.16-.3.32-.12.64.18.32.78 1.28 1.68 2.06 1.16 1.04 2.1 1.36 2.44 1.52.26.12.58.1.76-.1.24-.26.54-.7.86-1.14.22-.32.5-.36.8-.24.3.1 1.9.9 2.22 1.06.32.16.54.24.62.38.06.16.06.9-.14 1.46Z"/></svg>
+          <span>+1 849 763 8642</span>
+        </a>
+      </span>
+    </div>
+    <button class="mobile-menu-backdrop" id="mobileMenuBackdrop" type="button" aria-label="Close menu"></button>
+    <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile menu" aria-hidden="true">
+      <div class="mobile-menu-head">
+        <strong>Dominican Quest</strong>
+        <button class="mobile-icon-button mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <nav class="mobile-menu-links" aria-label="Additional mobile links">
+        <a href="https://wa.me/18497638642?text=Hi%20Dominican%20Quest%2C%20I%20would%20like%20to%20find%20my%20booking.">Find My Booking</a>
+        <a href="https://wa.me/18497638642">WhatsApp Support</a>
+        <a href="mailto:reservations@bookdominicanquest.com">Email Support</a>
+      </nav>
+    </aside>
+  </header>
+
+  <button class="calendar-sheet-backdrop" id="calendarSheetBackdrop" type="button" aria-label="Close calendar"></button>
+
+  <section class="mobile-place-overlay" id="mobilePlaceOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Search locations">
+    <div class="mobile-place-searchbar">
+      <button class="mobile-place-back" id="mobilePlaceBack" type="button" aria-label="Back to booking form">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <input id="mobilePlaceSearch" type="text" autocomplete="off" placeholder="Type location..." aria-label="Type location" role="combobox" aria-expanded="true" aria-controls="mobilePlaceResults" aria-autocomplete="list">
+    </div>
+    <div class="mobile-place-results" id="mobilePlaceResults" role="listbox"></div>
+  </section>
+
+  <main>
+    <section class="booking-shell">
+      <form class="search-panel" id="searchForm">
+        <div class="panel-head">
+          <div>
+            <h1>Wedding Transfers</h1>
+            <p class="panel-copy">Fast, private airport transfers for wedding guests traveling to Iberostar Waves Dominicana.</p>
+          </div>
+        </div>
+        <div class="search-grid">
+          <label><span class="label-text">Trip type <span class="required-mark">*</span></span>
+            <span class="trip-type" role="group" aria-label="Trip type">
+              <button class="is-active" id="oneWayTrip" type="button" data-trip-type="one_way">One-way</button>
+              <button id="roundTrip" type="button" data-trip-type="round_trip">Round trip</button>
+            </span>
+          </label>
+          <label><span class="label-text">Airport <span class="required-mark">*</span></span>
+            <span class="place-combobox" id="originPlace">
+              <input id="originSelect" type="hidden" required>
+              <input id="originSearch" type="text" autocomplete="off" placeholder="Loading locations..." role="combobox" aria-expanded="false" aria-controls="originSuggestions" aria-autocomplete="list" disabled>
+              <button class="place-icon" id="originClear" type="button" aria-label="Search pickup location">
+                <svg class="icon-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+                <svg class="icon-clear" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+              <span class="place-suggestions" id="originSuggestions" role="listbox" hidden></span>
+            </span>
+          </label>
+          <label class="wedding-destination-field"><span class="label-text">Wedding resort <span class="required-mark">*</span></span>
+            <span class="place-combobox" id="destinationPlace">
+              <input id="destinationSelect" type="hidden" required>
+              <input id="destinationSearch" type="text" autocomplete="off" placeholder="Iberostar Waves Dominicana" role="combobox" aria-expanded="false" aria-controls="destinationSuggestions" aria-autocomplete="list" readonly disabled>
+              <button class="place-icon" id="destinationClear" type="button" aria-label="Search dropoff location">
+                <svg class="icon-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+                <svg class="icon-clear" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+              <span class="place-suggestions" id="destinationSuggestions" role="listbox" hidden></span>
+            </span>
+          </label>
+          <span class="datetime-row">
+            <label><span class="label-text">Date <span class="required-mark">*</span></span>
+              <span class="date-picker" id="datePicker">
+                <input id="serviceDate" type="hidden" required>
+                <button class="date-trigger is-placeholder" id="dateTrigger" type="button" aria-expanded="false" aria-controls="calendarPopover">
+                  <span id="dateTriggerText">Select date</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                </button>
+                <span class="calendar-popover" id="calendarPopover" role="dialog" aria-modal="true" aria-label="Choose pickup date" hidden>
+                  <span class="calendar-head">
+                    <strong class="calendar-month" id="calendarMonthLabel"></strong>
+                    <span class="calendar-nav">
+                      <button id="calendarPrev" type="button" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                      <button id="calendarNext" type="button" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                    </span>
+                  </span>
+                  <span class="calendar-weekdays" aria-hidden="true">
+                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                  </span>
+                  <span class="calendar-grid" id="calendarGrid"></span>
+                  <span class="calendar-foot">
+                    <button class="calendar-clear" id="calendarClear" type="button">Clear</button>
+                    <button class="calendar-today" id="calendarTomorrow" type="button">Tomorrow</button>
+                  </span>
+                </span>
+              </span>
+            </label>
+            <label><span class="label-text">Pickup time <span class="required-mark">*</span></span>
+              <span class="time-picker" id="timePicker">
+                <input id="serviceTime" type="hidden" required>
+                <button class="time-trigger is-placeholder" id="timeTrigger" type="button" aria-expanded="false" aria-controls="timePopover">
+                  <span id="timeTriggerText">Select time</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </button>
+                <span class="time-popover" id="timePopover" hidden>
+                  <span class="time-popover-title">Enter pickup time</span>
+                  <span class="time-editor">
+                    <span class="time-number-field">
+                      <input id="timeHour" inputmode="numeric" autocomplete="off" maxlength="2" placeholder="--" aria-label="Hour">
+                      <span>Hour</span>
+                    </span>
+                    <span class="time-colon" aria-hidden="true">:</span>
+                    <span class="time-number-field">
+                      <input id="timeMinute" inputmode="numeric" autocomplete="off" maxlength="2" placeholder="--" aria-label="Minute">
+                      <span>Minute</span>
+                    </span>
+                    <span class="time-period" aria-label="AM or PM">
+                      <button id="timeAm" type="button" data-period="AM">AM</button>
+                      <button id="timePm" type="button" data-period="PM">PM</button>
+                    </span>
+                  </span>
+                  <span class="time-actions">
+                    <button class="time-reset" id="timeReset" type="button">Reset</button>
+                    <span class="time-actions-main">
+                      <button class="secondary" id="timeCancel" type="button">Close</button>
+                      <button class="primary" id="timeApply" type="button" disabled>Set time</button>
+                    </span>
+                  </span>
+                  <span class="time-message" id="timeMessage" aria-live="polite"></span>
+                </span>
+              </span>
+            </label>
+          </span>
+          <span class="return-passenger-row" id="returnPassengerRow">
+            <span class="round-trip-fields" id="roundTripFields" hidden>
+              <span class="datetime-row">
+              <label><span class="label-text">Return date <span class="required-mark">*</span></span>
+                <span class="date-picker" id="returnDatePicker">
+                  <input id="returnDate" type="hidden">
+                  <button class="date-trigger is-placeholder" id="returnDateTrigger" type="button" aria-expanded="false" aria-controls="returnCalendarPopover">
+                    <span id="returnDateTriggerText">Select date</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                  </button>
+                  <span class="calendar-popover" id="returnCalendarPopover" role="dialog" aria-modal="true" aria-label="Choose return date" hidden>
+                    <span class="calendar-head">
+                      <strong class="calendar-month" id="returnCalendarMonthLabel"></strong>
+                      <span class="calendar-nav">
+                        <button id="returnCalendarPrev" type="button" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                        <button id="returnCalendarNext" type="button" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                      </span>
+                    </span>
+                    <span class="calendar-weekdays" aria-hidden="true">
+                      <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </span>
+                    <span class="calendar-grid" id="returnCalendarGrid"></span>
+                    <span class="calendar-foot">
+                      <button class="calendar-clear" id="returnCalendarClear" type="button">Clear</button>
+                      <button class="calendar-today" id="returnCalendarTomorrow" type="button">Tomorrow</button>
+                    </span>
+                  </span>
+                </span>
+              </label>
+              <label class="return-time-search-field"><span class="label-text">Return pickup time <span class="required-mark">*</span></span>
+                <span class="time-picker" id="returnTimePicker">
+                  <input id="returnTime" type="hidden">
+                  <button class="time-trigger is-placeholder" id="returnTimeTrigger" type="button" aria-expanded="false" aria-controls="returnTimePopover">
+                    <span id="returnTimeTriggerText">Select time</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                  </button>
+                  <span class="time-popover" id="returnTimePopover" hidden>
+                    <span class="time-popover-title">Enter return pickup time</span>
+                    <span class="time-editor">
+                      <span class="time-number-field">
+                        <input id="returnTimeHour" inputmode="numeric" autocomplete="off" maxlength="2" placeholder="--" aria-label="Return hour">
+                        <span>Hour</span>
+                      </span>
+                      <span class="time-colon" aria-hidden="true">:</span>
+                      <span class="time-number-field">
+                        <input id="returnTimeMinute" inputmode="numeric" autocomplete="off" maxlength="2" placeholder="--" aria-label="Return minute">
+                        <span>Minute</span>
+                      </span>
+                      <span class="time-period" aria-label="Return AM or PM">
+                        <button id="returnTimeAm" type="button" data-period="AM">AM</button>
+                        <button id="returnTimePm" type="button" data-period="PM">PM</button>
+                      </span>
+                    </span>
+                    <span class="time-actions">
+                      <button class="time-reset" id="returnTimeReset" type="button">Reset</button>
+                      <span class="time-actions-main">
+                        <button class="secondary" id="returnTimeCancel" type="button">Close</button>
+                        <button class="primary" id="returnTimeApply" type="button" disabled>Set time</button>
+                      </span>
+                    </span>
+                    <span class="time-message" id="returnTimeMessage" aria-live="polite"></span>
+                  </span>
+                </span>
+              </label>
+              </span>
+            </span>
+            <label><span class="label-text">Passengers <span class="required-mark">*</span></span>
+              <input id="passengers" type="hidden">
+              <span class="quantity-stepper" id="passengerStepper">
+                <button id="passengerMinus" type="button" aria-label="Remove passenger">-</button>
+                <output id="passengerCount" for="passengers" aria-live="polite">?</output>
+                <button id="passengerPlus" type="button" aria-label="Add passenger">+</button>
+              </span>
+            </label>
+          </span>
+          <button class="primary" type="submit">Search transfers</button>
+        </div>
+        <p class="status" id="searchStatus"></p>
+      </form>
+
+      <section class="results-panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="resultsTitle">Choose Your Wedding Transfer</h2>
+            <p class="hint" id="resultHint">Pick your airport, date, time, and passenger count to continue quickly.</p>
+          </div>
+        </div>
+        <div class="route-summary" id="routeSummary"></div>
+        <div class="vehicle-list" id="vehicleList">
+          <div class="empty-state" id="initialVehicleEmpty"></div>
+        </div>
+
+        <form class="booking-panel" id="bookingForm">
+          <div class="panel-head">
+            <div>
+              <h2>Review &amp; complete your booking</h2>
+            </div>
+          </div>
+          <div class="trip-summary" id="tripSummary">
+            <strong class="trip-summary-title">Trip Summary</strong>
+            <div class="trip-summary-route" id="tripSummaryRoute"></div>
+            <div class="trip-summary-details" id="tripSummaryDetails"></div>
+            <div class="trip-summary-price" id="tripSummaryPrice"></div>
+          </div>
+          <div class="booking-grid">
+            <label><span class="label-text">Full name <span class="required-mark">*</span></span>
+              <input id="customerName" autocomplete="name" placeholder="e.g., John Smith" required>
+            </label>
+            <label><span class="label-text">Email <span class="required-mark">*</span></span>
+              <input id="customerEmail" type="email" autocomplete="email" placeholder="e.g., john@example.com" required>
+            </label>
+            <label class="wide"><span class="label-text">Phone <span class="required-mark">*</span></span>
+              <span class="phone-control">
+                <select id="phoneCountry" aria-label="Phone country">
+                  <option value="+1" data-example="e.g., 809 555 1234">🇩🇴 DR +1</option>
+                  <option value="+1" data-example="e.g., 212 555 1234" selected>🇺🇸 USA +1</option>
+                  <option value="+1" data-example="e.g., 416 555 1234">🇨🇦 Canada +1</option>
+                  <option value="+1" data-example="e.g., 787 555 1234">🇵🇷 Puerto Rico +1</option>
+                  <option value="+52" data-example="e.g., 55 1234 5678">🇲🇽 Mexico +52</option>
+                  <option value="+57" data-example="e.g., 300 123 4567">🇨🇴 Colombia +57</option>
+                  <option value="+58" data-example="e.g., 412 123 4567">🇻🇪 Venezuela +58</option>
+                  <option value="+54" data-example="e.g., 11 1234 5678">🇦🇷 Argentina +54</option>
+                  <option value="+56" data-example="e.g., 9 1234 5678">🇨🇱 Chile +56</option>
+                  <option value="+55" data-example="e.g., 11 91234 5678">🇧🇷 Brazil +55</option>
+                  <option value="+51" data-example="e.g., 912 345 678">🇵🇪 Peru +51</option>
+                  <option value="+593" data-example="e.g., 99 123 4567">🇪🇨 Ecuador +593</option>
+                  <option value="+507" data-example="e.g., 6123 4567">🇵🇦 Panama +507</option>
+                  <option value="+44" data-example="e.g., 7400 123456">🇬🇧 United Kingdom +44</option>
+                  <option value="+34" data-example="e.g., 612 345 678">🇪🇸 Spain +34</option>
+                  <option value="+33" data-example="e.g., 6 12 34 56 78">🇫🇷 France +33</option>
+                  <option value="+49" data-example="e.g., 151 23456789">🇩🇪 Germany +49</option>
+                  <option value="+39" data-example="e.g., 312 345 6789">🇮🇹 Italy +39</option>
+                  <option value="+31" data-example="e.g., 6 12345678">🇳🇱 Netherlands +31</option>
+                  <option value="+41" data-example="e.g., 79 123 45 67">🇨🇭 Switzerland +41</option>
+                </select>
+                <input id="customerPhone" autocomplete="tel" inputmode="tel" placeholder="e.g., 212 555 1234" required>
+              </span>
+            </label>
+            <label id="airlineCompanyLabel"><span class="label-text">Arrival airline <span class="required-mark conditional-required-mark">*</span></span>
+              <input id="airlineCompany" list="airlineOptions" autocomplete="off" placeholder="e.g., JetBlue">
+              <datalist id="airlineOptions"></datalist>
+            </label>
+            <label id="flightNumberLabel"><span class="label-text">Arrival flight number <span class="required-mark conditional-required-mark">*</span></span>
+              <input id="flightNumber" autocomplete="off" placeholder="e.g., B61704">
+            </label>
+            <section class="airport-return-details" id="airportReturnDetails" hidden>
+              <label><span class="label-text">Return Flight Departure Time <span class="required-mark">*</span></span>
+                <input id="returnFlightDepartureTime" inputmode="text" autocomplete="off" placeholder="e.g., 3:30 PM">
+              </label>
+              <div class="recommended-pickup" id="recommendedPickupWrap" hidden>
+                <strong id="recommendedPickupText">Recommended Pickup: --</strong>
+                <span>We automatically schedule your pickup so you arrive at the airport 2 hours and 30 minutes before departure, based on the route driving time. Need to change this? <button id="editReturnPickupTime" type="button">Edit pickup time</button></span>
+              </div>
+              <div class="manual-return-pickup" id="manualReturnPickupWrap" hidden>
+                <label><span class="label-text">Custom return pickup time <span class="required-mark">*</span></span>
+                  <input id="manualReturnPickupTime" inputmode="text" autocomplete="off" placeholder="e.g., 12:30 PM">
+                </label>
+              </div>
+            </section>
+            <section class="drink-addons" aria-labelledby="drinkAddonsTitle">
+              <div class="drink-addons-head">
+                <div class="drink-addons-intro">
+                  <h3 id="drinkAddonsTitle">Add drinks to your ride</h3>
+                  <p class="hint" id="drinkHelperText">Have a favorite drink? Tell us what to stock in the vehicle!</p>
+                </div>
+                <div class="drink-actions">
+                  <strong class="drink-total" id="drinksTotal">Drinks total: US$0.00</strong>
+                  <button class="drink-toggle" id="drinkToggle" type="button" aria-expanded="false" aria-controls="drinkPicker">Browse Drinks</button>
+                  <button class="drink-skip" id="drinkSkip" type="button" hidden>Continue without drinks</button>
+                </div>
+              </div>
+              <p class="drink-summary" id="drinkSummary" hidden>No drinks selected yet</p>
+              <div class="drink-picker" id="drinkPicker" hidden>
+                <div class="drink-tabs" role="tablist" aria-label="Drink categories">
+                  <button class="drink-tab is-active" id="softDrinkTab" type="button" role="tab" aria-selected="true" data-drink-category="Non-alcoholic drinks">Soft drinks</button>
+                  <button class="drink-tab" id="alcoholDrinkTab" type="button" role="tab" aria-selected="false" data-drink-category="Alcoholic drinks">Alcoholic</button>
+                </div>
+                <div id="drinkOptions"></div>
+              </div>
+            </section>
+            <label class="wide">Special remarks
+              <textarea id="bookingNotes" placeholder="e.g., Child seats, extra luggage, accessibility needs, etc."></textarea>
+            </label>
+          </div>
+          <button class="primary" id="checkoutButton" type="submit">Continue to PayPal</button>
+          <p class="status" id="bookingStatus"></p>
+        </form>
+
+        <section class="success-panel" id="successPanel">
+          <h2>Booking request received</h2>
+          <p class="hint" id="successText"></p>
+          <div class="success-actions" id="successActions" hidden></div>
+        </section>
+      </section>
+    </section>
+    <section class="trust-section" aria-label="Why travelers book with Dominican Quest">
+      <article class="trust-card">
+        <span class="trust-kicker">Customer peace of mind</span>
+        <div class="review-stars" aria-label="Five star review">★★★★★</div>
+        <blockquote>
+          <strong>"Absolute best service!"</strong>
+          "Our driver was waiting with a sign right as we walked out. Seamless, air-conditioned, and stress-free." — Sarah M.
+        </blockquote>
+        <div class="tripadvisor-review-card" aria-label="Dominican Quest TripAdvisor rating">
+          <img src="assets/tripadvisor-icon.svg" alt="TripAdvisor">
+          <div class="tripadvisor-rating"><span class="tripadvisor-rating-dots" aria-hidden="true">●●●●●</span> 5.0 traveler rating</div>
+          <p>Read reviews from Dominican Quest travelers.</p>
+        </div>
+        <a class="review-link" href="https://www.tripadvisor.com/Attraction_Review-g147289-d3653837-Reviews-Dominican_Quest_Tours-Santo_Domingo_Santo_Domingo_Province_Dominican_Republic.html" target="_blank" rel="noopener">Write a Review on TripAdvisor</a>
+      </article>
+      <article class="trust-card why-card">
+        <span class="trust-kicker">Why choose us</span>
+        <ul class="micro-badges">
+          <li>
+            <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.8 8.3 7 10 4.2-1.7 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg></span>
+            <span><strong>Fully Licensed &amp; Insured</strong> — 100% legal, authorized transport.</span>
+          </li>
+          <li>
+            <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span><strong>Local Experts</strong> — Drivers who know the island inside and out.</span>
+          </li>
+          <li>
+            <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/><path d="M5 19h14"/></svg></span>
+            <span><strong>24/7 Dispatch Support</strong> — Real human help, anytime you need it.</span>
+          </li>
+        </ul>
+        <div class="booking-guarantee">
+          <span class="booking-guarantee-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.8 8.3 7 10 4.2-1.7 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg></span>
+          <span><strong>Booking guarantee</strong>Free cancellation up to 24 hours before pickup.</span>
+        </div>
+        <a class="email-link" href="mailto:info@mydominicantransfers.com">Have questions? Email us →</a>
+      </article>
+      <article class="trust-card tour-promo" id="tours">
+        <span class="trust-kicker">Tours &amp; excursions</span>
+        <h2>Ready for adventure?</h2>
+        <p>Discover the best of the Dominican Republic. From speedboats to historic safaris, book your next excursion with us.</p>
+        <a class="tour-link" href="#tours">Explore Tours →</a>
+      </article>
+    </section>
+    <section class="faq-section" aria-labelledby="faqTitle">
+      <div class="faq-head">
+        <h2 id="faqTitle">Questions before you book?</h2>
+        <p>Quick answers to the most common private transfer details.</p>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Where and how do I meet my driver at the airport?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>Your driver will be waiting outside the terminal arrival hall holding a clear sign with your name on it, just like the one in our Cooper Family photo above.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>What happens if my flight is delayed?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>We monitor all flights in real-time. If your flight is delayed, your driver will automatically adjust their arrival time to match your new landing time at no extra charge.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Do you provide child car seats or boosters?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>Yes! We offer age-appropriate baby seats and booster seats upon request during checkout to ensure your family travels safely.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Is my booking fully refundable?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>Absolutely. We offer free cancellation and 100% refunds up to 24 hours before your scheduled pickup time.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="local-identity" aria-label="Dominican Quest local identity">
+      <h2>🇩🇴 Proudly Local. Professionally Managed.</h2>
+      <p>Dominican Quest is a family-owned transport and excursion provider based directly in Punta Cana. With our own dedicated fleet of modern, air-conditioned vehicles and professionally trained local drivers, we ensure your family’s first and last impression of the Dominican Republic is absolute perfection.</p>
+    </section>
+  </main>
+
+  <a class="whatsapp-chat" id="whatsappChat" href="https://wa.me/18497638642" target="_blank" rel="noopener" aria-label="Chat with Dominican Quest on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91a9.86 9.86 0 0 0-2.91-7.01Zm-7.01 15.24h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.83 2.42 8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.25 8.23Zm4.52-6.17c-.25-.12-1.46-.72-1.69-.8-.23-.08-.4-.12-.56.12-.17.25-.65.8-.79.96-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.12.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg>
+    <span>Chat with us</span>
+  </a>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-about">
+        <a class="footer-brand" href="/">
+          <img src="assets/dominican-quest-mark.png" alt="">
+          <span>Dominican <strong>Quest</strong></span>
+        </a>
+        <p>Your trusted private transportation and excursion partner in the Dominican Republic. Safe, comfortable, and reliable.</p>
+      </div>
+      <nav class="footer-column" aria-label="Footer quick links">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Transfers</a></li>
+          <li><a href="#tours">Tours</a></li>
+          <li><a href="https://wa.me/18497638642?text=Hi%20Dominican%20Quest%2C%20I%20would%20like%20to%20find%20my%20booking.">My Booking</a></li>
+        </ul>
+      </nav>
+      <div class="footer-column">
+        <h3>Contact &amp; Support</h3>
+        <ul class="footer-contact">
+          <li><a href="https://wa.me/18497638642">WhatsApp: +1 849 763 8642</a></li>
+          <li><a href="mailto:reservations@bookdominicanquest.com">reservations@bookdominicanquest.com</a></li>
+          <li>Punta Cana, DR</li>
+        </ul>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Dominican Quest. All rights reserved.</span>
+        <span class="footer-social" aria-label="Social links">
+          <a href="https://www.instagram.com/dominicanquest?igsh=YXcyeGdscG5iOHpq&amp;utm_source=qr" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g147289-d3653837-Reviews-Dominican_Quest_Tours-Santo_Domingo_Santo_Domingo_Province_Dominican_Republic.html" aria-label="TripAdvisor">TripAdvisor</a>
+        </span>
+        <span class="footer-legal">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = "https://rptwonpdqxqhxgkerbqp.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwdHdvbnBkcXhxaHhna2VyYnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NTU1OTgsImV4cCI6MjA5NzIzMTU5OH0.1UPWUSEmt6GIQ7q-wiQt0BYV3lLquYDZZYFLSj_7JLE";
+
+    const WEDDING_TRANSFER_PAGE = {
+      enabled: true,
+      destinationName: "Iberostar Waves Dominicana",
+      destinationQuery: "iberostar waves dominican"
+    };
+
+    const DRINK_OPTIONS = [
+      { id: "coca-cola", name: "Coca Cola", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/soda-can.svg" },
+      { id: "sprite", name: "Sprite", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/soda-can.svg" },
+      { id: "water", name: "Bottle of water", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/water-bottle.svg" },
+      { id: "diet-coke", name: "Diet Coke", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/soda-can.svg" },
+      { id: "gatorade", name: "Gatorade", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/sports-bottle.svg" },
+      { id: "lipton-ice-tea", name: "Lipton Ice Tea", size: "20 oz bottle", price: 2.5, category: "Non-alcoholic drinks", alcoholic: false, image: "assets/drinks/sports-bottle.svg" },
+      { id: "local-beer", name: "Local Beer", size: "350 ml bottle", price: 3.5, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/beer-bottle.svg" },
+      { id: "corona-miller-beer", name: "Corona/Miller Beer", size: "350 ml bottle", price: 4.5, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/beer-bottle.svg" },
+      { id: "brugal-extra-viejo", name: "Brugal Extra Viejo", size: "350 ml rum bottle", price: 10, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/rum-bottle.svg" },
+      { id: "red-wine", name: "Red Wine", size: "750 ml bottle", price: 20, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/wine-bottle.svg" },
+      { id: "white-wine", name: "White Wine", size: "750 ml bottle", price: 20, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/wine-bottle.svg" },
+      { id: "sparkling-wine", name: "Sparkling Wine", size: "750 ml bottle", price: 25, category: "Alcoholic drinks", alcoholic: true, image: "assets/drinks/sparkling-wine.svg" }
+    ];
+
+    const state = {
+      destinations: [],
+      locations: [],
+      airlines: [],
+      places: [],
+      originPlace: null,
+      destinationPlace: null,
+      route: null,
+      vehicles: [],
+      selectedVehicle: null,
+      drinks: {},
+      drinksOpen: false,
+      drinkCategory: "Non-alcoholic drinks",
+      mobilePlaceSide: null,
+      weddingDestinationPlace: null,
+      tripType: "one_way"
+    };
+
+    const originSelect = document.getElementById("originSelect");
+    const originSearch = document.getElementById("originSearch");
+    const originSuggestions = document.getElementById("originSuggestions");
+    const originClear = document.getElementById("originClear");
+    const destinationSelect = document.getElementById("destinationSelect");
+    const destinationSearch = document.getElementById("destinationSearch");
+    const destinationSuggestions = document.getElementById("destinationSuggestions");
+    const destinationClear = document.getElementById("destinationClear");
+    const serviceDate = document.getElementById("serviceDate");
+    const datePicker = document.getElementById("datePicker");
+    const dateTrigger = document.getElementById("dateTrigger");
+    const dateTriggerText = document.getElementById("dateTriggerText");
+    const calendarPopover = document.getElementById("calendarPopover");
+    const calendarSheetBackdrop = document.getElementById("calendarSheetBackdrop");
+    const calendarMonthLabel = document.getElementById("calendarMonthLabel");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const calendarPrev = document.getElementById("calendarPrev");
+    const calendarNext = document.getElementById("calendarNext");
+    const calendarClear = document.getElementById("calendarClear");
+    const calendarTomorrow = document.getElementById("calendarTomorrow");
+    const oneWayTrip = document.getElementById("oneWayTrip");
+    const roundTrip = document.getElementById("roundTrip");
+    const roundTripFields = document.getElementById("roundTripFields");
+    const returnDate = document.getElementById("returnDate");
+    const returnDatePicker = document.getElementById("returnDatePicker");
+    const returnDateTrigger = document.getElementById("returnDateTrigger");
+    const returnDateTriggerText = document.getElementById("returnDateTriggerText");
+    const returnCalendarPopover = document.getElementById("returnCalendarPopover");
+    const returnCalendarMonthLabel = document.getElementById("returnCalendarMonthLabel");
+    const returnCalendarGrid = document.getElementById("returnCalendarGrid");
+    const returnCalendarPrev = document.getElementById("returnCalendarPrev");
+    const returnCalendarNext = document.getElementById("returnCalendarNext");
+    const returnCalendarClear = document.getElementById("returnCalendarClear");
+    const returnCalendarTomorrow = document.getElementById("returnCalendarTomorrow");
+    const returnTime = document.getElementById("returnTime");
+    const returnTimePicker = document.getElementById("returnTimePicker");
+    const returnTimeTrigger = document.getElementById("returnTimeTrigger");
+    const returnTimeTriggerText = document.getElementById("returnTimeTriggerText");
+    const returnTimePopover = document.getElementById("returnTimePopover");
+    const returnTimeHour = document.getElementById("returnTimeHour");
+    const returnTimeMinute = document.getElementById("returnTimeMinute");
+    const returnTimeAm = document.getElementById("returnTimeAm");
+    const returnTimePm = document.getElementById("returnTimePm");
+    const returnTimeReset = document.getElementById("returnTimeReset");
+    const returnTimeCancel = document.getElementById("returnTimeCancel");
+    const returnTimeApply = document.getElementById("returnTimeApply");
+    const returnTimeMessage = document.getElementById("returnTimeMessage");
+    const serviceTime = document.getElementById("serviceTime");
+    const timePicker = document.getElementById("timePicker");
+    const timeTrigger = document.getElementById("timeTrigger");
+    const timeTriggerText = document.getElementById("timeTriggerText");
+    const timePopover = document.getElementById("timePopover");
+    const timeHour = document.getElementById("timeHour");
+    const timeMinute = document.getElementById("timeMinute");
+    const timeAm = document.getElementById("timeAm");
+    const timePm = document.getElementById("timePm");
+    const timeReset = document.getElementById("timeReset");
+    const timeCancel = document.getElementById("timeCancel");
+    const timeApply = document.getElementById("timeApply");
+    const timeMessage = document.getElementById("timeMessage");
+    const passengers = document.getElementById("passengers");
+    const passengerStepper = document.getElementById("passengerStepper");
+    const passengerMinus = document.getElementById("passengerMinus");
+    const passengerPlus = document.getElementById("passengerPlus");
+    const passengerCount = document.getElementById("passengerCount");
+    const searchForm = document.getElementById("searchForm");
+    const searchStatus = document.getElementById("searchStatus");
+    const resultsTitle = document.getElementById("resultsTitle");
+    const resultHint = document.getElementById("resultHint");
+    const routeSummary = document.getElementById("routeSummary");
+    const vehicleList = document.getElementById("vehicleList");
+    const bookingForm = document.getElementById("bookingForm");
+    const tripSummaryRoute = document.getElementById("tripSummaryRoute");
+    const tripSummaryDetails = document.getElementById("tripSummaryDetails");
+    const tripSummaryPrice = document.getElementById("tripSummaryPrice");
+    const bookingStatus = document.getElementById("bookingStatus");
+    const checkoutButton = document.getElementById("checkoutButton");
+    const successPanel = document.getElementById("successPanel");
+    const successText = document.getElementById("successText");
+    const successActions = document.getElementById("successActions");
+    const whatsappChat = document.getElementById("whatsappChat");
+    const phoneCountry = document.getElementById("phoneCountry");
+    const airlineCompany = document.getElementById("airlineCompany");
+    const airlineOptions = document.getElementById("airlineOptions");
+    const flightNumber = document.getElementById("flightNumber");
+    const airportReturnDetails = document.getElementById("airportReturnDetails");
+    const returnFlightDepartureTime = document.getElementById("returnFlightDepartureTime");
+    const recommendedPickupWrap = document.getElementById("recommendedPickupWrap");
+    const recommendedPickupText = document.getElementById("recommendedPickupText");
+    const editReturnPickupTime = document.getElementById("editReturnPickupTime");
+    const manualReturnPickupWrap = document.getElementById("manualReturnPickupWrap");
+    const manualReturnPickupTime = document.getElementById("manualReturnPickupTime");
+    const drinkAddons = document.querySelector(".drink-addons");
+    const drinkHelperText = document.getElementById("drinkHelperText");
+    const drinkToggle = document.getElementById("drinkToggle");
+    const drinkSkip = document.getElementById("drinkSkip");
+    const drinkSummary = document.getElementById("drinkSummary");
+    const drinkPicker = document.getElementById("drinkPicker");
+    const drinkOptions = document.getElementById("drinkOptions");
+    const drinkTabs = Array.from(document.querySelectorAll("[data-drink-category]"));
+    const drinksTotal = document.getElementById("drinksTotal");
+    const mobilePlaceOverlay = document.getElementById("mobilePlaceOverlay");
+    const mobilePlaceBack = document.getElementById("mobilePlaceBack");
+    const mobilePlaceSearch = document.getElementById("mobilePlaceSearch");
+    const mobilePlaceResults = document.getElementById("mobilePlaceResults");
+    const mobileReloadButton = document.getElementById("mobileReloadButton");
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileMenuBackdrop = document.getElementById("mobileMenuBackdrop");
+    const mobileMenuClose = document.getElementById("mobileMenuClose");
+
+    function setMobileMenuOpen(open) {
+      document.body.classList.toggle("mobile-menu-open", open);
+      mobileMenuToggle?.setAttribute("aria-expanded", String(open));
+      mobileMenuToggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      mobileMenu?.setAttribute("aria-hidden", String(!open));
+    }
+
+    mobilePlaceBack?.addEventListener("click", () => closeMobilePlaceOverlay(false));
+    mobilePlaceSearch?.addEventListener("input", syncMobilePlaceQuery);
+    mobilePlaceSearch?.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMobilePlaceOverlay(false);
+      if (event.key === "Enter") {
+        const firstOption = mobilePlaceResults?.querySelector(".place-option");
+        if (firstOption) {
+          event.preventDefault();
+          firstOption.click();
+        }
+      }
+    });
+
+    mobileReloadButton?.addEventListener("click", () => {
+      window.location.reload();
+    });
+
+    mobileMenuToggle?.addEventListener("click", () => {
+      setMobileMenuOpen(!document.body.classList.contains("mobile-menu-open"));
+    });
+
+    mobileMenuBackdrop?.addEventListener("click", () => setMobileMenuOpen(false));
+    mobileMenuClose?.addEventListener("click", () => setMobileMenuOpen(false));
+    mobileMenu?.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => setMobileMenuOpen(false));
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeMobilePlaceOverlay(false);
+        setMobileMenuOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (state.mobilePlaceSide && !mobilePlaceOverlayEnabled()) closeMobilePlaceOverlay(false);
+    });
+
+    function setStatus(element, message, type = "") {
+      element.textContent = message || "";
+      element.classList.toggle("error", type === "error");
+      element.classList.toggle("ok", type === "ok");
+    }
+
+    function clearSuccessActions() {
+      successActions.hidden = true;
+      successActions.replaceChildren();
+    }
+
+    function showPendingPaymentFallback(bookingReference) {
+      const referenceText = bookingReference ? ` Reference ${bookingReference}.` : "";
+      successText.textContent = `Your booking request was saved, but PayPal checkout could not start.${referenceText} Please contact us to complete your payment.`;
+      successActions.hidden = false;
+      successActions.replaceChildren();
+      const supportLink = document.createElement("a");
+      supportLink.className = "primary";
+      supportLink.href = `https://wa.me/18497638642?text=${encodeURIComponent(`Hi Dominican Quest, PayPal checkout did not start for booking ${bookingReference || ""}. I would like to complete my payment.`)}`;
+      supportLink.target = "_blank";
+      supportLink.rel = "noopener";
+      supportLink.textContent = "Complete payment with support";
+      successActions.appendChild(supportLink);
+    }
+
+    function checkoutErrorMessage(error) {
+      const message = error?.message || "";
+      if (/paypal|authentication|client/i.test(message)) {
+        return "PayPal checkout could not start right now. Please contact us and we will help complete your payment.";
+      }
+      return message || "Checkout could not start. Please try again.";
+    }
+
+    function currentPageBaseUrl() {
+      if (location.protocol !== "http:" && location.protocol !== "https:") return "";
+      return `${location.origin}${location.pathname}`;
+    }
+
+    async function functionRequest(functionName, payload = {}) {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/${functionName}`, {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const text = await response.text();
+      const body = text ? JSON.parse(text) : null;
+      if (!response.ok) throw new Error(body?.error || `Request failed (${response.status})`);
+      return body;
+    }
+
+    function money(value, currency = "USD") {
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) return "";
+      const prefix = currency === "USD" ? "US$" : currency === "EUR" ? "EUR " : "RD$";
+      return `${prefix}${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    const calendarMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let calendarMinDate = null;
+    let calendarCursor = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    let returnCalendarCursor = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+    function dateKey(date) {
+      return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+      ].join("-");
+    }
+
+    function parseDateKey(value) {
+      const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!match) return null;
+      return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    }
+
+    function displayDate(value) {
+      const date = parseDateKey(value);
+      if (!date) return "";
+      return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+    }
+
+    function displayTripDate(value) {
+      const date = parseDateKey(value);
+      if (!date) return "";
+      return date.toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    function formatNativeTime(value) {
+      const match = String(value || "").match(/^(\d{2}):(\d{2})/);
+      if (!match) return "";
+      const hour24 = Number(match[1]);
+      const period = hour24 >= 12 ? "PM" : "AM";
+      const hour12 = hour24 % 12 || 12;
+      return `${String(hour12).padStart(2, "0")}:${match[2]} ${period}`;
+    }
+
+    const calendarSheetTimers = {
+      calendar: null,
+      returnCalendar: null
+    };
+
+    function isMobileCalendarSheet() {
+      return window.matchMedia("(max-width: 860px)").matches;
+    }
+
+    function syncCalendarSheetState() {
+      document.body.classList.toggle("calendar-sheet-open", !calendarPopover.hidden || !returnCalendarPopover.hidden);
+    }
+
+    function setCalendarSheet(popover, trigger, open, timerKey) {
+      const isMobile = isMobileCalendarSheet();
+      if (calendarSheetTimers[timerKey]) {
+        window.clearTimeout(calendarSheetTimers[timerKey]);
+        calendarSheetTimers[timerKey] = null;
+      }
+
+      if (open) {
+        popover.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        syncCalendarSheetState();
+        if (isMobile) {
+          window.requestAnimationFrame(() => popover.classList.add("is-open"));
+        }
+        return;
+      }
+
+      trigger.setAttribute("aria-expanded", "false");
+      popover.classList.remove("is-open");
+      if (isMobile) {
+        calendarSheetTimers[timerKey] = window.setTimeout(() => {
+          popover.hidden = true;
+          calendarSheetTimers[timerKey] = null;
+          syncCalendarSheetState();
+        }, 240);
+      } else {
+        popover.hidden = true;
+        syncCalendarSheetState();
+      }
+    }
+
+    function setCalendarOpen(open) {
+      if (open) setReturnCalendarOpen(false);
+      setCalendarSheet(calendarPopover, dateTrigger, open, "calendar");
+    }
+
+    function setReturnCalendarOpen(open) {
+      if (open) setCalendarOpen(false);
+      setCalendarSheet(returnCalendarPopover, returnDateTrigger, open, "returnCalendar");
+    }
+
+    function returnMinDate() {
+      return parseDateKey(serviceDate.value) || calendarMinDate;
+    }
+
+    function setReturnDate(value) {
+      returnDate.value = value || "";
+      if (value) {
+        returnDateTriggerText.textContent = displayDate(value);
+        returnDateTrigger.classList.remove("is-placeholder");
+        const selected = parseDateKey(value);
+        if (selected) returnCalendarCursor = new Date(selected.getFullYear(), selected.getMonth(), 1);
+      } else {
+        returnDateTriggerText.textContent = "Select date";
+        returnDateTrigger.classList.add("is-placeholder");
+      }
+      renderReturnCalendar();
+      calculateAirportReturnPickup();
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    }
+
+    function setServiceDate(value) {
+      serviceDate.value = value || "";
+      if (value) {
+        dateTriggerText.textContent = displayDate(value);
+        dateTrigger.classList.remove("is-placeholder");
+        const selected = parseDateKey(value);
+        if (selected) calendarCursor = new Date(selected.getFullYear(), selected.getMonth(), 1);
+      } else {
+        dateTriggerText.textContent = "Select date";
+        dateTrigger.classList.add("is-placeholder");
+      }
+      renderCalendar();
+      if (returnDate.value && value && returnDate.value < value) setReturnDate(value);
+      renderReturnCalendar();
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    }
+
+    function renderCalendar() {
+      if (!calendarMinDate) return;
+      calendarGrid.replaceChildren();
+      calendarMonthLabel.textContent = `${calendarMonths[calendarCursor.getMonth()]} ${calendarCursor.getFullYear()}`;
+      const first = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth(), 1);
+      const gridStart = new Date(first);
+      gridStart.setDate(first.getDate() - first.getDay());
+      const minKey = dateKey(calendarMinDate);
+      const selectedKey = serviceDate.value;
+      const todayKey = dateKey(new Date());
+      for (let index = 0; index < 42; index += 1) {
+        const day = new Date(gridStart);
+        day.setDate(gridStart.getDate() + index);
+        const key = dateKey(day);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "calendar-day";
+        button.textContent = String(day.getDate());
+        button.dataset.date = key;
+        button.classList.toggle("is-muted", day.getMonth() !== calendarCursor.getMonth());
+        button.classList.toggle("is-today", key === todayKey);
+        button.classList.toggle("is-selected", key === selectedKey);
+        button.disabled = key < minKey;
+        button.addEventListener("click", () => {
+          if (button.disabled) return;
+          setServiceDate(key);
+          setCalendarOpen(false);
+        });
+        calendarGrid.appendChild(button);
+      }
+      calendarPrev.disabled = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() - 1, 1) < new Date(calendarMinDate.getFullYear(), calendarMinDate.getMonth(), 1);
+      calendarTomorrow.disabled = serviceDate.value === minKey;
+    }
+
+    function renderReturnCalendar() {
+      const minDate = returnMinDate();
+      if (!minDate) return;
+      returnCalendarGrid.replaceChildren();
+      returnCalendarMonthLabel.textContent = `${calendarMonths[returnCalendarCursor.getMonth()]} ${returnCalendarCursor.getFullYear()}`;
+      const first = new Date(returnCalendarCursor.getFullYear(), returnCalendarCursor.getMonth(), 1);
+      const gridStart = new Date(first);
+      gridStart.setDate(first.getDate() - first.getDay());
+      const minKey = dateKey(minDate);
+      const selectedKey = returnDate.value;
+      const todayKey = dateKey(new Date());
+      for (let index = 0; index < 42; index += 1) {
+        const day = new Date(gridStart);
+        day.setDate(gridStart.getDate() + index);
+        const key = dateKey(day);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "calendar-day";
+        button.textContent = String(day.getDate());
+        button.dataset.date = key;
+        button.classList.toggle("is-muted", day.getMonth() !== returnCalendarCursor.getMonth());
+        button.classList.toggle("is-today", key === todayKey);
+        button.classList.toggle("is-selected", key === selectedKey);
+        button.disabled = key < minKey;
+        button.addEventListener("click", () => {
+          if (button.disabled) return;
+          setReturnDate(key);
+          setReturnCalendarOpen(false);
+        });
+        returnCalendarGrid.appendChild(button);
+      }
+      returnCalendarPrev.disabled = new Date(returnCalendarCursor.getFullYear(), returnCalendarCursor.getMonth() - 1, 1) < new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+      returnCalendarTomorrow.disabled = returnDate.value === minKey;
+    }
+
+    function initializeCalendar() {
+      const tomorrow = new Date();
+      tomorrow.setHours(0, 0, 0, 0);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      calendarMinDate = tomorrow;
+      calendarCursor = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), 1);
+      returnCalendarCursor = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), 1);
+      setServiceDate("");
+      setReturnDate("");
+    }
+
+    let selectedPeriod = "";
+    let selectedReturnPeriod = "";
+
+    function timeInputIsComplete() {
+      const hour = Number(timeHour.value);
+      const minute = Number(timeMinute.value);
+      return Number.isInteger(hour)
+        && hour >= 1
+        && hour <= 12
+        && Number.isInteger(minute)
+        && minute >= 0
+        && minute <= 59
+        && Boolean(selectedPeriod);
+    }
+
+    function syncTimeApplyState() {
+      const complete = timeInputIsComplete();
+      timeApply.disabled = !complete;
+      if (complete) timeMessage.textContent = "";
+    }
+
+    function returnTimeInputIsComplete() {
+      const hour = Number(returnTimeHour.value);
+      const minute = Number(returnTimeMinute.value);
+      return Number.isInteger(hour)
+        && hour >= 1
+        && hour <= 12
+        && Number.isInteger(minute)
+        && minute >= 0
+        && minute <= 59
+        && Boolean(selectedReturnPeriod);
+    }
+
+    function syncReturnTimeApplyState() {
+      const complete = returnTimeInputIsComplete();
+      returnTimeApply.disabled = !complete;
+      if (complete) returnTimeMessage.textContent = "";
+    }
+
+    function missingTimeParts() {
+      const missing = [];
+      const hour = Number(timeHour.value);
+      const minute = Number(timeMinute.value);
+      if (!timeHour.value || !Number.isInteger(hour) || hour < 1 || hour > 12) missing.push("hour");
+      if (!timeMinute.value || !Number.isInteger(minute) || minute < 0 || minute > 59) missing.push("minute");
+      if (!selectedPeriod) missing.push("AM or PM");
+      return missing;
+    }
+
+    function showTimeIncompleteMessage() {
+      const missing = missingTimeParts();
+      if (!missing.length) {
+        timeMessage.textContent = "";
+      } else if (missing.length === 1) {
+        timeMessage.textContent = `Choose ${missing[0]}.`;
+      } else {
+        timeMessage.textContent = `Choose ${missing.slice(0, -1).join(", ")} and ${missing[missing.length - 1]}.`;
+      }
+    }
+
+    function missingReturnTimeParts() {
+      const missing = [];
+      const hour = Number(returnTimeHour.value);
+      const minute = Number(returnTimeMinute.value);
+      if (!returnTimeHour.value || !Number.isInteger(hour) || hour < 1 || hour > 12) missing.push("hour");
+      if (!returnTimeMinute.value || !Number.isInteger(minute) || minute < 0 || minute > 59) missing.push("minute");
+      if (!selectedReturnPeriod) missing.push("AM or PM");
+      return missing;
+    }
+
+    function showReturnTimeIncompleteMessage() {
+      const missing = missingReturnTimeParts();
+      if (!missing.length) {
+        returnTimeMessage.textContent = "";
+      } else if (missing.length === 1) {
+        returnTimeMessage.textContent = `Choose ${missing[0]}.`;
+      } else {
+        returnTimeMessage.textContent = `Choose ${missing.slice(0, -1).join(", ")} and ${missing[missing.length - 1]}.`;
+      }
+    }
+
+    function resetPickupTime() {
+      selectedPeriod = "";
+      timeHour.value = "";
+      timeMinute.value = "";
+      serviceTime.value = "";
+      timeTriggerText.textContent = "Select time";
+      timeTrigger.classList.add("is-placeholder");
+      timeAm.classList.remove("is-active");
+      timePm.classList.remove("is-active");
+      timeMessage.textContent = "";
+      syncTimeApplyState();
+      updateWhatsappLink();
+      window.requestAnimationFrame(() => timeHour.focus());
+    }
+
+    function setTimePeriod(period) {
+      selectedPeriod = period === "PM" ? "PM" : "AM";
+      timeAm.classList.toggle("is-active", selectedPeriod === "AM");
+      timePm.classList.toggle("is-active", selectedPeriod === "PM");
+      syncTimeApplyState();
+    }
+
+    function resetReturnPickupTime(shouldFocus = true) {
+      selectedReturnPeriod = "";
+      returnTimeHour.value = "";
+      returnTimeMinute.value = "";
+      returnTime.value = "";
+      returnTimeTriggerText.textContent = "Select time";
+      returnTimeTrigger.classList.add("is-placeholder");
+      returnTimeAm.classList.remove("is-active");
+      returnTimePm.classList.remove("is-active");
+      returnTimeMessage.textContent = "";
+      syncReturnTimeApplyState();
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+      if (shouldFocus) window.requestAnimationFrame(() => returnTimeHour.focus());
+    }
+
+    function setReturnTimePeriod(period) {
+      selectedReturnPeriod = period === "PM" ? "PM" : "AM";
+      returnTimeAm.classList.toggle("is-active", selectedReturnPeriod === "AM");
+      returnTimePm.classList.toggle("is-active", selectedReturnPeriod === "PM");
+      syncReturnTimeApplyState();
+    }
+
+    function numericTimeInput(input, max) {
+      input.value = input.value.replace(/\D/g, "").slice(0, 2);
+      const value = Number(input.value);
+      if (input.value.length === 2 && value > max) input.value = String(max).padStart(2, "0");
+      if (input === timeHour && input.value.length === 2 && Number(input.value) >= 1 && Number(input.value) <= 12) {
+        window.requestAnimationFrame(() => {
+          timeMinute.focus();
+          timeMinute.select();
+        });
+      }
+      if (input === returnTimeHour && input.value.length === 2 && Number(input.value) >= 1 && Number(input.value) <= 12) {
+        window.requestAnimationFrame(() => {
+          returnTimeMinute.focus();
+          returnTimeMinute.select();
+        });
+      }
+      if (input === returnTimeHour || input === returnTimeMinute) {
+        syncReturnTimeApplyState();
+      } else {
+        syncTimeApplyState();
+      }
+    }
+
+    function normalizeHour(value) {
+      const hour = Number(String(value || "").replace(/\D/g, ""));
+      if (!Number.isFinite(hour) || hour < 1) return "01";
+      return String(Math.min(hour, 12)).padStart(2, "0");
+    }
+
+    function normalizeMinute(value) {
+      const minute = Number(String(value || "").replace(/\D/g, ""));
+      if (!Number.isFinite(minute) || minute < 0) return "00";
+      return String(Math.min(minute, 59)).padStart(2, "0");
+    }
+
+    function setTimePopoverOpen(open) {
+      timePopover.hidden = !open;
+      timeTrigger.setAttribute("aria-expanded", String(open));
+      if (open) window.requestAnimationFrame(() => timeHour.focus());
+    }
+
+    function setReturnTimePopoverOpen(open) {
+      returnTimePopover.hidden = !open;
+      returnTimeTrigger.setAttribute("aria-expanded", String(open));
+      if (open) window.requestAnimationFrame(() => returnTimeHour.focus());
+    }
+
+    function applyPickupTime() {
+      if (!timeInputIsComplete()) {
+        setStatus(searchStatus, "Choose hour, minute, and AM/PM.", "error");
+        showTimeIncompleteMessage();
+        syncTimeApplyState();
+        return;
+      }
+      const hourText = normalizeHour(timeHour.value);
+      const minuteText = normalizeMinute(timeMinute.value);
+      timeHour.value = hourText;
+      timeMinute.value = minuteText;
+      let hour24 = Number(hourText) % 12;
+      if (selectedPeriod === "PM") hour24 += 12;
+      serviceTime.value = `${String(hour24).padStart(2, "0")}:${minuteText}`;
+      timeTriggerText.textContent = `${hourText}:${minuteText} ${selectedPeriod}`;
+      timeTrigger.classList.remove("is-placeholder");
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+      setTimePopoverOpen(false);
+    }
+
+    function applyReturnPickupTime() {
+      if (!returnTimeInputIsComplete()) {
+        setStatus(searchStatus, "Choose return hour, minute, and AM/PM.", "error");
+        showReturnTimeIncompleteMessage();
+        syncReturnTimeApplyState();
+        return;
+      }
+      const hourText = normalizeHour(returnTimeHour.value);
+      const minuteText = normalizeMinute(returnTimeMinute.value);
+      returnTimeHour.value = hourText;
+      returnTimeMinute.value = minuteText;
+      let hour24 = Number(hourText) % 12;
+      if (selectedReturnPeriod === "PM") hour24 += 12;
+      returnTime.value = `${String(hour24).padStart(2, "0")}:${minuteText}`;
+      returnTimeTriggerText.textContent = `${hourText}:${minuteText} ${selectedReturnPeriod}`;
+      returnTimeTrigger.classList.remove("is-placeholder");
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+      setReturnTimePopoverOpen(false);
+    }
+
+    syncTimeApplyState();
+    syncReturnTimeApplyState();
+    timeTrigger.addEventListener("click", () => setTimePopoverOpen(timePopover.hidden));
+    returnTimeTrigger.addEventListener("click", () => setReturnTimePopoverOpen(returnTimePopover.hidden));
+    timeAm.addEventListener("click", () => setTimePeriod("AM"));
+    timePm.addEventListener("click", () => setTimePeriod("PM"));
+    returnTimeAm.addEventListener("click", () => setReturnTimePeriod("AM"));
+    returnTimePm.addEventListener("click", () => setReturnTimePeriod("PM"));
+    timeReset.addEventListener("click", resetPickupTime);
+    returnTimeReset.addEventListener("click", resetReturnPickupTime);
+    timeCancel.addEventListener("click", () => setTimePopoverOpen(false));
+    returnTimeCancel.addEventListener("click", () => setReturnTimePopoverOpen(false));
+    timePopover.addEventListener("pointerdown", event => {
+      if (event.target === timeApply && !timeInputIsComplete()) showTimeIncompleteMessage();
+    });
+    returnTimePopover.addEventListener("pointerdown", event => {
+      if (event.target === returnTimeApply && !returnTimeInputIsComplete()) showReturnTimeIncompleteMessage();
+    });
+    timeApply.addEventListener("click", applyPickupTime);
+    returnTimeApply.addEventListener("click", applyReturnPickupTime);
+    timeHour.addEventListener("input", () => numericTimeInput(timeHour, 12));
+    timeMinute.addEventListener("input", () => numericTimeInput(timeMinute, 59));
+    returnTimeHour.addEventListener("input", () => numericTimeInput(returnTimeHour, 12));
+    returnTimeMinute.addEventListener("input", () => numericTimeInput(returnTimeMinute, 59));
+    [timeHour, timeMinute].forEach(input => {
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          applyPickupTime();
+        }
+      });
+      input.addEventListener("blur", () => {
+        if (!input.value) {
+          syncTimeApplyState();
+          return;
+        }
+        input.value = input === timeHour ? normalizeHour(input.value) : normalizeMinute(input.value);
+        syncTimeApplyState();
+      });
+    });
+    [returnTimeHour, returnTimeMinute].forEach(input => {
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          applyReturnPickupTime();
+        }
+      });
+      input.addEventListener("blur", () => {
+        if (!input.value) {
+          syncReturnTimeApplyState();
+          return;
+        }
+        input.value = input === returnTimeHour ? normalizeHour(input.value) : normalizeMinute(input.value);
+        syncReturnTimeApplyState();
+      });
+    });
+    document.addEventListener("click", event => {
+      if (timePicker.contains(event.target)) return;
+      setTimePopoverOpen(false);
+    });
+    document.addEventListener("click", event => {
+      if (returnTimePicker.contains(event.target)) return;
+      setReturnTimePopoverOpen(false);
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !timePopover.hidden) {
+        setTimePopoverOpen(false);
+        timeTrigger.focus();
+      }
+      if (event.key === "Escape" && !returnTimePopover.hidden) {
+        setReturnTimePopoverOpen(false);
+        returnTimeTrigger.focus();
+      }
+      if (event.key === "Escape" && !calendarPopover.hidden) {
+        setCalendarOpen(false);
+        dateTrigger.focus();
+      }
+      if (event.key === "Escape" && !returnCalendarPopover.hidden) {
+        setReturnCalendarOpen(false);
+        returnDateTrigger.focus();
+      }
+    });
+    dateTrigger.addEventListener("click", () => setCalendarOpen(calendarPopover.hidden));
+    returnDateTrigger.addEventListener("click", () => setReturnCalendarOpen(returnCalendarPopover.hidden));
+    calendarSheetBackdrop.addEventListener("click", () => {
+      setCalendarOpen(false);
+      setReturnCalendarOpen(false);
+    });
+    oneWayTrip.addEventListener("click", () => setTripType("one_way"));
+    roundTrip.addEventListener("click", () => setTripType("round_trip"));
+    calendarPrev.addEventListener("click", () => {
+      calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() - 1, 1);
+      renderCalendar();
+    });
+    returnCalendarPrev.addEventListener("click", () => {
+      returnCalendarCursor = new Date(returnCalendarCursor.getFullYear(), returnCalendarCursor.getMonth() - 1, 1);
+      renderReturnCalendar();
+    });
+    calendarNext.addEventListener("click", () => {
+      calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() + 1, 1);
+      renderCalendar();
+    });
+    returnCalendarNext.addEventListener("click", () => {
+      returnCalendarCursor = new Date(returnCalendarCursor.getFullYear(), returnCalendarCursor.getMonth() + 1, 1);
+      renderReturnCalendar();
+    });
+    calendarClear.addEventListener("click", () => {
+      setServiceDate("");
+      setCalendarOpen(true);
+    });
+    returnCalendarClear.addEventListener("click", () => {
+      setReturnDate("");
+      setReturnCalendarOpen(true);
+    });
+    calendarTomorrow.addEventListener("click", () => {
+      if (!calendarMinDate) return;
+      setServiceDate(dateKey(calendarMinDate));
+      setCalendarOpen(false);
+    });
+    returnCalendarTomorrow.addEventListener("click", () => {
+      const minDate = returnMinDate();
+      if (!minDate) return;
+      setReturnDate(dateKey(minDate));
+      setReturnCalendarOpen(false);
+    });
+    document.addEventListener("click", event => {
+      if (datePicker.contains(event.target)) return;
+      setCalendarOpen(false);
+    });
+    document.addEventListener("click", event => {
+      if (returnDatePicker.contains(event.target)) return;
+      setReturnCalendarOpen(false);
+    });
+    document.addEventListener("click", event => {
+      [
+        { input: originSearch, list: originSuggestions },
+        { input: destinationSearch, list: destinationSuggestions }
+      ].forEach(elements => {
+        if (elements.input.contains(event.target) || elements.list.contains(event.target)) return;
+        elements.list.hidden = true;
+        elements.input.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    function normalizeSearchText(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+    }
+
+    function isAirportPlace(place) {
+      const text = normalizeSearchText(`${place.label} ${place.type}`);
+      return text.includes("airport") || text.includes("aeropuerto");
+    }
+
+    function placeGroup(place) {
+      if (isAirportPlace(place)) return "Airports";
+      if (normalizeSearchText(place.type).includes("hotel")) return "Hotels";
+      return "Locations";
+    }
+
+    function buildPlaces() {
+      const zonePlaces = state.destinations.map(destination => ({
+        key: `destination-${destination.id}`,
+        label: destination.label,
+        detail: isAirportPlace(destination) ? "Airport" : "Destination zone",
+        type: isAirportPlace(destination) ? "airport" : "location",
+        destinationId: String(destination.id),
+        destinationLabel: destination.label,
+        mapLocation: destination.label,
+        source: "destination"
+      }));
+      const locationPlaces = state.locations.map(location => ({
+        key: `location-${location.id}`,
+        label: location.label,
+        detail: location.destination_label ? `Zone: ${location.destination_label}` : "Mapped location",
+        type: location.type || "location",
+        destinationId: String(location.destination_id),
+        destinationLabel: location.destination_label || "",
+        mapLocation: location.label,
+        source: "location"
+      })).filter(place => place.label && place.destinationId);
+      state.places = [...locationPlaces, ...zonePlaces].sort((a, b) => {
+        const groupOrder = { Airports: 0, Hotels: 1, Locations: 2 };
+        return (groupOrder[placeGroup(a)] ?? 3) - (groupOrder[placeGroup(b)] ?? 3)
+          || a.label.localeCompare(b.label, "en", { sensitivity: "base" });
+      });
+    }
+
+    function comboElements(side) {
+      return side === "origin"
+        ? { hidden: originSelect, input: originSearch, list: originSuggestions, clear: originClear }
+        : { hidden: destinationSelect, input: destinationSearch, list: destinationSuggestions, clear: destinationClear };
+    }
+
+    function selectedPlace(side) {
+      return side === "origin" ? state.originPlace : state.destinationPlace;
+    }
+
+    function isHotelPlace(place) {
+      return normalizeSearchText(`${place?.label || ""} ${place?.type || ""} ${place?.detail || ""}`).includes("hotel");
+    }
+
+    function emptyStateMessages() {
+      const origin = selectedPlace("origin");
+      if (origin && isAirportPlace(origin)) {
+        return [
+          ["luggage", "<strong>Meet & Greet at the Terminal</strong> — Easy, stress-free pickup right outside arrivals."],
+          ["card", "<strong>100% All-Inclusive Rates</strong> — No hidden fees for luggage, airport taxes, or tolls."],
+          ["clock", "<strong>60 Minutes Free Waiting Time</strong> — Plenty of time to get through customs and baggage claim stress-free."]
+        ];
+      }
+      if (origin && isHotelPlace(origin)) {
+        return [
+          ["hotel", "<strong>Lobby Pickup Success</strong> — Your private driver meets you directly at your location's main entrance."],
+          ["clock", "<strong>Punctual & Reliable</strong> — Perfect for scheduled dinner reservations, excursions, or resort hops."],
+          ["card", "<strong>Fixed, all-inclusive rates</strong> — No surprises or extra fees for luggage, toll roads, or resort gate access."]
+        ];
+      }
+      return [
+        ["car", "Private, comfortable transfers across the Dominican Republic."],
+        ["clock", "Real-time trip updates and professional, punctual drivers."],
+        ["card", "Secure, hassle-free checkout via PayPal."]
+      ];
+    }
+
+    function benefitIcon(name) {
+      const paths = {
+        luggage: '<path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/><rect x="6" y="7" width="12" height="12" rx="2"/><path d="M9 11v4M15 11v4"/>',
+        card: '<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M8 14h3"/>',
+        clock: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+        hotel: '<path d="M5 19V8l7-3 7 3v11"/><path d="M9 19v-5h6v5M9 10h.01M12 10h.01M15 10h.01"/>',
+        car: '<path d="m6 15 1.5-4.5A2 2 0 0 1 9.4 9h5.2a2 2 0 0 1 1.9 1.5L18 15"/><path d="M5 15h14v4H5zM7 19v1M17 19v1M8 15h.01M16 15h.01"/>'
+      };
+      const iconNode = document.createElement("span");
+      iconNode.className = "empty-state-icon";
+      iconNode.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.car}</svg>`;
+      return iconNode;
+    }
+
+    function vehicleEmptyState(message = "") {
+      const empty = document.createElement("div");
+      empty.className = "empty-state";
+      if (message) {
+        empty.textContent = message;
+        return empty;
+      }
+      empty.classList.add("is-featured");
+      const imageWrap = document.createElement("div");
+      imageWrap.className = "empty-state-image-wrap";
+      const image = document.createElement("img");
+      image.className = "empty-state-image";
+      image.src = "assets/cooper-family-dominican-quest.webp";
+      image.alt = "Family traveling with Dominican Quest";
+      image.loading = "lazy";
+      const badge = document.createElement("div");
+      badge.className = "review-badge";
+      badge.innerHTML = '<span class="stars">★★★★★</span><span class="badge-text">Verified Customer Ride</span>';
+      const trustStrip = document.createElement("div");
+      trustStrip.className = "empty-state-trust-strip";
+      trustStrip.innerHTML = [
+        '<span>⭐ <strong>Top Rated</strong></span>',
+        '<span>🌴 <strong>100% Local</strong></span>',
+        '<span><strong>TripAdvisor 5.0</strong> <span class="trust-logo tripadvisor" aria-label="Tripadvisor"><img src="assets/tripadvisor-icon.svg" alt="Tripadvisor"></span></span>',
+        '<span>🔒 <strong>Secure</strong> <span class="trust-logo paypal" aria-label="PayPal"><img src="assets/paypal-icon.svg" alt="PayPal"></span></span>'
+      ].join("");
+      imageWrap.append(image, badge);
+      const content = document.createElement("div");
+      content.className = "empty-state-content";
+      const title = document.createElement("strong");
+      title.className = "empty-state-title";
+      title.textContent = "Why book your transfers with Dominican Quest?";
+      content.appendChild(title);
+      emptyStateMessages().forEach(([icon, text]) => {
+        const line = document.createElement("div");
+        line.className = "empty-state-line";
+        const iconNode = benefitIcon(icon);
+        const textNode = document.createElement("span");
+        textNode.innerHTML = text;
+        line.append(iconNode, textNode);
+        content.appendChild(line);
+      });
+      empty.append(imageWrap, content, trustStrip);
+      return empty;
+    }
+
+    const LIVE_STATUS_MESSAGES = [
+      "Premium SUV transfer from PUJ Airport booked 15 mins ago",
+      "Private van from Punta Cana Airport to Bavaro booked 22 mins ago",
+      "Round trip transfer to Majestic Mirage booked 34 mins ago",
+      "Family transfer from PUJ Airport booked 41 mins ago",
+      "Airport pickup to Lopesan Costa Bavaro booked 52 mins ago",
+      "Private ride from Santo Domingo Airport booked 1 hour ago",
+      "Hotel-to-airport return transfer booked 1 hour ago"
+    ];
+    const LIVE_STATUS_DELAYS = [9000, 13000, 17000, 24000, 31000, 39000];
+
+    function randomLiveStatusDelay() {
+      return LIVE_STATUS_DELAYS[Math.floor(Math.random() * LIVE_STATUS_DELAYS.length)];
+    }
+
+    function liveStatusText(index) {
+      return `<strong>Live Status:</strong> Last booked: ${LIVE_STATUS_MESSAGES[index % LIVE_STATUS_MESSAGES.length]}`;
+    }
+
+    function liveStatusIndicator() {
+      const liveStatus = document.createElement("div");
+      liveStatus.className = "empty-state-live-status";
+      const textNode = document.createElement("span");
+      let messageIndex = Math.floor(Math.random() * LIVE_STATUS_MESSAGES.length);
+      textNode.innerHTML = liveStatusText(messageIndex);
+      liveStatus.innerHTML = '<span class="live-status-dot" aria-hidden="true"></span>';
+      liveStatus.appendChild(textNode);
+      const scheduleNextUpdate = () => {
+        window.setTimeout(() => {
+          if (!document.body.contains(liveStatus)) return;
+          messageIndex = (messageIndex + 1) % LIVE_STATUS_MESSAGES.length;
+          textNode.innerHTML = liveStatusText(messageIndex);
+          scheduleNextUpdate();
+        }, randomLiveStatusDelay());
+      };
+      scheduleNextUpdate();
+      return liveStatus;
+    }
+
+    function renderInitialVehicleEmptyState() {
+      if (state.route || state.vehicles.length) return;
+      document.querySelector(".results-panel").classList.add("is-featured-empty");
+      vehicleList.replaceChildren(vehicleEmptyState(), liveStatusIndicator());
+    }
+
+    document.querySelectorAll(".faq-item").forEach(item => {
+      const button = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      if (!button || !answer) return;
+      button.addEventListener("click", () => {
+        const isOpen = item.classList.toggle("is-open");
+        button.setAttribute("aria-expanded", String(isOpen));
+        if (isOpen) {
+          answer.hidden = false;
+          answer.style.maxHeight = `${answer.scrollHeight}px`;
+        } else {
+          answer.style.maxHeight = `${answer.scrollHeight}px`;
+          window.requestAnimationFrame(() => {
+            answer.style.maxHeight = "0px";
+          });
+          window.setTimeout(() => {
+            if (!item.classList.contains("is-open")) answer.hidden = true;
+          }, 230);
+        }
+      });
+    });
+
+    function syncPlaceIcon(elements) {
+      const hasText = Boolean(elements.input.value.trim());
+      elements.clear.classList.toggle("has-text", hasText);
+      elements.clear.setAttribute("aria-label", hasText ? "Clear location" : "Search location");
+    }
+
+    function syncDestinationPlaceholder() {
+      if (destinationSearch.value.trim()) return;
+      destinationSearch.placeholder = originIsAirport()
+        ? "Enter your hotel, resort or destination"
+        : "Pick a location, hotel, or airport";
+    }
+
+    function setSelectedPlace(side, place) {
+      const elements = comboElements(side);
+      if (side === "origin") state.originPlace = place;
+      if (side === "destination") state.destinationPlace = place;
+      elements.hidden.value = place ? place.destinationId : "";
+      elements.input.value = place ? place.label : "";
+      syncPlaceIcon(elements);
+      if (side === "origin") {
+        elements.input.placeholder = "Pick a location, hotel, or airport";
+        syncDestinationPlaceholder();
+      } else {
+        elements.input.placeholder = "Pick a location, hotel, or airport";
+      }
+      elements.input.setAttribute("aria-expanded", "false");
+      elements.list.hidden = true;
+      state.route = null;
+      state.vehicles = [];
+      state.selectedVehicle = null;
+      resultsTitle.textContent = "Choose Your Wedding Transfer";
+      resultHint.textContent = "Pick your airport, date, time, and passenger count to continue quickly.";
+      resultHint.hidden = false;
+      syncAirportBookingFields();
+      renderRouteSummary();
+      renderVehicles();
+      if (side === "origin") renderInitialVehicleEmptyState();
+      updateWhatsappLink();
+    }
+
+    function weddingTransfersEnabled() {
+      return Boolean(WEDDING_TRANSFER_PAGE?.enabled);
+    }
+
+    function isAllowedWeddingOrigin(place) {
+      return !weddingTransfersEnabled() || isAirportPlace(place);
+    }
+
+    function isWeddingDestinationPlace(place) {
+      if (!weddingTransfersEnabled()) return false;
+      const label = normalizeSearchText(`${place.label} ${place.destinationLabel}`);
+      return label.includes(WEDDING_TRANSFER_PAGE.destinationQuery);
+    }
+
+    function weddingFilteredPlaces(side, places) {
+      if (!weddingTransfersEnabled()) return places;
+      if (side === "origin") return places.filter(isAllowedWeddingOrigin);
+      if (side === "destination") return places.filter(isWeddingDestinationPlace);
+      return places;
+    }
+
+    function placeMatches(place, query) {
+      const haystack = normalizeSearchText(`${place.label} ${place.detail} ${place.destinationLabel} ${place.type}`);
+      return haystack.includes(query);
+    }
+
+    function filteredPlaces(query, side = "") {
+      const normalized = normalizeSearchText(query);
+      const allowedPlaces = weddingFilteredPlaces(side, state.places);
+      const list = normalized ? allowedPlaces.filter(place => placeMatches(place, normalized)) : allowedPlaces;
+      return list.slice(0, 24);
+    }
+
+    function appendPlaceOption(container, side, place, onSelect = () => {}) {
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "place-option";
+      option.setAttribute("role", "option");
+      const title = document.createElement("strong");
+      title.textContent = place.label;
+      const detail = document.createElement("span");
+      detail.textContent = place.detail || place.destinationLabel || "";
+      option.append(title, detail);
+      option.addEventListener("click", () => {
+        setSelectedPlace(side, place);
+        onSelect();
+      });
+      container.appendChild(option);
+    }
+
+    function appendGroupedPlaceSuggestions(container, side, query, onSelect) {
+      container.replaceChildren();
+      const matches = filteredPlaces(query, side);
+      if (!matches.length) {
+        const empty = document.createElement("span");
+        empty.className = "place-empty";
+        empty.textContent = state.places.length ? "No matching location found" : "Locations unavailable";
+        container.appendChild(empty);
+        return;
+      }
+      let currentGroup = "";
+      matches.forEach(place => {
+        const group = placeGroup(place);
+        if (group !== currentGroup) {
+          currentGroup = group;
+          const label = document.createElement("span");
+          label.className = "place-group";
+          label.textContent = group;
+          container.appendChild(label);
+        }
+        appendPlaceOption(container, side, place, onSelect);
+      });
+    }
+
+    function renderPlaceSuggestions(side) {
+      const elements = comboElements(side);
+      appendGroupedPlaceSuggestions(elements.list, side, elements.input.value);
+      elements.list.hidden = false;
+      elements.input.setAttribute("aria-expanded", "true");
+    }
+
+    function mobilePlaceOverlayEnabled() {
+      return window.matchMedia("(max-width: 860px)").matches;
+    }
+
+    function closeMobilePlaceOverlay(restoreFocus = false) {
+      const side = state.mobilePlaceSide;
+      state.mobilePlaceSide = null;
+      mobilePlaceOverlay?.classList.remove("is-open");
+      mobilePlaceOverlay?.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("mobile-place-overlay-open");
+      if (side) {
+        const elements = comboElements(side);
+        elements.input.setAttribute("aria-expanded", "false");
+        elements.list.hidden = true;
+        if (restoreFocus) elements.input.focus({ preventScroll: true });
+      }
+    }
+
+    function renderMobilePlaceSuggestions() {
+      if (!state.mobilePlaceSide || !mobilePlaceResults) return;
+      appendGroupedPlaceSuggestions(
+        mobilePlaceResults,
+        state.mobilePlaceSide,
+        mobilePlaceSearch.value,
+        () => closeMobilePlaceOverlay(false)
+      );
+    }
+
+    function syncMobilePlaceQuery() {
+      const side = state.mobilePlaceSide;
+      if (!side) return;
+      const elements = comboElements(side);
+      elements.input.value = mobilePlaceSearch.value;
+      if (selectedPlace(side)?.label !== elements.input.value) {
+        if (side === "origin") state.originPlace = null;
+        if (side === "destination") state.destinationPlace = null;
+        elements.hidden.value = "";
+        syncPlaceIcon(elements);
+        state.route = null;
+        state.vehicles = [];
+        state.selectedVehicle = null;
+        resultsTitle.textContent = "Choose Your Wedding Transfer";
+        resultHint.textContent = "Pick your airport, date, time, and passenger count to continue quickly.";
+        resultHint.hidden = false;
+        renderRouteSummary();
+        renderVehicles();
+        updateWhatsappLink();
+      }
+      renderMobilePlaceSuggestions();
+    }
+
+    function openMobilePlaceOverlay(side) {
+      if (!mobilePlaceOverlayEnabled()) return false;
+      const elements = comboElements(side);
+      if (elements.input.disabled) return false;
+      state.mobilePlaceSide = side;
+      elements.list.hidden = true;
+      elements.input.setAttribute("aria-expanded", "true");
+      mobilePlaceSearch.value = elements.input.value;
+      mobilePlaceSearch.placeholder = side === "origin" ? "Type airport..." : "Wedding resort...";
+      mobilePlaceOverlay.classList.add("is-open");
+      mobilePlaceOverlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("mobile-place-overlay-open");
+      renderMobilePlaceSuggestions();
+      window.setTimeout(() => mobilePlaceSearch.focus(), 0);
+      return true;
+    }
+
+    function initializePlaceCombo(side) {
+      const elements = comboElements(side);
+      elements.input.disabled = false;
+      elements.input.placeholder = weddingTransfersEnabled() && side === "origin"
+        ? "Pick your airport"
+        : "Pick a location, hotel, or airport";
+      if (weddingTransfersEnabled() && side === "destination") {
+        elements.input.placeholder = WEDDING_TRANSFER_PAGE.destinationName;
+        elements.input.readOnly = true;
+        elements.clear.hidden = true;
+        return;
+      }
+      elements.input.addEventListener("pointerdown", event => {
+        if (!mobilePlaceOverlayEnabled()) return;
+        event.preventDefault();
+        openMobilePlaceOverlay(side);
+      });
+      elements.input.addEventListener("focus", () => {
+        if (openMobilePlaceOverlay(side)) return;
+        renderPlaceSuggestions(side);
+      });
+      elements.input.addEventListener("input", () => {
+        if (selectedPlace(side)?.label !== elements.input.value) {
+          if (side === "origin") state.originPlace = null;
+          if (side === "destination") state.destinationPlace = null;
+          elements.hidden.value = "";
+          syncPlaceIcon(elements);
+          updateWhatsappLink();
+        }
+        renderPlaceSuggestions(side);
+      });
+      elements.input.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          elements.list.hidden = true;
+          elements.input.setAttribute("aria-expanded", "false");
+        }
+        if (event.key === "Enter" && !elements.list.hidden) {
+          const firstOption = elements.list.querySelector(".place-option");
+          if (firstOption) {
+            event.preventDefault();
+            firstOption.click();
+          }
+        }
+      });
+      elements.clear.addEventListener("click", () => {
+        if (elements.input.value.trim()) {
+          setSelectedPlace(side, null);
+        }
+        if (openMobilePlaceOverlay(side)) return;
+        elements.input.focus();
+        renderPlaceSuggestions(side);
+      });
+      syncPlaceIcon(elements);
+    }
+
+    function setPlaceLoadingFailed() {
+      [originSearch, destinationSearch].forEach(input => {
+        input.placeholder = "Locations unavailable";
+        input.disabled = true;
+      });
+    }
+
+    function renderRouteSummary() {
+      routeSummary.replaceChildren();
+      if (!state.route) return;
+      const originLabel = selectedDestinationLabel("origin") || state.route.origin_label;
+      const destinationLabel = selectedDestinationLabel("destination") || state.route.destination_label;
+      [
+        `${originLabel} to ${destinationLabel}`,
+        state.route.driving_time_label,
+        state.route.distance_label
+      ].filter(Boolean).forEach(text => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = text;
+        routeSummary.appendChild(chip);
+      });
+      const preview = document.createElement("div");
+      preview.className = "route-preview";
+      if (state.route.static_map_url) {
+        const mapPreview = document.createElement("div");
+        mapPreview.className = "route-map-preview";
+        const image = document.createElement("img");
+        image.src = state.route.static_map_url;
+        image.alt = `${originLabel} to ${destinationLabel} route map`;
+        image.loading = "lazy";
+        image.addEventListener("error", () => {
+          mapPreview.remove();
+          preview.appendChild(routeMapFallback("Map preview could not load"));
+        });
+        const legend = document.createElement("div");
+        legend.className = "route-map-legend";
+        [
+          ["1", originLabel],
+          ["2", destinationLabel]
+        ].forEach(([marker, label]) => {
+          const row = document.createElement("span");
+          const number = document.createElement("strong");
+          number.textContent = marker;
+          row.append(number, document.createTextNode(label));
+          legend.appendChild(row);
+        });
+        mapPreview.append(image, legend);
+        preview.appendChild(mapPreview);
+      } else {
+        preview.appendChild(routeMapFallback(state.route.preview_status && state.route.preview_status !== "saved_route_only" ? state.route.preview_status : ""));
+      }
+      preview.appendChild(routePassengerNote());
+      if (preview.children.length) routeSummary.appendChild(preview);
+    }
+
+    function routeMapFallback(reason = "") {
+      const message = document.createElement("span");
+      message.className = "route-map-fallback";
+      message.textContent = reason || "Map preview unavailable.";
+      return message;
+    }
+
+    function routePassengerNote() {
+      const count = Math.max(1, Number(passengers.value) || 1);
+      const note = document.createElement("div");
+      note.className = "route-passenger-note";
+      const icon = document.createElement("span");
+      icon.className = "route-passenger-note-icon";
+      icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 19v-1.5a3.5 3.5 0 0 0-7 0V19"/><circle cx="12.5" cy="8" r="3"/><path d="M7 19v-1a3 3 0 0 1 2-2.83M17 15.17A3 3 0 0 1 19 18v1"/><path d="M7.5 10a2.5 2.5 0 1 1 1.6-4.42M16.5 10a2.5 2.5 0 1 0-1.6-4.42"/></svg>';
+      const text = document.createElement("span");
+      text.innerHTML = `We’re showing vehicles that comfortably fit <strong>${count} passenger${count === 1 ? "" : "s"}</strong>. Need to make a change? `;
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.textContent = "Edit your search!";
+      edit.addEventListener("click", () => {
+        searchForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => passengerPlus.focus(), 250);
+      });
+      text.appendChild(edit);
+      note.append(icon, text);
+      return note;
+    }
+
+    function selectedDestinationLabel(side) {
+      return selectedPlace(side)?.label || "";
+    }
+
+    function selectedPlaceDetails(side) {
+      const place = selectedPlace(side);
+      return place?.label || "";
+    }
+
+    function originIsAirport() {
+      return Boolean(selectedPlace("origin") && isAirportPlace(selectedPlace("origin")));
+    }
+
+    function isAirportRoundTrip() {
+      return state.tripType === "round_trip" && originIsAirport();
+    }
+
+    function parseDisplayTime(value) {
+      const match = String(value || "").trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)$/i);
+      if (!match) return null;
+      let hour = Number(match[1]);
+      const minute = Number(match[2] || 0);
+      if (!Number.isInteger(hour) || !Number.isInteger(minute) || hour < 1 || hour > 12 || minute < 0 || minute > 59) return null;
+      const period = match[3].toUpperCase();
+      hour %= 12;
+      if (period === "PM") hour += 12;
+      return { hour, minute };
+    }
+
+    function setReturnTimeFromDate(date) {
+      const hour24 = date.getHours();
+      const minuteText = String(date.getMinutes()).padStart(2, "0");
+      const period = hour24 >= 12 ? "PM" : "AM";
+      const hour12 = hour24 % 12 || 12;
+      const hourText = String(hour12).padStart(2, "0");
+      selectedReturnPeriod = period;
+      returnTimeHour.value = hourText;
+      returnTimeMinute.value = minuteText;
+      returnTime.value = `${String(hour24).padStart(2, "0")}:${minuteText}`;
+      returnTimeTriggerText.textContent = `${hourText}:${minuteText} ${period}`;
+      returnTimeTrigger.classList.remove("is-placeholder");
+      returnTimeAm.classList.toggle("is-active", period === "AM");
+      returnTimePm.classList.toggle("is-active", period === "PM");
+      syncReturnTimeApplyState();
+    }
+
+    function routeDrivingMinutes() {
+      const seconds = Number(state.route?.driving_time_seconds || 0);
+      if (seconds > 0) return Math.round(seconds / 60);
+      const label = String(state.route?.driving_time_label || "");
+      const hourMatch = label.match(/(\d+)\s*h/);
+      const minuteMatch = label.match(/(\d+)\s*min/);
+      return (hourMatch ? Number(hourMatch[1]) * 60 : 0) + (minuteMatch ? Number(minuteMatch[1]) : 0);
+    }
+
+    function syncAirportRoundTripState() {
+      const active = isAirportRoundTrip();
+      searchForm.classList.toggle("is-airport-round-trip", active);
+      airportReturnDetails.hidden = !active;
+      returnFlightDepartureTime.required = active;
+      manualReturnPickupTime.required = active && !manualReturnPickupWrap.hidden;
+      returnTime.required = state.tripType === "round_trip" && !active;
+      if (!active) {
+        returnFlightDepartureTime.value = "";
+        recommendedPickupWrap.hidden = true;
+        manualReturnPickupWrap.hidden = true;
+        manualReturnPickupTime.value = "";
+      }
+      if (state.selectedVehicle) updateTripSummary();
+    }
+
+    function calculateAirportReturnPickup() {
+      if (!isAirportRoundTrip()) return;
+      const parsed = parseDisplayTime(returnFlightDepartureTime.value);
+      if (!returnDate.value || !parsed) {
+        recommendedPickupWrap.hidden = true;
+        return;
+      }
+      const departure = parseDateKey(returnDate.value);
+      if (!departure) return;
+      departure.setHours(parsed.hour, parsed.minute, 0, 0);
+      const driveMinutes = Math.max(0, routeDrivingMinutes());
+      const pickup = new Date(departure.getTime() - ((150 + driveMinutes) * 60000));
+      setReturnTimeFromDate(pickup);
+      recommendedPickupText.textContent = `Recommended Pickup: ${formatNativeTime(returnTime.value)}`;
+      recommendedPickupWrap.hidden = false;
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    }
+
+    function populateAirlines() {
+      airlineOptions.replaceChildren();
+      state.airlines.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        airlineOptions.appendChild(option);
+      });
+    }
+
+    function syncAirportBookingFields() {
+      const required = originIsAirport();
+      airlineCompany.required = required;
+      flightNumber.required = required;
+      document.getElementById("airlineCompanyLabel").classList.toggle("is-required", required);
+      document.getElementById("flightNumberLabel").classList.toggle("is-required", required);
+      syncAirportRoundTripState();
+    }
+
+    function syncPhonePlaceholder() {
+      const selected = phoneCountry.options[phoneCountry.selectedIndex];
+      document.getElementById("customerPhone").placeholder = selected?.dataset.example || "e.g., 212 555 1234";
+    }
+
+    function syncPassengerStepper() {
+      const count = Number(passengers.value);
+      const hasCount = Number.isInteger(count) && count >= 1;
+      passengerCount.textContent = hasCount ? String(count) : "?";
+      passengerMinus.disabled = !hasCount || count <= 1;
+    }
+
+    function setPassengerCount(nextCount) {
+      const count = Math.max(1, Number(nextCount) || 1);
+      passengers.value = String(count);
+      syncPassengerStepper();
+      passengers.dispatchEvent(new Event("input", { bubbles: true }));
+      passengers.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function setTripType(type) {
+      state.tripType = type === "round_trip" ? "round_trip" : "one_way";
+      const isRoundTrip = state.tripType === "round_trip";
+      oneWayTrip.classList.toggle("is-active", !isRoundTrip);
+      roundTrip.classList.toggle("is-active", isRoundTrip);
+      oneWayTrip.setAttribute("aria-pressed", String(!isRoundTrip));
+      roundTrip.setAttribute("aria-pressed", String(isRoundTrip));
+      roundTripFields.hidden = !isRoundTrip;
+      returnDate.required = isRoundTrip;
+      returnTime.required = isRoundTrip && !originIsAirport();
+      if (!isRoundTrip) {
+        setReturnDate("");
+        resetReturnPickupTime(false);
+      }
+      syncAirportRoundTripState();
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    }
+
+    function selectedDrinks() {
+      return DRINK_OPTIONS
+        .map(drink => ({
+          ...drink,
+          quantity: Number(state.drinks[drink.id] || 0)
+        }))
+        .filter(drink => drink.quantity > 0);
+    }
+
+    function drinksTotalValue() {
+      return selectedDrinks().reduce((total, drink) => total + drink.price * drink.quantity, 0);
+    }
+
+    function setDrinksOpen(open) {
+      state.drinksOpen = Boolean(open);
+      drinkPicker.hidden = !state.drinksOpen;
+      drinkAddons.classList.toggle("is-open", state.drinksOpen);
+      drinkToggle.setAttribute("aria-expanded", String(state.drinksOpen));
+      const hasSelection = selectedDrinks().length > 0;
+      drinkToggle.textContent = state.drinksOpen ? (hasSelection ? "Confirm selection" : "Choose drinks") : hasSelection ? "Edit drinks" : "Browse Drinks";
+      drinkToggle.disabled = state.drinksOpen && !hasSelection;
+      drinkSkip.hidden = !(state.drinksOpen && !hasSelection);
+      syncDrinkTotals();
+    }
+
+    function setDrinkCategory(category) {
+      state.drinkCategory = category;
+      drinkTabs.forEach(tab => {
+        const active = tab.dataset.drinkCategory === category;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+      });
+      renderDrinkOptions();
+    }
+
+    function syncDrinkTotals() {
+      drinkOptions.querySelectorAll("[data-drink-qty]").forEach(output => {
+        output.textContent = String(state.drinks[output.dataset.drinkQty] || 0);
+      });
+      const selected = selectedDrinks();
+      const hasSelection = selected.length > 0;
+      const total = drinksTotalValue();
+      drinksTotal.textContent = `Drinks total: ${money(total)}`;
+      drinkSummary.hidden = !hasSelection && !state.drinksOpen;
+      drinkSummary.textContent = hasSelection ? selected.map(drink => `${drink.quantity} ${drink.name}`).join(" • ") : "No drinks selected yet";
+      drinkHelperText.textContent = hasSelection
+        ? "Great choice! Your drinks will be chilled and ready onboard."
+        : "Have a favorite drink? Tell us what to stock in the vehicle!";
+      drinkToggle.textContent = state.drinksOpen ? (hasSelection ? "Confirm selection" : "Choose drinks") : hasSelection ? "Edit drinks" : "Browse Drinks";
+      drinkToggle.disabled = state.drinksOpen && !hasSelection;
+      drinkSkip.hidden = !(state.drinksOpen && !hasSelection);
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    }
+
+    function setDrinkQuantity(drinkId, quantity) {
+      state.drinks[drinkId] = Math.max(0, Math.min(99, quantity));
+      if (state.drinks[drinkId] === 0) delete state.drinks[drinkId];
+      syncDrinkTotals();
+    }
+
+    function renderDrinkOptions() {
+      drinkOptions.replaceChildren();
+      const group = document.createElement("section");
+      group.className = "drink-group";
+      DRINK_OPTIONS.filter(drink => drink.category === state.drinkCategory).forEach(drink => {
+        const row = document.createElement("div");
+        row.className = "drink-row";
+        const thumbnail = document.createElement("img");
+        thumbnail.className = "drink-thumb";
+        thumbnail.src = drink.image;
+        thumbnail.alt = "";
+        thumbnail.loading = "lazy";
+        thumbnail.addEventListener("error", () => thumbnail.remove());
+        const info = document.createElement("div");
+        const name = document.createElement("strong");
+        name.textContent = drink.name;
+        const meta = document.createElement("span");
+        meta.textContent = `${drink.size} - ${money(drink.price)}`;
+        info.append(name, meta);
+        const stepper = document.createElement("div");
+        stepper.className = "drink-stepper";
+        const minus = document.createElement("button");
+        minus.type = "button";
+        minus.textContent = "-";
+        minus.setAttribute("aria-label", `Remove ${drink.name}`);
+        const quantity = document.createElement("output");
+        quantity.dataset.drinkQty = drink.id;
+        quantity.textContent = "0";
+        const plus = document.createElement("button");
+        plus.type = "button";
+        plus.textContent = "+";
+        plus.setAttribute("aria-label", `Add ${drink.name}`);
+        minus.addEventListener("click", () => setDrinkQuantity(drink.id, Number(state.drinks[drink.id] || 0) - 1));
+        plus.addEventListener("click", () => setDrinkQuantity(drink.id, Number(state.drinks[drink.id] || 0) + 1));
+        stepper.append(minus, quantity, plus);
+        row.append(thumbnail, info, stepper);
+        group.appendChild(row);
+      });
+      drinkOptions.appendChild(group);
+      syncDrinkTotals();
+    }
+
+    drinkToggle.addEventListener("click", () => setDrinksOpen(!state.drinksOpen));
+    drinkSkip.addEventListener("click", () => setDrinksOpen(false));
+    drinkAddons.addEventListener("click", event => {
+      if (state.drinksOpen) return;
+      if (event.target.closest("button, input, select, textarea, a")) return;
+      setDrinksOpen(true);
+    });
+    drinkTabs.forEach(tab => {
+      tab.addEventListener("click", () => setDrinkCategory(tab.dataset.drinkCategory));
+    });
+    returnFlightDepartureTime.addEventListener("input", calculateAirportReturnPickup);
+    editReturnPickupTime.addEventListener("click", () => {
+      manualReturnPickupWrap.hidden = false;
+      manualReturnPickupTime.required = true;
+      manualReturnPickupTime.value = returnTime.value ? formatNativeTime(returnTime.value) : "";
+      manualReturnPickupTime.focus();
+    });
+    manualReturnPickupTime.addEventListener("input", () => {
+      const parsed = parseDisplayTime(manualReturnPickupTime.value);
+      if (!parsed || !returnDate.value) return;
+      const date = parseDateKey(returnDate.value);
+      date.setHours(parsed.hour, parsed.minute, 0, 0);
+      setReturnTimeFromDate(date);
+      recommendedPickupText.textContent = `Recommended Pickup: ${formatNativeTime(returnTime.value)}`;
+      if (state.selectedVehicle) updateTripSummary();
+      updateWhatsappLink();
+    });
+
+    function whatsappMessage() {
+      const lines = ["Hello Dominican Quest, I need help booking a wedding transfer."];
+      const routeMatchesSelection = state.route
+        && String(state.route.origin_destination_id) === String(originSelect.value)
+        && String(state.route.destination_destination_id) === String(destinationSelect.value);
+      const from = selectedDestinationLabel("origin") || (routeMatchesSelection ? state.route.origin_label : "");
+      const to = selectedDestinationLabel("destination") || (routeMatchesSelection ? state.route.destination_label : "");
+      const date = serviceDate.value ? displayDate(serviceDate.value) : "";
+      const time = serviceTime.value ? timeTriggerText.textContent : "";
+      const returnDateText = state.tripType === "round_trip" && returnDate.value ? displayDate(returnDate.value) : "";
+      const returnTimeText = state.tripType === "round_trip" && returnTime.value ? formatNativeTime(returnTime.value) : "";
+      const pax = passengers.value || "";
+      const vehicle = routeMatchesSelection ? state.selectedVehicle?.vehicle_model || "" : "";
+      const drinks = selectedDrinks().map(drink => `${drink.quantity} ${drink.name}`).join(", ");
+      const details = [
+        `Trip type: ${state.tripType === "round_trip" ? "Round trip" : "One-way"}`,
+        from && from !== "Pick a location or airport" ? `From: ${from}` : "",
+        to && to !== "Pick a location or airport" ? `To: ${to}` : "",
+        date ? `Date: ${date}` : "",
+        time && time !== "Select time" ? `Pickup time: ${time}` : "",
+        returnDateText ? `Return date: ${returnDateText}` : "",
+        returnTimeText ? `Return pickup time: ${returnTimeText}` : "",
+        pax ? `Passengers: ${pax}` : "",
+        vehicle ? `Vehicle: ${vehicle}` : "",
+        drinks ? `Drinks: ${drinks}` : ""
+      ].filter(Boolean);
+      if (details.length) lines.push("", ...details);
+      return lines.join("\n");
+    }
+
+    function customerPhoneValue() {
+      const phone = document.getElementById("customerPhone").value.trim();
+      if (!phone) return "";
+      if (phone.startsWith("+")) return phone;
+      return `${phoneCountry.value} ${phone}`;
+    }
+
+    function updateWhatsappLink() {
+      const params = new URLSearchParams({
+        phone: "18497638642",
+        text: whatsappMessage()
+      });
+      whatsappChat.href = `https://api.whatsapp.com/send?${params.toString()}`;
+    }
+
+    function vehicleImageNode(vehicle) {
+      if (vehicle.image_url) {
+        const image = document.createElement("img");
+        image.className = "vehicle-image";
+        image.src = vehicle.image_url;
+        image.alt = vehicle.vehicle_model || "Transfer vehicle";
+        return image;
+      }
+      const placeholder = document.createElement("div");
+      placeholder.className = "vehicle-placeholder";
+      placeholder.textContent = vehicle.is_suv ? "SUV" : "DQ";
+      return placeholder;
+    }
+
+    function syncVehicleSelection() {
+      document.querySelectorAll(".vehicle-card").forEach(card => {
+        const isSelected = state.selectedVehicle
+          && String(card.dataset.vehicleId) === String(state.selectedVehicle.vehicle_id);
+        card.classList.toggle("is-selected", Boolean(isSelected));
+        card.classList.toggle("is-muted", Boolean(state.selectedVehicle && !isSelected));
+        const button = card.querySelector(".vehicle-select-button");
+        if (!button) return;
+        button.disabled = Boolean(isSelected);
+        button.setAttribute("aria-pressed", String(Boolean(isSelected)));
+        button.replaceChildren();
+        if (isSelected) {
+          const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          icon.setAttribute("viewBox", "0 0 24 24");
+          icon.setAttribute("aria-hidden", "true");
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", "m20 6-11 11-5-5");
+          icon.appendChild(path);
+          button.append(icon, document.createTextNode("Selected"));
+        } else {
+          button.textContent = "Select";
+        }
+      });
+    }
+
+    function updateTripSummary() {
+      const originLabel = selectedDestinationLabel("origin") || state.route?.origin_label || "Pickup";
+      const destinationLabel = selectedDestinationLabel("destination") || state.route?.destination_label || "Dropoff";
+      const tripDate = displayTripDate(serviceDate.value);
+      const tripTime = serviceTime.value ? timeTriggerText.textContent : "";
+      const returnDateLabel = displayTripDate(returnDate.value);
+      const returnTimeLabel = returnTime.value ? formatNativeTime(returnTime.value) : "";
+      const passengerCount = passengers.value ? `${passengers.value} passenger${Number(passengers.value) === 1 ? "" : "s"}` : "";
+      const vehicleName = state.selectedVehicle?.vehicle_model || "";
+      const isRoundTrip = state.tripType === "round_trip";
+      const rideMultiplier = isRoundTrip ? 2 : 1;
+      const ridePrice = Number(state.selectedVehicle?.client_price || 0);
+      const currency = state.selectedVehicle?.currency || "USD";
+      const drinksPrice = drinksTotalValue();
+      const rideTotal = ridePrice * rideMultiplier;
+      const totalPrice = rideTotal + drinksPrice;
+      tripSummaryRoute.textContent = isRoundTrip
+        ? `${originLabel} -> ${destinationLabel} -> ${originLabel}`
+        : `${originLabel} -> ${destinationLabel}`;
+      tripSummaryDetails.textContent = [
+        tripDate && tripTime ? `${tripDate} at ${tripTime}` : tripDate || tripTime,
+        isRoundTrip && (returnDateLabel || returnTimeLabel) ? `Return ${returnDateLabel && returnTimeLabel ? `${returnDateLabel} at ${returnTimeLabel}` : returnDateLabel || returnTimeLabel}` : "",
+        passengerCount,
+        vehicleName
+      ].filter(Boolean).join(" · ");
+      tripSummaryPrice.textContent = drinksPrice > 0
+        ? `${isRoundTrip ? "Ride round trip" : "Ride"} ${money(rideTotal, currency)} • Drinks ${money(drinksPrice, currency)} • Total ${money(totalPrice, currency)}`
+        : `${isRoundTrip ? "Ride Round Trip Total" : "Ride Total"}: ${money(rideTotal, currency)}`;
+    }
+
+    function renderVehicles() {
+      vehicleList.replaceChildren();
+      document.querySelector(".results-panel").classList.remove("is-featured-empty");
+      bookingForm.classList.remove("is-visible");
+      state.selectedVehicle = null;
+      tripSummaryRoute.textContent = "";
+      tripSummaryDetails.textContent = "";
+      tripSummaryPrice.textContent = "";
+      if (!state.vehicles.length) {
+        const hasRoute = Boolean(state.route);
+        document.querySelector(".results-panel").classList.toggle("is-featured-empty", !hasRoute);
+        if (hasRoute) {
+          vehicleList.appendChild(vehicleEmptyState("No vehicles match this passenger count yet."));
+        } else {
+          vehicleList.append(vehicleEmptyState(), liveStatusIndicator());
+        }
+        return;
+      }
+      state.vehicles.forEach(vehicle => {
+        const card = document.createElement("article");
+        card.className = "vehicle-card";
+        card.dataset.vehicleId = vehicle.vehicle_id;
+        const selectedBadge = document.createElement("span");
+        selectedBadge.className = "vehicle-selected-badge";
+        const selectedBadgeIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        selectedBadgeIcon.setAttribute("viewBox", "0 0 24 24");
+        selectedBadgeIcon.setAttribute("aria-hidden", "true");
+        const selectedBadgePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        selectedBadgePath.setAttribute("d", "m20 6-11 11-5-5");
+        selectedBadgeIcon.appendChild(selectedBadgePath);
+        selectedBadge.append(selectedBadgeIcon, document.createTextNode("Your selected vehicle"));
+        const info = document.createElement("div");
+        info.className = "vehicle-info";
+        const title = document.createElement("h3");
+        title.textContent = vehicle.vehicle_model || "Private vehicle";
+        const meta = document.createElement("div");
+        meta.className = "vehicle-meta";
+        [
+          `${vehicle.pax_onboard} pax max`,
+          vehicle.vehicle_type,
+          vehicle.is_suv ? "SUV" : "",
+          ...(vehicle.features || [])
+        ].filter(Boolean).forEach(text => {
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = text;
+          meta.appendChild(chip);
+        });
+        const description = document.createElement("p");
+        description.className = "vehicle-description";
+        description.textContent = vehicle.description || "Private transfer with Dominican Quest service.";
+        info.append(title, meta, description);
+
+        const price = document.createElement("div");
+        price.className = "vehicle-price";
+        const priceText = document.createElement("strong");
+        priceText.className = "price";
+        priceText.textContent = money(vehicle.client_price, vehicle.currency);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "primary vehicle-select-button";
+        button.setAttribute("aria-pressed", "false");
+        button.textContent = "Select";
+        button.addEventListener("click", () => {
+          state.selectedVehicle = vehicle;
+          updateWhatsappLink();
+          syncVehicleSelection();
+          updateTripSummary();
+          bookingForm.classList.add("is-visible");
+          bookingForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        price.append(priceText, button);
+        card.append(selectedBadge, vehicleImageNode(vehicle), info, price);
+        vehicleList.appendChild(card);
+      });
+    }
+
+    function applyWeddingTransferDefaults() {
+      if (!weddingTransfersEnabled()) return;
+      const destination = state.places.find(isWeddingDestinationPlace);
+      state.weddingDestinationPlace = destination || null;
+      destinationSearch.disabled = false;
+      destinationSearch.readOnly = true;
+      destinationClear.hidden = true;
+      if (!destination) {
+        destinationSearch.value = WEDDING_TRANSFER_PAGE.destinationName;
+        destinationSearch.placeholder = "Wedding resort unavailable";
+        destinationSelect.value = "";
+        setStatus(searchStatus, "Wedding resort route is unavailable right now. Please contact us for help.", "error");
+        return;
+      }
+      setSelectedPlace("destination", destination);
+      destinationSearch.value = WEDDING_TRANSFER_PAGE.destinationName;
+      destinationSearch.setAttribute("aria-expanded", "false");
+      destinationSuggestions.hidden = true;
+      originSearch.placeholder = "Pick your airport";
+      resultsTitle.textContent = "Choose Your Wedding Transfer";
+      resultHint.textContent = "Pick your airport, date, time, and passenger count to continue quickly.";
+    }
+
+    async function loadDestinations() {
+      setStatus(searchStatus, "Loading destinations...");
+      const data = await functionRequest("public-transfer-search", { mode: "destinations" });
+      state.destinations = data.destinations || [];
+      state.locations = data.locations || [];
+      state.airlines = data.airlines || [];
+      buildPlaces();
+      populateAirlines();
+      renderDrinkOptions();
+      initializePlaceCombo("origin");
+      initializePlaceCombo("destination");
+      initializeCalendar();
+      setTripType("one_way");
+      syncAirportBookingFields();
+      syncDestinationPlaceholder();
+      applyWeddingTransferDefaults();
+      updateWhatsappLink();
+      renderInitialVehicleEmptyState();
+      setStatus(searchStatus, "");
+    }
+
+    searchForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!originSelect.value) {
+        setStatus(searchStatus, "Choose an airport from the list.", "error");
+        originSearch.focus();
+        renderPlaceSuggestions("origin");
+        return;
+      }
+      if (!destinationSelect.value) {
+        setStatus(searchStatus, "Wedding resort is unavailable. Please contact us for help.", "error");
+        originSearch.focus();
+        return;
+      }
+      if (!serviceDate.value) {
+        setStatus(searchStatus, "Select a transfer date.", "error");
+        setCalendarOpen(true);
+        return;
+      }
+      if (!serviceTime.value) {
+        setStatus(searchStatus, "Select a pickup time.", "error");
+        setTimePopoverOpen(true);
+        showTimeIncompleteMessage();
+        return;
+      }
+      if (state.tripType === "round_trip") {
+        if (!returnDate.value) {
+          setStatus(searchStatus, "Choose return date.", "error");
+          setReturnCalendarOpen(true);
+          returnDateTrigger.focus();
+          return;
+        }
+        if (!isAirportRoundTrip() && !returnTime.value) {
+          setStatus(searchStatus, "Choose return pickup time.", "error");
+          setReturnTimePopoverOpen(true);
+          showReturnTimeIncompleteMessage();
+          return;
+        }
+      }
+      const passengerCount = Number(passengers.value);
+      if (!Number.isInteger(passengerCount) || passengerCount < 1) {
+        setStatus(searchStatus, "Enter passenger count.", "error");
+        passengerPlus.focus();
+        return;
+      }
+      successPanel.classList.remove("is-visible");
+      setStatus(searchStatus, "Searching transfers...");
+      try {
+        const data = await functionRequest("public-transfer-search", {
+          origin_destination_id: originSelect.value,
+          destination_destination_id: destinationSelect.value,
+          origin_map_location: selectedPlace("origin")?.mapLocation || selectedDestinationLabel("origin"),
+          destination_map_location: selectedPlace("destination")?.mapLocation || selectedDestinationLabel("destination"),
+          passengers: passengerCount
+        });
+        state.route = data.route;
+        state.vehicles = data.vehicles || [];
+        calculateAirportReturnPickup();
+        updateWhatsappLink();
+        if (state.route) {
+          resultsTitle.textContent = `Pick your ride (${state.vehicles.length} option${state.vehicles.length === 1 ? "" : "s"} available)`;
+          resultHint.hidden = true;
+        } else {
+          resultsTitle.textContent = "Choose Your Wedding Transfer";
+          resultHint.textContent = "No wedding transfer route found for this airport yet.";
+          resultHint.hidden = false;
+        }
+        renderRouteSummary();
+        renderVehicles();
+        setStatus(searchStatus, state.route ? "Transfer options loaded." : "No active route found.", state.route ? "ok" : "error");
+      } catch (error) {
+        setStatus(searchStatus, error.message, "error");
+      }
+    });
+
+    phoneCountry.addEventListener("change", syncPhonePlaceholder);
+    syncPhonePlaceholder();
+    syncPassengerStepper();
+    passengerMinus.addEventListener("click", () => setPassengerCount(Number(passengers.value) - 1));
+    passengerPlus.addEventListener("click", () => setPassengerCount(passengers.value ? Number(passengers.value) + 1 : 1));
+
+    [originSearch, destinationSearch, passengers, phoneCountry, document.getElementById("customerPhone")].forEach(element => {
+      element.addEventListener("change", updateWhatsappLink);
+      element.addEventListener("input", updateWhatsappLink);
+    });
+    passengers.addEventListener("input", () => {
+      if (state.selectedVehicle) updateTripSummary();
+    });
+
+    bookingForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!state.route || !state.selectedVehicle) {
+        setStatus(bookingStatus, "Select a vehicle first.", "error");
+        return;
+      }
+      if (originIsAirport()) {
+        if (!airlineCompany.value.trim()) {
+          setStatus(bookingStatus, "Enter airline company.", "error");
+          airlineCompany.focus();
+          return;
+        }
+        if (!flightNumber.value.trim()) {
+          setStatus(bookingStatus, "Enter flight number.", "error");
+          flightNumber.focus();
+          return;
+        }
+      }
+      const passengerCount = Number(passengers.value);
+      if (!Number.isInteger(passengerCount) || passengerCount < 1) {
+        setStatus(bookingStatus, "Enter passenger count.", "error");
+        passengerPlus.focus();
+        return;
+      }
+      if (state.tripType === "round_trip") {
+        if (!returnDate.value) {
+          setStatus(bookingStatus, "Choose return date.", "error");
+          setReturnCalendarOpen(true);
+          returnDateTrigger.focus();
+          return;
+        }
+        if (isAirportRoundTrip()) {
+          if (!returnFlightDepartureTime.value.trim()) {
+            setStatus(bookingStatus, "Enter return flight departure time.", "error");
+            returnFlightDepartureTime.focus();
+            return;
+          }
+          calculateAirportReturnPickup();
+        }
+        if (!returnTime.value) {
+          if (isAirportRoundTrip()) {
+            setStatus(bookingStatus, "Enter return flight departure time like 3:30 PM.", "error");
+            returnFlightDepartureTime.focus();
+          } else {
+            setStatus(bookingStatus, "Choose return pickup time.", "error");
+            setReturnTimePopoverOpen(true);
+            showReturnTimeIncompleteMessage();
+          }
+          return;
+        }
+      }
+      const pageBaseUrl = currentPageBaseUrl();
+      clearSuccessActions();
+      if (!pageBaseUrl) {
+        setStatus(
+          bookingStatus,
+          "PayPal checkout needs this page opened from a web URL, not directly from a file. Open the deployed page or a local http:// address, then try again.",
+          "error"
+        );
+        return;
+      }
+      checkoutButton.disabled = true;
+      setStatus(bookingStatus, "Creating secure PayPal order...");
+      try {
+        const payload = {
+          route_id: state.route.id,
+          vehicle_id: state.selectedVehicle.vehicle_id,
+          passengers: passengerCount,
+          trip_type: state.tripType,
+          service_date: serviceDate.value,
+          service_time: serviceTime.value,
+          return_date: state.tripType === "round_trip" ? returnDate.value : "",
+          return_time: state.tripType === "round_trip" ? returnTime.value : "",
+          return_flight_departure_time: isAirportRoundTrip() ? returnFlightDepartureTime.value.trim() : "",
+          customer_name: document.getElementById("customerName").value.trim(),
+          customer_email: document.getElementById("customerEmail").value.trim(),
+          customer_phone: customerPhoneValue(),
+          pickup_details: selectedPlaceDetails("origin"),
+          dropoff_details: selectedPlaceDetails("destination"),
+          airline_company: airlineCompany.value.trim(),
+          flight_number: flightNumber.value.trim(),
+          drinks: selectedDrinks().map(drink => ({ id: drink.id, quantity: drink.quantity })),
+          notes: document.getElementById("bookingNotes").value.trim(),
+          return_url: `${pageBaseUrl}?paypal=success`,
+          cancel_url: `${pageBaseUrl}?paypal=cancelled`
+        };
+        const data = await functionRequest("create-transfer-paypal-order", payload);
+        if (data.approval_url) {
+          location.href = data.approval_url;
+          return;
+        }
+        showPendingPaymentFallback(data.booking_reference);
+        successPanel.classList.add("is-visible");
+        setStatus(bookingStatus, "Booking saved. Payment support is ready.", "ok");
+      } catch (error) {
+        setStatus(bookingStatus, checkoutErrorMessage(error), "error");
+      } finally {
+        checkoutButton.disabled = false;
+      }
+    });
+
+    async function handlePayPalReturn() {
+      const params = new URLSearchParams(location.search);
+      if (params.get("paypal") === "cancelled") {
+        clearSuccessActions();
+        successText.textContent = "PayPal payment was cancelled. You can search again and restart the booking when ready.";
+        successPanel.classList.add("is-visible");
+        return;
+      }
+      if (params.get("paypal") !== "success") return;
+      const token = params.get("token");
+      if (!token) {
+        clearSuccessActions();
+        successText.textContent = "PayPal returned without an order token. Please contact Dominican Quest.";
+        successPanel.classList.add("is-visible");
+        return;
+      }
+      successText.textContent = "Confirming your PayPal payment...";
+      clearSuccessActions();
+      successPanel.classList.add("is-visible");
+      try {
+        const data = await functionRequest("capture-transfer-paypal-order", { token });
+        successText.textContent = `Payment confirmed. Reference ${data.booking_reference}. A confirmation email will arrive shortly.`;
+      } catch (error) {
+        successText.textContent = `We could not confirm the PayPal payment automatically: ${error.message}`;
+      }
+    }
+
+    handlePayPalReturn();
+    loadDestinations().catch(error => {
+      setPlaceLoadingFailed();
+      setStatus(searchStatus, error.message, "error");
+    });
+  </script>
+</body>
+</html>
