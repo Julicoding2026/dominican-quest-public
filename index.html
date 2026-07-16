@@ -2708,7 +2708,7 @@
       }
 
       .whatsapp-chat {
-        right: max(12px, env(safe-area-inset-right));
+        right: max(27px, calc(env(safe-area-inset-right) + 15px));
         bottom: max(12px, env(safe-area-inset-bottom));
         min-height: 46px;
         padding: 0 14px;
@@ -4104,51 +4104,13 @@
       "Hotel-to-airport return transfer booked 1 hour ago"
     ];
     const LIVE_STATUS_DELAYS = [9000, 13000, 17000, 24000, 31000, 39000];
-    let liveStatusAudioReady = false;
-    let liveStatusAudioContext = null;
 
     function randomLiveStatusDelay() {
       return LIVE_STATUS_DELAYS[Math.floor(Math.random() * LIVE_STATUS_DELAYS.length)];
     }
 
-    function enableLiveStatusAudio() {
-      liveStatusAudioReady = true;
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass && !liveStatusAudioContext) {
-        liveStatusAudioContext = new AudioContextClass();
-        liveStatusAudioContext.resume?.();
-      }
-      document.removeEventListener("pointerdown", enableLiveStatusAudio);
-      document.removeEventListener("keydown", enableLiveStatusAudio);
-    }
-
-    document.addEventListener("pointerdown", enableLiveStatusAudio, { once: true });
-    document.addEventListener("keydown", enableLiveStatusAudio, { once: true });
-
     function liveStatusText(index) {
       return `<strong>Live Status:</strong> Last booked: ${LIVE_STATUS_MESSAGES[index % LIVE_STATUS_MESSAGES.length]}`;
-    }
-
-    function playLiveStatusChime() {
-      if (!liveStatusAudioReady || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return;
-      liveStatusAudioContext ||= new AudioContextClass();
-      const context = liveStatusAudioContext;
-      const now = context.currentTime;
-      const gain = context.createGain();
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.018, now + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-      gain.connect(context.destination);
-      [660, 880].forEach((frequency, index) => {
-        const oscillator = context.createOscillator();
-        oscillator.type = "sine";
-        oscillator.frequency.setValueAtTime(frequency, now + index * 0.045);
-        oscillator.connect(gain);
-        oscillator.start(now + index * 0.045);
-        oscillator.stop(now + 0.22);
-      });
     }
 
     function liveStatusIndicator() {
@@ -4164,7 +4126,6 @@
           if (!document.body.contains(liveStatus)) return;
           messageIndex = (messageIndex + 1) % LIVE_STATUS_MESSAGES.length;
           textNode.innerHTML = liveStatusText(messageIndex);
-          playLiveStatusChime();
           scheduleNextUpdate();
         }, randomLiveStatusDelay());
       };
