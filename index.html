@@ -1097,6 +1097,10 @@
       display: none;
     }
 
+    .mobile-place-overlay {
+      display: none;
+    }
+
     .place-group {
       display: block;
       padding: 8px 9px 5px;
@@ -2585,6 +2589,85 @@
         display: none;
       }
 
+      body.mobile-place-overlay-open {
+        overflow: hidden;
+      }
+
+      .mobile-place-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: none;
+        grid-template-rows: auto minmax(0, 1fr);
+        background: #fff;
+      }
+
+      .mobile-place-overlay.is-open {
+        display: grid;
+      }
+
+      .mobile-place-searchbar {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+        padding: max(10px, env(safe-area-inset-top)) 14px 10px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .mobile-place-back {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        min-height: 44px;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ink);
+        touch-action: manipulation;
+      }
+
+      .mobile-place-back svg {
+        width: 23px;
+        height: 23px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .mobile-place-searchbar input {
+        min-height: 44px;
+        border-radius: 999px;
+        padding: 10px 15px;
+        background: #f8f5ef;
+      }
+
+      .mobile-place-results {
+        min-height: 0;
+        overflow-y: auto;
+        padding: 10px 14px max(28px, env(safe-area-inset-bottom));
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .mobile-place-results .place-group {
+        padding: 14px 4px 7px;
+      }
+
+      .mobile-place-results .place-option,
+      .mobile-place-results .place-empty {
+        min-height: 54px;
+        padding: 10px 4px;
+        border-bottom: 1px solid #eee7dc;
+        border-radius: 0;
+      }
+
+      .mobile-place-results .place-option:hover,
+      .mobile-place-results .place-option:focus-visible {
+        background: transparent;
+      }
+
       .site-header-inner {
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 8px 12px;
@@ -2921,6 +3004,16 @@
   </header>
 
   <button class="calendar-sheet-backdrop" id="calendarSheetBackdrop" type="button" aria-label="Close calendar"></button>
+
+  <section class="mobile-place-overlay" id="mobilePlaceOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Search locations">
+    <div class="mobile-place-searchbar">
+      <button class="mobile-place-back" id="mobilePlaceBack" type="button" aria-label="Back to booking form">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <input id="mobilePlaceSearch" type="text" autocomplete="off" placeholder="Type location..." aria-label="Type location" role="combobox" aria-expanded="true" aria-controls="mobilePlaceResults" aria-autocomplete="list">
+    </div>
+    <div class="mobile-place-results" id="mobilePlaceResults" role="listbox"></div>
+  </section>
 
   <main>
     <section class="booking-shell">
@@ -3391,6 +3484,7 @@
       drinks: {},
       drinksOpen: false,
       drinkCategory: "Non-alcoholic drinks",
+      mobilePlaceSide: null,
       tripType: "one_way"
     };
 
@@ -3495,6 +3589,10 @@
     const drinkOptions = document.getElementById("drinkOptions");
     const drinkTabs = Array.from(document.querySelectorAll("[data-drink-category]"));
     const drinksTotal = document.getElementById("drinksTotal");
+    const mobilePlaceOverlay = document.getElementById("mobilePlaceOverlay");
+    const mobilePlaceBack = document.getElementById("mobilePlaceBack");
+    const mobilePlaceSearch = document.getElementById("mobilePlaceSearch");
+    const mobilePlaceResults = document.getElementById("mobilePlaceResults");
     const mobileReloadButton = document.getElementById("mobileReloadButton");
     const mobileMenuToggle = document.getElementById("mobileMenuToggle");
     const mobileMenu = document.getElementById("mobileMenu");
@@ -3507,6 +3605,19 @@
       mobileMenuToggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       mobileMenu?.setAttribute("aria-hidden", String(!open));
     }
+
+    mobilePlaceBack?.addEventListener("click", () => closeMobilePlaceOverlay(false));
+    mobilePlaceSearch?.addEventListener("input", syncMobilePlaceQuery);
+    mobilePlaceSearch?.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMobilePlaceOverlay(false);
+      if (event.key === "Enter") {
+        const firstOption = mobilePlaceResults?.querySelector(".place-option");
+        if (firstOption) {
+          event.preventDefault();
+          firstOption.click();
+        }
+      }
+    });
 
     mobileReloadButton?.addEventListener("click", () => {
       window.location.reload();
@@ -3523,7 +3634,14 @@
     });
 
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape") setMobileMenuOpen(false);
+      if (event.key === "Escape") {
+        closeMobilePlaceOverlay(false);
+        setMobileMenuOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (state.mobilePlaceSide && !mobilePlaceOverlayEnabled()) closeMobilePlaceOverlay(false);
     });
 
     function setStatus(element, message, type = "") {
@@ -4428,48 +4546,135 @@
       return list.slice(0, 24);
     }
 
-    function renderPlaceSuggestions(side) {
-      const elements = comboElements(side);
-      elements.list.replaceChildren();
-      const matches = filteredPlaces(elements.input.value);
+    function appendPlaceOption(container, side, place, onSelect = () => {}) {
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "place-option";
+      option.setAttribute("role", "option");
+      const title = document.createElement("strong");
+      title.textContent = place.label;
+      const detail = document.createElement("span");
+      detail.textContent = place.detail || place.destinationLabel || "";
+      option.append(title, detail);
+      option.addEventListener("click", () => {
+        setSelectedPlace(side, place);
+        onSelect();
+      });
+      container.appendChild(option);
+    }
+
+    function appendGroupedPlaceSuggestions(container, side, query, onSelect) {
+      container.replaceChildren();
+      const matches = filteredPlaces(query);
       if (!matches.length) {
         const empty = document.createElement("span");
         empty.className = "place-empty";
         empty.textContent = state.places.length ? "No matching location found" : "Locations unavailable";
-        elements.list.appendChild(empty);
-      } else {
-        let currentGroup = "";
-        matches.forEach(place => {
-          const group = placeGroup(place);
-          if (group !== currentGroup) {
-            currentGroup = group;
-            const label = document.createElement("span");
-            label.className = "place-group";
-            label.textContent = group;
-            elements.list.appendChild(label);
-          }
-          const option = document.createElement("button");
-          option.type = "button";
-          option.className = "place-option";
-          option.setAttribute("role", "option");
-          const title = document.createElement("strong");
-          title.textContent = place.label;
-          const detail = document.createElement("span");
-          detail.textContent = place.detail || place.destinationLabel || "";
-          option.append(title, detail);
-          option.addEventListener("click", () => setSelectedPlace(side, place));
-          elements.list.appendChild(option);
-        });
+        container.appendChild(empty);
+        return;
       }
+      let currentGroup = "";
+      matches.forEach(place => {
+        const group = placeGroup(place);
+        if (group !== currentGroup) {
+          currentGroup = group;
+          const label = document.createElement("span");
+          label.className = "place-group";
+          label.textContent = group;
+          container.appendChild(label);
+        }
+        appendPlaceOption(container, side, place, onSelect);
+      });
+    }
+
+    function renderPlaceSuggestions(side) {
+      const elements = comboElements(side);
+      appendGroupedPlaceSuggestions(elements.list, side, elements.input.value);
       elements.list.hidden = false;
       elements.input.setAttribute("aria-expanded", "true");
+    }
+
+    function mobilePlaceOverlayEnabled() {
+      return window.matchMedia("(max-width: 860px)").matches;
+    }
+
+    function closeMobilePlaceOverlay(restoreFocus = false) {
+      const side = state.mobilePlaceSide;
+      state.mobilePlaceSide = null;
+      mobilePlaceOverlay?.classList.remove("is-open");
+      mobilePlaceOverlay?.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("mobile-place-overlay-open");
+      if (side) {
+        const elements = comboElements(side);
+        elements.input.setAttribute("aria-expanded", "false");
+        elements.list.hidden = true;
+        if (restoreFocus) elements.input.focus({ preventScroll: true });
+      }
+    }
+
+    function renderMobilePlaceSuggestions() {
+      if (!state.mobilePlaceSide || !mobilePlaceResults) return;
+      appendGroupedPlaceSuggestions(
+        mobilePlaceResults,
+        state.mobilePlaceSide,
+        mobilePlaceSearch.value,
+        () => closeMobilePlaceOverlay(false)
+      );
+    }
+
+    function syncMobilePlaceQuery() {
+      const side = state.mobilePlaceSide;
+      if (!side) return;
+      const elements = comboElements(side);
+      elements.input.value = mobilePlaceSearch.value;
+      if (selectedPlace(side)?.label !== elements.input.value) {
+        if (side === "origin") state.originPlace = null;
+        if (side === "destination") state.destinationPlace = null;
+        elements.hidden.value = "";
+        syncPlaceIcon(elements);
+        state.route = null;
+        state.vehicles = [];
+        state.selectedVehicle = null;
+        resultsTitle.textContent = "Choose Your Perfect Ride";
+        resultHint.textContent = "Search your route to find the perfect vehicle for your group size and budget.";
+        resultHint.hidden = false;
+        renderRouteSummary();
+        renderVehicles();
+        updateWhatsappLink();
+      }
+      renderMobilePlaceSuggestions();
+    }
+
+    function openMobilePlaceOverlay(side) {
+      if (!mobilePlaceOverlayEnabled()) return false;
+      const elements = comboElements(side);
+      if (elements.input.disabled) return false;
+      state.mobilePlaceSide = side;
+      elements.list.hidden = true;
+      elements.input.setAttribute("aria-expanded", "true");
+      mobilePlaceSearch.value = elements.input.value;
+      mobilePlaceSearch.placeholder = side === "origin" ? "Pickup location..." : "Dropoff location...";
+      mobilePlaceOverlay.classList.add("is-open");
+      mobilePlaceOverlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("mobile-place-overlay-open");
+      renderMobilePlaceSuggestions();
+      window.setTimeout(() => mobilePlaceSearch.focus(), 0);
+      return true;
     }
 
     function initializePlaceCombo(side) {
       const elements = comboElements(side);
       elements.input.disabled = false;
       elements.input.placeholder = "Pick a location, hotel, or airport";
-      elements.input.addEventListener("focus", () => renderPlaceSuggestions(side));
+      elements.input.addEventListener("pointerdown", event => {
+        if (!mobilePlaceOverlayEnabled()) return;
+        event.preventDefault();
+        openMobilePlaceOverlay(side);
+      });
+      elements.input.addEventListener("focus", () => {
+        if (openMobilePlaceOverlay(side)) return;
+        renderPlaceSuggestions(side);
+      });
       elements.input.addEventListener("input", () => {
         if (selectedPlace(side)?.label !== elements.input.value) {
           if (side === "origin") state.originPlace = null;
@@ -4494,10 +4699,11 @@
         }
       });
       elements.clear.addEventListener("click", () => {
-        elements.input.focus();
         if (elements.input.value.trim()) {
           setSelectedPlace(side, null);
         }
+        if (openMobilePlaceOverlay(side)) return;
+        elements.input.focus();
         renderPlaceSuggestions(side);
       });
       syncPlaceIcon(elements);
