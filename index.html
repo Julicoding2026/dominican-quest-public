@@ -5463,6 +5463,8 @@
       try {
         const payload = {
           route_id: state.route.id,
+          origin_destination_id: originSelect.value,
+          destination_destination_id: destinationSelect.value,
           vehicle_id: state.selectedVehicle.vehicle_id,
           passengers: passengerCount,
           trip_type: state.tripType,
