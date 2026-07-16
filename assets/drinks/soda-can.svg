@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Soda can">
+  <rect width="64" height="64" rx="14" fill="#f4efff"/>
+  <path d="M23 15h18l3 7v25l-4 4H24l-4-4V22l3-7Z" fill="#673de6"/>
+  <path d="M24 15h16v5H24z" fill="#ffffff" opacity=".85"/>
+  <path d="M23 31h20v10H23z" fill="#ffffff" opacity=".9"/>
+  <path d="M27 36h12" stroke="#673de6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M27 13h10" stroke="#2f1d7a" stroke-width="3" stroke-linecap="round"/>
+</svg>

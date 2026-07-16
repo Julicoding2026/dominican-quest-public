@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wine bottle">
+  <rect width="64" height="64" rx="14" fill="#fff0f5"/>
+  <path d="M27 10h10v15l5 8v19l-4 4H26l-4-4V33l5-8V10Z" fill="#7f1d4e"/>
+  <path d="M27 10h10v7H27z" fill="#673de6"/>
+  <path d="M24 36h16v10H24z" fill="#ffffff" opacity=".92"/>
+  <path d="M28 41h8" stroke="#7f1d4e" stroke-width="3" stroke-linecap="round"/>
+</svg>

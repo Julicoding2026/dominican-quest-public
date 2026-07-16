@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Water bottle">
+  <rect width="64" height="64" rx="14" fill="#eff9ff"/>
+  <path d="M27 12h10v7l4 6v25l-4 4H27l-4-4V25l4-6v-7Z" fill="#85d7ff"/>
+  <path d="M27 12h10v6H27z" fill="#673de6"/>
+  <path d="M24 32h16v11H24z" fill="#ffffff" opacity=".9"/>
+  <path d="M28 38h8" stroke="#2390c9" stroke-width="3" stroke-linecap="round"/>
+</svg>
