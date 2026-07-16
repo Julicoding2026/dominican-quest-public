@@ -1798,6 +1798,16 @@
       gap: 14px;
     }
 
+    .success-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .success-actions[hidden] {
+      display: none;
+    }
+
     .booking-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
@@ -2085,27 +2095,6 @@
       text-align: center;
       font-size: 13px;
       font-weight: 950;
-    }
-
-    .alcohol-confirm {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 850;
-      line-height: 1.35;
-    }
-
-    .alcohol-confirm[hidden] {
-      display: none;
-    }
-
-    .alcohol-confirm input {
-      width: 16px;
-      min-height: 16px;
-      margin-top: 1px;
-      accent-color: var(--accent);
     }
 
     .status {
@@ -3172,6 +3161,7 @@
         <section class="success-panel" id="successPanel">
           <h2>Booking request received</h2>
           <p class="hint" id="successText"></p>
+          <div class="success-actions" id="successActions" hidden></div>
         </section>
       </section>
     </section>
@@ -3430,6 +3420,7 @@
     const checkoutButton = document.getElementById("checkoutButton");
     const successPanel = document.getElementById("successPanel");
     const successText = document.getElementById("successText");
+    const successActions = document.getElementById("successActions");
     const whatsappChat = document.getElementById("whatsappChat");
     const phoneCountry = document.getElementById("phoneCountry");
     const airlineCompany = document.getElementById("airlineCompany");
@@ -3481,6 +3472,33 @@
       element.textContent = message || "";
       element.classList.toggle("error", type === "error");
       element.classList.toggle("ok", type === "ok");
+    }
+
+    function clearSuccessActions() {
+      successActions.hidden = true;
+      successActions.replaceChildren();
+    }
+
+    function showPendingPaymentFallback(bookingReference) {
+      const referenceText = bookingReference ? ` Reference ${bookingReference}.` : "";
+      successText.textContent = `Your booking request was saved, but PayPal checkout could not start.${referenceText} Please contact us to complete your payment.`;
+      successActions.hidden = false;
+      successActions.replaceChildren();
+      const supportLink = document.createElement("a");
+      supportLink.className = "primary";
+      supportLink.href = `https://wa.me/18497638642?text=${encodeURIComponent(`Hi Dominican Quest, PayPal checkout did not start for booking ${bookingReference || ""}. I would like to complete my payment.`)}`;
+      supportLink.target = "_blank";
+      supportLink.rel = "noopener";
+      supportLink.textContent = "Complete payment with support";
+      successActions.appendChild(supportLink);
+    }
+
+    function checkoutErrorMessage(error) {
+      const message = error?.message || "";
+      if (/paypal|authentication|client/i.test(message)) {
+        return "PayPal checkout could not start right now. Please contact us and we will help complete your payment.";
+      }
+      return message || "Checkout could not start. Please try again.";
     }
 
     function currentPageBaseUrl() {
@@ -5141,6 +5159,7 @@
         }
       }
       const pageBaseUrl = currentPageBaseUrl();
+      clearSuccessActions();
       if (!pageBaseUrl) {
         setStatus(
           bookingStatus,
@@ -5170,7 +5189,6 @@
           airline_company: airlineCompany.value.trim(),
           flight_number: flightNumber.value.trim(),
           drinks: selectedDrinks().map(drink => ({ id: drink.id, quantity: drink.quantity })),
-          alcohol_age_confirmed: false,
           notes: document.getElementById("bookingNotes").value.trim(),
           return_url: `${pageBaseUrl}?paypal=success`,
           cancel_url: `${pageBaseUrl}?paypal=cancelled`
@@ -5180,11 +5198,11 @@
           location.href = data.approval_url;
           return;
         }
-        successText.textContent = `Reference ${data.booking_reference}. PayPal did not start: ${data.message || "configuration is incomplete"}. The booking was saved as pending.`;
+        showPendingPaymentFallback(data.booking_reference);
         successPanel.classList.add("is-visible");
-        setStatus(bookingStatus, "Booking saved in pending payment.", "ok");
+        setStatus(bookingStatus, "Booking saved. Payment support is ready.", "ok");
       } catch (error) {
-        setStatus(bookingStatus, error.message, "error");
+        setStatus(bookingStatus, checkoutErrorMessage(error), "error");
       } finally {
         checkoutButton.disabled = false;
       }
@@ -5193,6 +5211,7 @@
     async function handlePayPalReturn() {
       const params = new URLSearchParams(location.search);
       if (params.get("paypal") === "cancelled") {
+        clearSuccessActions();
         successText.textContent = "PayPal payment was cancelled. You can search again and restart the booking when ready.";
         successPanel.classList.add("is-visible");
         return;
@@ -5200,11 +5219,13 @@
       if (params.get("paypal") !== "success") return;
       const token = params.get("token");
       if (!token) {
+        clearSuccessActions();
         successText.textContent = "PayPal returned without an order token. Please contact Dominican Quest.";
         successPanel.classList.add("is-visible");
         return;
       }
       successText.textContent = "Confirming your PayPal payment...";
+      clearSuccessActions();
       successPanel.classList.add("is-visible");
       try {
         const data = await functionRequest("capture-transfer-paypal-order", { token });
