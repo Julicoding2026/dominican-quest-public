@@ -511,6 +511,377 @@
       text-underline-offset: 3px;
     }
 
+
+    .tours-page[hidden],
+    .transfer-view[hidden] {
+      display: none !important;
+    }
+
+    .tours-page {
+      display: grid;
+      gap: 22px;
+    }
+
+    .tours-hero {
+      display: grid;
+      gap: 14px;
+      padding: 28px 0 4px;
+      text-align: center;
+    }
+
+    .tours-hero h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .tours-hero p {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      color: #5f586b;
+      font-size: 16px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .zone-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .zone-filter button {
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgb(62 48 32 / 0.04);
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+      touch-action: manipulation;
+    }
+
+    .zone-filter button:hover,
+    .zone-filter button:focus-visible {
+      border-color: color-mix(in srgb, var(--accent) 36%, #fff 64%);
+      color: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .zone-filter button.is-active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 24px rgb(103 61 230 / 0.14);
+    }
+
+    .zone-grid,
+    .excursion-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .zone-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .zone-card,
+    .excursion-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.94);
+      box-shadow: 0 18px 42px rgb(62 48 32 / 0.09);
+    }
+
+    .zone-card {
+      display: grid;
+      grid-template-rows: 170px 1fr;
+      min-height: 320px;
+    }
+
+    .zone-card img,
+    .excursion-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
+    }
+
+    .zone-card-body {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 16px;
+    }
+
+    .tour-kicker {
+      color: var(--accent-dark);
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .zone-card h2,
+    .excursion-card h2,
+    .tour-detail h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .zone-card h2 {
+      font-size: 20px;
+    }
+
+    .zone-card p,
+    .excursion-card p,
+    .tour-detail p {
+      margin: 0;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.5;
+    }
+
+    .zone-card .tour-link {
+      align-self: end;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .tours-results {
+      display: grid;
+      gap: 16px;
+    }
+
+    .tours-results-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 4px;
+    }
+
+    .tours-results-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .tours-results-head p {
+      margin: 4px 0 0;
+      color: #5f586b;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .excursion-card {
+      display: grid;
+      grid-template-rows: 190px 1fr;
+    }
+
+    .excursion-body {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .tour-rating {
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .tour-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: #5f586b;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .tour-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .tour-price {
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .tour-card-button,
+    .tour-detail-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgb(103 61 230 / 0.14);
+      transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+      touch-action: manipulation;
+    }
+
+    .tour-card-button:hover,
+    .tour-card-button:focus-visible,
+    .tour-detail-whatsapp:hover,
+    .tour-detail-whatsapp:focus-visible {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgb(103 61 230 / 0.18);
+    }
+
+    .tour-detail {
+      display: none;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgb(255 255 255 / 0.96);
+      box-shadow: 0 18px 42px rgb(62 48 32 / 0.08);
+    }
+
+    .tour-detail.is-visible {
+      display: grid;
+    }
+
+    .tour-detail-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .tour-detail-media {
+      overflow: hidden;
+      min-height: 280px;
+      border-radius: 8px;
+    }
+
+    .tour-detail-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tour-detail-content {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tour-detail-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #5f586b;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
+    .tour-detail-list strong {
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .tour-booking-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid color-mix(in srgb, var(--accent) 15%, #fff 85%);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--accent) 5%, #fff 95%));
+    }
+
+    .tour-booking-card h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
+    .tour-booking-card label {
+      display: grid;
+      gap: 6px;
+      color: #2b2536;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .tour-booking-card input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid #d8cfbf;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .tour-passenger-stepper {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 44px;
+      min-height: 44px;
+      overflow: hidden;
+      border: 1px solid #d8cfbf;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .tour-passenger-stepper button {
+      border-radius: 0;
+      background: #fff;
+      color: var(--accent-dark);
+      font-size: 18px;
+      touch-action: manipulation;
+    }
+
+    .tour-passenger-stepper output {
+      display: grid;
+      place-items: center;
+      border-right: 1px solid #eadfce;
+      border-left: 1px solid #eadfce;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
     .faq-section {
       display: grid;
       gap: 16px;
@@ -2933,6 +3304,69 @@
         left: auto;
       }
 
+
+
+      .tours-hero {
+        padding-top: 22px;
+        text-align: left;
+      }
+
+      .tours-hero p {
+        margin: 0;
+      }
+
+      .zone-filter {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-right: -16px;
+        padding: 2px 16px 8px 0;
+        scrollbar-width: none;
+      }
+
+      .zone-filter::-webkit-scrollbar {
+        display: none;
+      }
+
+      .zone-filter button {
+        flex: 0 0 auto;
+        min-height: 44px;
+        font-size: 13px;
+      }
+
+      .zone-grid,
+      .excursion-grid,
+      .tour-detail-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .zone-card {
+        grid-template-rows: 170px 1fr;
+        min-height: 330px;
+      }
+
+      .excursion-card {
+        grid-template-rows: 180px 1fr;
+      }
+
+      .tours-results-head {
+        display: grid;
+        align-items: start;
+      }
+
+      .tour-price-row {
+        display: grid;
+      }
+
+      .tour-card-button,
+      .tour-detail-whatsapp {
+        width: 100%;
+      }
+
+      .tour-detail-media {
+        min-height: 210px;
+      }
+
       .whatsapp-chat {
         right: max(27px, calc(env(safe-area-inset-right) + 15px));
         bottom: max(12px, env(safe-area-inset-bottom));
@@ -2995,7 +3429,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
           <span>Home</span>
         </a>
-        <a class="nav-link is-active" href="/" aria-current="page">
+        <a class="nav-link is-active" href="#transfers" aria-current="page">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 1.5-4.5A2 2 0 0 1 9.4 9h5.2a2 2 0 0 1 1.9 1.5L18 15"/><path d="M5 15h14v4H5zM7 19v1M17 19v1"/></svg>
           <span>Transfers</span>
         </a>
@@ -3041,7 +3475,7 @@
   </section>
 
   <main>
-    <section class="booking-shell">
+    <section class="booking-shell transfer-view" id="transfers">
       <form class="search-panel" id="searchForm">
         <div class="panel-head">
           <div>
@@ -3336,7 +3770,7 @@
         </section>
       </section>
     </section>
-    <section class="trust-section" aria-label="Why travelers book with Dominican Quest">
+    <section class="trust-section transfer-view" aria-label="Why travelers book with Dominican Quest">
       <article class="trust-card">
         <span class="trust-kicker">Customer peace of mind</span>
         <div class="review-stars" aria-label="Five star review">★★★★★</div>
@@ -3380,7 +3814,7 @@
         <a class="tour-link" href="#tours">Explore Tours →</a>
       </article>
     </section>
-    <section class="faq-section" aria-labelledby="faqTitle">
+    <section class="faq-section transfer-view" aria-labelledby="faqTitle">
       <div class="faq-head">
         <h2 id="faqTitle">Questions before you book?</h2>
         <p>Quick answers to the most common private transfer details.</p>
@@ -3424,9 +3858,38 @@
         </article>
       </div>
     </section>
-    <section class="local-identity" aria-label="Dominican Quest local identity">
+    <section class="local-identity transfer-view" aria-label="Dominican Quest local identity">
       <h2>🇩🇴 Proudly Local. Professionally Managed.</h2>
       <p>Dominican Quest is a family-owned transport and excursion provider based directly in Punta Cana. With our own dedicated fleet of modern, air-conditioned vehicles and professionally trained local drivers, we ensure your family’s first and last impression of the Dominican Republic is absolute perfection.</p>
+    </section>
+    <section class="tours-page" id="toursPage" aria-labelledby="toursTitle" hidden>
+      <header class="tours-hero">
+        <h1 id="toursTitle">Find Your Next Adventure</h1>
+        <p>Browse our curated local tours by zone to match your resort.</p>
+        <div class="zone-filter" id="zoneFilter" role="group" aria-label="Tour zones">
+          <button type="button" data-tour-zone="all">📍 All</button>
+          <button type="button" data-tour-zone="punta-cana">📍 Punta Cana</button>
+          <button type="button" data-tour-zone="bayahibe-la-romana">📍 Bayahibe / La Romana</button>
+          <button type="button" data-tour-zone="samana">📍 Samaná</button>
+          <button type="button" data-tour-zone="santo-domingo">📍 Santo Domingo</button>
+          <button type="button" data-tour-zone="puerto-plata-sosua">📍 Puerto Plata / Sosua</button>
+          <button type="button" data-tour-zone="juan-dolio-boca-chica">📍 Juan Dolio / Boca Chica</button>
+        </div>
+      </header>
+
+      <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
+
+      <section class="tours-results" id="toursResults" hidden>
+        <div class="tours-results-head">
+          <div>
+            <h2 id="toursResultsTitle">All Dominican Quest tours</h2>
+            <p id="toursResultsCopy">Choose an excursion, then pick your date and group size.</p>
+          </div>
+          <a class="tour-link" href="#tours" id="backToZones">Browse zones →</a>
+        </div>
+        <div class="excursion-grid" id="excursionGrid"></div>
+        <section class="tour-detail" id="tourDetail" aria-live="polite"></section>
+      </section>
     </section>
   </main>
 
@@ -3624,6 +4087,343 @@
     const mobileMenuBackdrop = document.getElementById("mobileMenuBackdrop");
     const mobileMenuClose = document.getElementById("mobileMenuClose");
 
+    const transferViews = Array.from(document.querySelectorAll(".transfer-view"));
+    const toursPage = document.getElementById("toursPage");
+    const zoneFilter = document.getElementById("zoneFilter");
+    const zoneGrid = document.getElementById("zoneGrid");
+    const toursResults = document.getElementById("toursResults");
+    const toursResultsTitle = document.getElementById("toursResultsTitle");
+    const toursResultsCopy = document.getElementById("toursResultsCopy");
+    const excursionGrid = document.getElementById("excursionGrid");
+    const tourDetail = document.getElementById("tourDetail");
+    const backToZones = document.getElementById("backToZones");
+    let selectedTourZone = "";
+    let activeTourGuestCounts = {};
+
+    const TOUR_ZONES = [
+      {
+        id: "punta-cana",
+        label: "Punta Cana & Bavaro",
+        kicker: "Popular location",
+        tagline: "Adventure, Speedboats & Safaris",
+        cta: "Explore Punta Cana Tours →",
+        image: "assets/saona-island-tour-private.webp"
+      },
+      {
+        id: "samana",
+        label: "Samaná Peninsula",
+        kicker: "Nature escape",
+        tagline: "Waterfalls, Whales & Rain Forests",
+        cta: "Explore Samaná Tours →",
+        image: "assets/Samana_Excursions_Dominican_Quest.webp"
+      },
+      {
+        id: "bayahibe-la-romana",
+        label: "Bayahibe / La Romana",
+        kicker: "Island classics",
+        tagline: "Saona, Catalina & Caribbean Blue Water",
+        cta: "Explore Bayahibe Tours →",
+        image: "assets/Bayahibe_tours_Quest_DR.webp"
+      },
+      {
+        id: "santo-domingo",
+        label: "Santo Domingo",
+        kicker: "Culture & history",
+        tagline: "Colonial City, Food & Local Heritage",
+        cta: "Explore Santo Domingo Tours →",
+        image: "assets/Santo_Domingo_Tours_Dominican_Quest.webp"
+      },
+      {
+        id: "puerto-plata-sosua",
+        label: "Puerto Plata / Sosua",
+        kicker: "North coast",
+        tagline: "Cable Car, Beaches & Ocean Adventures",
+        cta: "Explore Puerto Plata Tours →",
+        image: "assets/Puerto_Plata_Tours_Quest.webp"
+      },
+      {
+        id: "juan-dolio-boca-chica",
+        label: "Juan Dolio / Boca Chica",
+        kicker: "Beach getaway",
+        tagline: "Reefs, Calm Bays & Easy Day Trips",
+        cta: "Explore Boca Chica Tours →",
+        image: "assets/Juan_Dolio_Tours_Quest.webp"
+      }
+    ];
+
+    const TOURS = [
+      {
+        id: "saona-paradise",
+        zone: "punta-cana",
+        title: "Saona Island Paradise Tour",
+        rating: "4.9",
+        reviews: "120 Reviews",
+        duration: "Full Day",
+        from: "From Punta Cana",
+        price: "US$85.00",
+        image: "assets/saona-island-tour-private.webp",
+        summary: "A bright Caribbean day with beach time, natural pool stops, music, lunch, and postcard-blue water.",
+        includes: ["Hotel pickup available", "Speedboat and catamaran experience", "Lunch and island time included"]
+      },
+      {
+        id: "buggy-macao",
+        zone: "punta-cana",
+        title: "Macao Buggy Adventure",
+        rating: "4.8",
+        reviews: "96 Reviews",
+        duration: "Half Day",
+        from: "From Punta Cana",
+        price: "US$65.00",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
+        summary: "Ride through countryside trails, visit local stops, and finish near the wild Macao coastline.",
+        includes: ["Morning and afternoon departures", "Helmet and guide included", "Great for couples and groups"]
+      },
+      {
+        id: "catalina-snorkel",
+        zone: "bayahibe-la-romana",
+        title: "Catalina Island Snorkel Day",
+        rating: "4.9",
+        reviews: "88 Reviews",
+        duration: "Full Day",
+        from: "From La Romana / Bayahibe",
+        price: "US$95.00",
+        image: "https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1200&q=82",
+        summary: "Clear-water snorkeling, beach lounging, and an easy island day from the southeast coast.",
+        includes: ["Snorkel stop included", "Beach lunch", "Private transfer options available"]
+      },
+      {
+        id: "samana-waterfall",
+        zone: "samana",
+        title: "El Limón Waterfall & Samaná Day",
+        rating: "4.9",
+        reviews: "74 Reviews",
+        duration: "Full Day",
+        from: "From Samaná / Las Terrenas",
+        price: "US$110.00",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
+        summary: "A lush mountain-and-waterfall experience with local guides and dramatic peninsula scenery.",
+        includes: ["Local guide", "Waterfall visit", "Optional lunch coordination"]
+      },
+      {
+        id: "whale-watch",
+        zone: "samana",
+        title: "Samaná Whale Watching",
+        rating: "4.8",
+        reviews: "62 Reviews",
+        duration: "Seasonal Half Day",
+        from: "From Samaná Bay",
+        price: "US$89.00",
+        image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=82",
+        summary: "Seasonal whale watching in Samaná Bay with a comfortable boat experience and local crew.",
+        includes: ["Seasonal availability", "Boat tour", "Best for nature lovers"]
+      },
+      {
+        id: "colonial-city",
+        zone: "santo-domingo",
+        title: "Santo Domingo Colonial City Tour",
+        rating: "4.9",
+        reviews: "105 Reviews",
+        duration: "Full Day",
+        from: "From Santo Domingo / Punta Cana",
+        price: "US$99.00",
+        image: "assets/Santo_Domingo_Tours_Dominican_Quest.webp",
+        summary: "A cultural day through the Colonial Zone, historic landmarks, local flavors, and city highlights.",
+        includes: ["Historic center visit", "Private guide options", "Comfortable transport available"]
+      },
+      {
+        id: "puerto-plata-coast",
+        zone: "puerto-plata-sosua",
+        title: "Puerto Plata City & Sosua Beach Day",
+        rating: "4.8",
+        reviews: "54 Reviews",
+        duration: "Full Day",
+        from: "From Puerto Plata / Sosua",
+        price: "US$95.00",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=82",
+        summary: "Explore the north coast with city views, beach time, local stops, and a relaxed Dominican Quest itinerary.",
+        includes: ["North coast pickup", "Beach and city highlights", "Private group options available"]
+      },
+      {
+        id: "boca-chica-reef",
+        zone: "juan-dolio-boca-chica",
+        title: "Boca Chica Reef & Juan Dolio Escape",
+        rating: "4.8",
+        reviews: "47 Reviews",
+        duration: "Half Day",
+        from: "From Juan Dolio / Boca Chica",
+        price: "US$75.00",
+        image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=82",
+        summary: "A simple beach-and-water day for guests staying close to Santo Domingo’s eastern coastline.",
+        includes: ["Easy resort pickup", "Beach time", "Great for families and groups"]
+      }
+    ];
+
+    function tourZoneLabel(zoneId) {
+      if (zoneId === "all") return "All Dominican Quest tours";
+      return TOUR_ZONES.find(zone => zone.id === zoneId)?.label || "Dominican Quest tours";
+    }
+
+    function renderZoneCards() {
+      if (!zoneGrid) return;
+      zoneGrid.replaceChildren(...TOUR_ZONES.map(zone => {
+        const card = document.createElement("article");
+        card.className = "zone-card";
+        card.innerHTML = `
+          <img src="${zone.image}" alt="${zone.label} tours" loading="lazy">
+          <div class="zone-card-body">
+            <span class="tour-kicker">${zone.kicker}</span>
+            <h2>${zone.label}</h2>
+            <p>${zone.tagline}</p>
+            <button class="tour-link" type="button" data-zone-card="${zone.id}">${zone.cta}</button>
+          </div>
+        `;
+        return card;
+      }));
+      zoneGrid.querySelectorAll("[data-zone-card]").forEach(button => {
+        button.addEventListener("click", () => selectTourZone(button.dataset.zoneCard || "all"));
+      });
+    }
+
+    function renderTourCards(zoneId = "all") {
+      if (!excursionGrid) return;
+      const tours = zoneId === "all" ? TOURS : TOURS.filter(tour => tour.zone === zoneId);
+      excursionGrid.replaceChildren(...tours.map(tour => {
+        const card = document.createElement("article");
+        card.className = "excursion-card";
+        card.innerHTML = `
+          <img src="${tour.image}" alt="${tour.title}" loading="lazy">
+          <div class="excursion-body">
+            <span class="tour-rating">★★★★★ (${tour.rating}) • ${tour.reviews}</span>
+            <h2>${tour.title}</h2>
+            <div class="tour-meta"><span>⏱️ ${tour.duration}</span><span>📍 ${tour.from}</span></div>
+            <p>${tour.summary}</p>
+            <div class="tour-price-row">
+              <strong class="tour-price">From ${tour.price}</strong>
+              <button class="tour-card-button" type="button" data-tour-id="${tour.id}">View Details &amp; Book</button>
+            </div>
+          </div>
+        `;
+        return card;
+      }));
+      excursionGrid.querySelectorAll("[data-tour-id]").forEach(button => {
+        button.addEventListener("click", () => showTourDetail(button.dataset.tourId));
+      });
+    }
+
+    function syncTourZoneButtons() {
+      zoneFilter?.querySelectorAll("[data-tour-zone]").forEach(button => {
+        button.classList.toggle("is-active", button.dataset.tourZone === selectedTourZone);
+      });
+    }
+
+    function selectTourZone(zoneId) {
+      selectedTourZone = zoneId;
+      syncTourZoneButtons();
+      if (zoneGrid) zoneGrid.hidden = true;
+      if (toursResults) toursResults.hidden = false;
+      if (tourDetail) {
+        tourDetail.classList.remove("is-visible");
+        tourDetail.replaceChildren();
+      }
+      if (toursResultsTitle) toursResultsTitle.textContent = tourZoneLabel(zoneId);
+      if (toursResultsCopy) toursResultsCopy.textContent = zoneId === "all"
+        ? "A curated mix of our most requested local excursions."
+        : "Choose your favorite excursion in this region, then pick a date and group size.";
+      renderTourCards(zoneId);
+    }
+
+    function resetToursToZones() {
+      selectedTourZone = "";
+      syncTourZoneButtons();
+      if (zoneGrid) zoneGrid.hidden = false;
+      if (toursResults) toursResults.hidden = true;
+      if (tourDetail) {
+        tourDetail.classList.remove("is-visible");
+        tourDetail.replaceChildren();
+      }
+    }
+
+    function showTourDetail(tourId) {
+      const tour = TOURS.find(item => item.id === tourId);
+      if (!tour || !tourDetail) return;
+      const guestCount = activeTourGuestCounts[tour.id] || 2;
+      tourDetail.innerHTML = `
+        <div class="tour-detail-layout">
+          <div class="tour-detail-content">
+            <div class="tour-detail-media"><img src="${tour.image}" alt="${tour.title}"></div>
+            <span class="tour-kicker">${tourZoneLabel(tour.zone)}</span>
+            <h2>${tour.title}</h2>
+            <p>${tour.summary}</p>
+            <ul class="tour-detail-list">
+              ${tour.includes.map(item => `<li><strong>✓</strong> ${item}</li>`).join("")}
+            </ul>
+          </div>
+          <form class="tour-booking-card" data-tour-booking="${tour.id}">
+            <h3>Book this tour</h3>
+            <label>Date
+              <input type="date" required aria-label="Tour date">
+            </label>
+            <label>Pickup time
+              <input type="time" required aria-label="Tour pickup time">
+            </label>
+            <label>Guests
+              <span class="tour-passenger-stepper">
+                <button type="button" data-tour-guests="minus" aria-label="Remove guest">-</button>
+                <output aria-live="polite">${guestCount}</output>
+                <button type="button" data-tour-guests="plus" aria-label="Add guest">+</button>
+              </span>
+            </label>
+            <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, guestCount)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
+          </form>
+        </div>
+      `;
+      tourDetail.classList.add("is-visible");
+      tourDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+      wireTourGuestStepper(tour);
+    }
+
+    function tourWhatsAppLink(tour, guests) {
+      const text = `Hi Dominican Quest, I would like to book ${tour.title} for ${guests} guests.`;
+      return `https://wa.me/18497638642?text=${encodeURIComponent(text)}`;
+    }
+
+    function wireTourGuestStepper(tour) {
+      const form = tourDetail?.querySelector(`[data-tour-booking="${tour.id}"]`);
+      if (!form) return;
+      const output = form.querySelector("output");
+      const whatsappLink = form.querySelector(".tour-detail-whatsapp");
+      const sync = () => {
+        const guests = activeTourGuestCounts[tour.id] || 2;
+        if (output) output.textContent = String(guests);
+        if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, guests);
+      };
+      form.querySelectorAll("[data-tour-guests]").forEach(button => {
+        button.addEventListener("click", () => {
+          const current = activeTourGuestCounts[tour.id] || 2;
+          activeTourGuestCounts[tour.id] = button.dataset.tourGuests === "plus"
+            ? Math.min(30, current + 1)
+            : Math.max(1, current - 1);
+          sync();
+        });
+      });
+      sync();
+    }
+
+    function setSiteViewFromHash() {
+      const isToursView = window.location.hash.startsWith("#tours");
+      transferViews.forEach(view => { view.hidden = isToursView; });
+      if (toursPage) toursPage.hidden = !isToursView;
+      document.querySelectorAll(".site-nav .nav-link").forEach(link => {
+        const isToursLink = link.getAttribute("href") === "#tours";
+        const shouldActivate = isToursView ? isToursLink : link.textContent.trim() === "Transfers";
+        link.classList.toggle("is-active", shouldActivate);
+        if (shouldActivate) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+      if (isToursView && !selectedTourZone) resetToursToZones();
+    }
+
+
     function setMobileMenuOpen(open) {
       document.body.classList.toggle("mobile-menu-open", open);
       mobileMenuToggle?.setAttribute("aria-expanded", String(open));
@@ -3668,6 +4468,18 @@
     window.addEventListener("resize", () => {
       if (state.mobilePlaceSide && !mobilePlaceOverlayEnabled()) closeMobilePlaceOverlay(false);
     });
+
+
+    renderZoneCards();
+    zoneFilter?.querySelectorAll("[data-tour-zone]").forEach(button => {
+      button.addEventListener("click", () => selectTourZone(button.dataset.tourZone || "all"));
+    });
+    backToZones?.addEventListener("click", event => {
+      event.preventDefault();
+      resetToursToZones();
+    });
+    window.addEventListener("hashchange", setSiteViewFromHash);
+    setSiteViewFromHash();
 
     function setStatus(element, message, type = "") {
       element.textContent = message || "";
