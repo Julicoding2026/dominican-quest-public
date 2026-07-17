@@ -4145,7 +4145,7 @@
 
     let tourZones = DEFAULT_TOUR_ZONES.map(zone => ({ ...zone }));
 
-    const TOURS = [
+    const DEFAULT_TOURS = [
       {
         id: "saona-paradise",
         zone: "punta-cana",
@@ -4252,6 +4252,8 @@
       }
     ];
 
+    let tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])] }));
+
     function tourZoneLabel(zoneId) {
       if (zoneId === "all") return "All Dominican Quest tours";
       return tourZones.find(zone => zone.id === zoneId)?.label || "Dominican Quest tours";
@@ -4297,8 +4299,8 @@
 
     function renderTourCards(zoneId = "all") {
       if (!excursionGrid) return;
-      const tours = zoneId === "all" ? TOURS : TOURS.filter(tour => tour.zone === zoneId);
-      excursionGrid.replaceChildren(...tours.map(tour => {
+      const visibleTours = zoneId === "all" ? tours : tours.filter(tour => tour.zone === zoneId);
+      excursionGrid.replaceChildren(...visibleTours.map(tour => {
         const card = document.createElement("article");
         card.className = "excursion-card";
         card.innerHTML = `
@@ -4365,6 +4367,45 @@
       };
     }
 
+    function publicTourFromRow(row) {
+      const includes = Array.isArray(row.included_items)
+        ? row.included_items
+        : String(row.included_items || "").split("\n").map(item => item.trim()).filter(Boolean);
+      return {
+        id: row.slug,
+        zone: row.zone_slug,
+        title: row.title,
+        rating: row.rating || "4.9",
+        reviews: row.reviews || "0 Reviews",
+        duration: row.duration,
+        from: row.departure_label,
+        price: row.price_text,
+        image: row.image_url,
+        summary: row.summary,
+        includes
+      };
+    }
+
+    async function loadPublicTours() {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,title,rating,reviews,duration,departure_label,price_text,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        if (!response.ok) throw new Error(`Tours ${response.status}`);
+        const rows = await response.json();
+        if (Array.isArray(rows) && rows.length) {
+          tours = rows.map(publicTourFromRow).filter(tour => tour.id && tour.zone && tour.title && tour.image);
+        }
+      } catch (error) {
+        console.warn("Using fallback tours", error);
+        tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])] }));
+      }
+      if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
+    }
+
     async function loadPublicTourZones() {
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tour_zones?select=slug,name,kicker,tagline,cta_text,image_url,sort_order,is_active&is_active=eq.true&order=sort_order.asc,name.asc`, {
@@ -4391,7 +4432,7 @@
     }
 
     function showTourDetail(tourId) {
-      const tour = TOURS.find(item => item.id === tourId);
+      const tour = tours.find(item => item.id === tourId);
       if (!tour || !tourDetail) return;
       const guestCount = activeTourGuestCounts[tour.id] || 2;
       tourDetail.innerHTML = `
@@ -4520,6 +4561,7 @@
     renderZoneFilters();
     renderZoneCards();
     loadPublicTourZones();
+    loadPublicTours();
     backToZones?.addEventListener("click", event => {
       event.preventDefault();
       resetToursToZones();
