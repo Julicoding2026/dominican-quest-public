@@ -3392,13 +3392,14 @@
       }
 
       .zone-filter-wrap {
-        margin-right: -16px;
+        max-width: 100%;
+        overflow: hidden;
       }
 
       .zone-scroll-hint {
         position: absolute;
         top: 50%;
-        right: 4px;
+        right: 2px;
         z-index: 2;
         display: grid;
         width: 24px;
@@ -3427,16 +3428,20 @@
 
       .zone-filter {
         justify-content: flex-start;
-        width: auto;
-        max-width: none;
+        width: 100%;
+        max-width: 100%;
         margin: 0;
-        padding: 4px 16px 8px 0;
+        padding: 4px 42px 8px 0;
+        overflow-x: auto;
+        overflow-y: hidden;
         border: 0;
         border-radius: 0;
         background: transparent;
         box-shadow: none;
-        -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
-        mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
+        overscroll-behavior-inline: contain;
+        touch-action: pan-x;
+        -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 42px), transparent 100%);
+        mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 42px), transparent 100%);
       }
 
       .zone-filter button {
