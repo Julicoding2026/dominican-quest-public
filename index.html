@@ -550,22 +550,38 @@
 
     .zone-filter {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 6px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 4px auto 0;
+      padding: 4px;
+      overflow-x: auto;
+      border: 1px solid color-mix(in srgb, var(--line) 72%, #fff 28%);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.68);
+      box-shadow: 0 10px 24px rgb(62 48 32 / 0.05);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .zone-filter::-webkit-scrollbar {
+      display: none;
     }
 
     .zone-filter button {
-      min-height: 42px;
-      padding: 0 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
+      flex: 0 0 auto;
+      min-height: 36px;
+      padding: 0 11px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 950;
-      box-shadow: 0 8px 18px rgb(62 48 32 / 0.04);
+      white-space: nowrap;
+      box-shadow: none;
       transition: background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
       touch-action: manipulation;
     }
@@ -3317,21 +3333,23 @@
 
       .zone-filter {
         justify-content: flex-start;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        margin-right: -16px;
-        padding: 2px 16px 8px 0;
-        scrollbar-width: none;
-      }
-
-      .zone-filter::-webkit-scrollbar {
-        display: none;
+        width: auto;
+        max-width: none;
+        margin: 0 -16px 0 0;
+        padding: 4px 16px 8px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
       }
 
       .zone-filter button {
-        flex: 0 0 auto;
         min-height: 44px;
+        padding: 0 14px;
+        border-color: var(--line);
+        background: #fff;
         font-size: 13px;
+        box-shadow: 0 8px 18px rgb(62 48 32 / 0.04);
       }
 
       .zone-grid,
