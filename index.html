@@ -3866,15 +3866,7 @@
       <header class="tours-hero">
         <h1 id="toursTitle">Find Your Next Adventure</h1>
         <p>Browse our curated local tours by zone to match your resort.</p>
-        <div class="zone-filter" id="zoneFilter" role="group" aria-label="Tour zones">
-          <button type="button" data-tour-zone="all">📍 All</button>
-          <button type="button" data-tour-zone="punta-cana">📍 Punta Cana</button>
-          <button type="button" data-tour-zone="bayahibe-la-romana">📍 Bayahibe / La Romana</button>
-          <button type="button" data-tour-zone="samana">📍 Samaná</button>
-          <button type="button" data-tour-zone="santo-domingo">📍 Santo Domingo</button>
-          <button type="button" data-tour-zone="puerto-plata-sosua">📍 Puerto Plata / Sosua</button>
-          <button type="button" data-tour-zone="juan-dolio-boca-chica">📍 Juan Dolio / Boca Chica</button>
-        </div>
+        <div class="zone-filter" id="zoneFilter" role="group" aria-label="Tour zones"></div>
       </header>
 
       <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
@@ -4100,7 +4092,7 @@
     let selectedTourZone = "";
     let activeTourGuestCounts = {};
 
-    const TOUR_ZONES = [
+    const DEFAULT_TOUR_ZONES = [
       {
         id: "punta-cana",
         label: "Punta Cana & Bavaro",
@@ -4150,6 +4142,8 @@
         image: "assets/tours-juan-dolio-boca-chica.webp"
       }
     ];
+
+    let tourZones = DEFAULT_TOUR_ZONES.map(zone => ({ ...zone }));
 
     const TOURS = [
       {
@@ -4260,12 +4254,29 @@
 
     function tourZoneLabel(zoneId) {
       if (zoneId === "all") return "All Dominican Quest tours";
-      return TOUR_ZONES.find(zone => zone.id === zoneId)?.label || "Dominican Quest tours";
+      return tourZones.find(zone => zone.id === zoneId)?.label || "Dominican Quest tours";
+    }
+
+    function renderZoneFilters() {
+      if (!zoneFilter) return;
+      const buttons = [
+        { id: "all", label: "All" },
+        ...tourZones.map(zone => ({ id: zone.id, label: zone.label }))
+      ];
+      zoneFilter.replaceChildren(...buttons.map(zone => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.tourZone = zone.id;
+        button.textContent = `📍 ${zone.label}`;
+        button.addEventListener("click", () => selectTourZone(zone.id));
+        return button;
+      }));
+      syncTourZoneButtons();
     }
 
     function renderZoneCards() {
       if (!zoneGrid) return;
-      zoneGrid.replaceChildren(...TOUR_ZONES.map(zone => {
+      zoneGrid.replaceChildren(...tourZones.map(zone => {
         const card = document.createElement("article");
         card.className = "zone-card";
         card.innerHTML = `
@@ -4340,6 +4351,42 @@
       if (tourDetail) {
         tourDetail.classList.remove("is-visible");
         tourDetail.replaceChildren();
+      }
+    }
+
+    function publicTourZoneFromRow(row) {
+      return {
+        id: row.slug,
+        label: row.name,
+        kicker: row.kicker,
+        tagline: row.tagline,
+        cta: row.cta_text,
+        image: row.image_url
+      };
+    }
+
+    async function loadPublicTourZones() {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tour_zones?select=slug,name,kicker,tagline,cta_text,image_url,sort_order,is_active&is_active=eq.true&order=sort_order.asc,name.asc`, {
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        if (!response.ok) throw new Error(`Tour zones ${response.status}`);
+        const rows = await response.json();
+        if (Array.isArray(rows) && rows.length) {
+          tourZones = rows.map(publicTourZoneFromRow).filter(zone => zone.id && zone.label && zone.image);
+        }
+      } catch (error) {
+        console.warn("Using fallback tour zones", error);
+        tourZones = DEFAULT_TOUR_ZONES.map(zone => ({ ...zone }));
+      }
+      renderZoneFilters();
+      renderZoneCards();
+      if (selectedTourZone && selectedTourZone !== "all") {
+        const stillExists = tourZones.some(zone => zone.id === selectedTourZone);
+        if (!stillExists) resetToursToZones();
       }
     }
 
@@ -4470,10 +4517,9 @@
     });
 
 
+    renderZoneFilters();
     renderZoneCards();
-    zoneFilter?.querySelectorAll("[data-tour-zone]").forEach(button => {
-      button.addEventListener("click", () => selectTourZone(button.dataset.tourZone || "all"));
-    });
+    loadPublicTourZones();
     backToZones?.addEventListener("click", event => {
       event.preventDefault();
       resetToursToZones();
