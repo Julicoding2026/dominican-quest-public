@@ -548,6 +548,16 @@
       line-height: 1.45;
     }
 
+    .zone-filter-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .zone-scroll-hint {
+      display: none;
+      pointer-events: none;
+    }
+
     .zone-filter {
       display: flex;
       flex-wrap: nowrap;
@@ -625,6 +635,25 @@
       display: grid;
       grid-template-rows: 170px 1fr;
       min-height: 320px;
+      cursor: pointer;
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .zone-card.is-featured {
+      grid-column: span 2;
+    }
+
+    .zone-card:hover,
+    .zone-card:focus-visible,
+    .zone-card:focus-within {
+      border-color: color-mix(in srgb, var(--accent) 44%, #fff 56%);
+      box-shadow: 0 24px 52px rgb(62 48 32 / 0.14);
+      transform: translateY(-4px);
+    }
+
+    .zone-card:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent) 28%, transparent 72%);
+      outline-offset: 3px;
     }
 
     .zone-card img,
@@ -636,6 +665,16 @@
       background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
     }
 
+    .zone-card img {
+      transition: transform 260ms ease;
+    }
+
+    .zone-card:hover img,
+    .zone-card:focus-visible img,
+    .zone-card:focus-within img {
+      transform: scale(1.035);
+    }
+
     .zone-card-body {
       display: grid;
       gap: 8px;
@@ -644,10 +683,15 @@
     }
 
     .tour-kicker {
-      color: var(--accent-dark);
+      justify-self: start;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgb(103 61 230 / 0.10);
+      color: #3f1ab7;
       font-size: 11px;
-      font-weight: 950;
-      letter-spacing: 0.04em;
+      font-weight: 900;
+      letter-spacing: 0.045em;
+      line-height: 1.1;
       text-transform: uppercase;
     }
 
@@ -677,8 +721,24 @@
 
     .zone-card .tour-link {
       align-self: end;
+      justify-self: start;
+      min-height: 38px;
       margin-top: 8px;
+      padding: 0 14px;
+      border: 1px solid color-mix(in srgb, var(--accent) 62%, #fff 38%);
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
       font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 12px 24px rgb(103 61 230 / 0.16);
+    }
+
+    .zone-card .tour-link:hover,
+    .zone-card .tour-link:focus-visible {
+      background: var(--accent-dark);
+      color: #fff;
+      transform: translateY(-1px);
     }
 
     .tours-results {
@@ -3331,11 +3391,45 @@
         margin: 0;
       }
 
+      .zone-filter-wrap {
+        margin-right: -16px;
+      }
+
+      .zone-scroll-hint {
+        position: absolute;
+        top: 50%;
+        right: 4px;
+        z-index: 2;
+        display: grid;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border: 1px solid rgb(103 61 230 / 0.16);
+        border-radius: 999px;
+        background: rgb(255 255 255 / 0.68);
+        color: rgb(88 48 224 / 0.72);
+        font-size: 18px;
+        font-weight: 950;
+        line-height: 1;
+        box-shadow: 0 8px 18px rgb(62 48 32 / 0.08);
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      .zone-filter-wrap.has-more .zone-scroll-hint:not(.is-hidden) {
+        opacity: 1;
+      }
+
+      .zone-filter-wrap.has-more .zone-scroll-hint.is-hidden {
+        transform: translate(4px, -50%);
+      }
+
       .zone-filter {
         justify-content: flex-start;
         width: auto;
         max-width: none;
-        margin: 0 -16px 0 0;
+        margin: 0;
         padding: 4px 16px 8px 0;
         border: 0;
         border-radius: 0;
@@ -3360,7 +3454,9 @@
         grid-template-columns: 1fr;
       }
 
-      .zone-card {
+      .zone-card,
+      .zone-card.is-featured {
+        grid-column: auto;
         grid-template-rows: 170px 1fr;
         min-height: 330px;
       }
@@ -3886,7 +3982,10 @@
       <header class="tours-hero">
         <h1 id="toursTitle">Find Your Next Adventure</h1>
         <p>Browse our curated local tours by zone to match your resort.</p>
-        <div class="zone-filter" id="zoneFilter" role="group" aria-label="Tour zones"></div>
+        <div class="zone-filter-wrap" id="zoneFilterWrap">
+          <div class="zone-filter" id="zoneFilter" role="group" aria-label="Tour zones"></div>
+          <span class="zone-scroll-hint" id="zoneScrollHint" aria-hidden="true">›</span>
+        </div>
       </header>
 
       <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
@@ -4101,7 +4200,9 @@
 
     const transferViews = Array.from(document.querySelectorAll(".transfer-view"));
     const toursPage = document.getElementById("toursPage");
+    const zoneFilterWrap = document.getElementById("zoneFilterWrap");
     const zoneFilter = document.getElementById("zoneFilter");
+    const zoneScrollHint = document.getElementById("zoneScrollHint");
     const zoneGrid = document.getElementById("zoneGrid");
     const toursResults = document.getElementById("toursResults");
     const toursResultsTitle = document.getElementById("toursResultsTitle");
@@ -4294,26 +4395,51 @@
         return button;
       }));
       syncTourZoneButtons();
+      requestAnimationFrame(updateZoneScrollHint);
+    }
+
+    function updateZoneScrollHint() {
+      if (!zoneFilter || !zoneFilterWrap || !zoneScrollHint) return;
+      const hasOverflow = zoneFilter.scrollWidth > zoneFilter.clientWidth + 8;
+      zoneFilterWrap.classList.toggle("has-more", hasOverflow && !zoneScrollHint.classList.contains("is-hidden"));
+    }
+
+    function hideZoneScrollHint() {
+      if (!zoneFilterWrap || !zoneScrollHint) return;
+      zoneScrollHint.classList.add("is-hidden");
+      zoneFilterWrap.classList.remove("has-more");
     }
 
     function renderZoneCards() {
       if (!zoneGrid) return;
       zoneGrid.replaceChildren(...tourZones.map(zone => {
         const card = document.createElement("article");
-        card.className = "zone-card";
+        card.className = zone.id === "punta-cana" ? "zone-card is-featured" : "zone-card";
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", zone.cta.replace("→", "").trim());
+        card.dataset.zoneCard = zone.id;
         card.innerHTML = `
           <img src="${zone.image}" alt="${zone.label} tours" loading="lazy">
           <div class="zone-card-body">
             <span class="tour-kicker">${zone.kicker}</span>
             <h2>${zone.label}</h2>
             <p>${zone.tagline}</p>
-            <button class="tour-link" type="button" data-zone-card="${zone.id}">${zone.cta}</button>
+            <span class="tour-link zone-card-cta" aria-hidden="true">${zone.cta}</span>
           </div>
         `;
         return card;
       }));
-      zoneGrid.querySelectorAll("[data-zone-card]").forEach(button => {
-        button.addEventListener("click", () => selectTourZone(button.dataset.zoneCard || "all"));
+      zoneGrid.querySelectorAll(".zone-card").forEach(card => {
+        card.addEventListener("click", event => {
+          event.preventDefault();
+          selectTourZone(card.dataset.zoneCard || "all");
+        });
+        card.addEventListener("keydown", event => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          selectTourZone(card.dataset.zoneCard || "all");
+        });
       });
     }
 
@@ -4575,6 +4701,7 @@
 
     window.addEventListener("resize", () => {
       if (state.mobilePlaceSide && !mobilePlaceOverlayEnabled()) closeMobilePlaceOverlay(false);
+      updateZoneScrollHint();
     });
 
 
@@ -4586,6 +4713,9 @@
       event.preventDefault();
       resetToursToZones();
     });
+    zoneFilter?.addEventListener("scroll", () => {
+      if (zoneFilter.scrollLeft > 2) hideZoneScrollHint();
+    }, { passive: true });
     window.addEventListener("hashchange", setSiteViewFromHash);
     setSiteViewFromHash();
 
