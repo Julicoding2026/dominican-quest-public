@@ -3895,6 +3895,7 @@
       }
     }
   </style>
+  <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="c785cede-88b3-45b5-8a16-4c8b9508d7d3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 </head>
 <body>
   <header class="site-header">
@@ -4770,6 +4771,7 @@
         duration: "Full Day",
         from: "From Punta Cana",
         price: "US$85.00",
+        childPrice: null,
         image: "assets/saona-island-tour-private.webp",
         summary: "A bright Caribbean day with beach time, natural pool stops, music, lunch, and postcard-blue water.",
         includes: ["Hotel pickup available", "Speedboat and catamaran experience", "Lunch and island time included"]
@@ -4784,6 +4786,7 @@
         duration: "Half Day",
         from: "From Punta Cana",
         price: "US$65.00",
+        childPrice: null,
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
         summary: "Ride through countryside trails, visit local stops, and finish near the wild Macao coastline.",
         includes: ["Morning and afternoon departures", "Helmet and guide included", "Great for couples and groups"]
@@ -4798,6 +4801,7 @@
         duration: "Full Day",
         from: "Private from Punta Cana",
         price: "From US$420.00",
+        childPrice: null,
         image: "assets/saona-island-tour-private.webp",
         summary: "A private, flexible Saona day for families, wedding groups, and guests who want a quieter custom pace.",
         includes: ["Private transportation coordination", "Custom pickup timing", "Best for families and small groups"]
@@ -4812,6 +4816,7 @@
         duration: "Full Day",
         from: "From La Romana / Bayahibe",
         price: "US$95.00",
+        childPrice: null,
         image: "assets/tours-bayahibe-la-romana.webp",
         summary: "Clear-water snorkeling, beach lounging, and an easy island day from the southeast coast.",
         includes: ["Snorkel stop included", "Beach lunch", "Private transfer options available"]
@@ -4826,6 +4831,7 @@
         duration: "Full Day",
         from: "From Samaná / Las Terrenas",
         price: "US$110.00",
+        childPrice: null,
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
         summary: "A lush mountain-and-waterfall experience with local guides and dramatic peninsula scenery.",
         includes: ["Local guide", "Waterfall visit", "Optional lunch coordination"]
@@ -4840,6 +4846,7 @@
         duration: "Seasonal Half Day",
         from: "From Samaná Bay",
         price: "US$89.00",
+        childPrice: null,
         image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=82",
         summary: "Seasonal whale watching in Samaná Bay with a comfortable boat experience and local crew.",
         includes: ["Seasonal availability", "Boat tour", "Best for nature lovers"]
@@ -4854,6 +4861,7 @@
         duration: "Full Day",
         from: "From Santo Domingo / Punta Cana",
         price: "US$99.00",
+        childPrice: null,
         image: "assets/tours-santo-domingo.webp",
         summary: "A cultural day through the Colonial Zone, historic landmarks, local flavors, and city highlights.",
         includes: ["Historic center visit", "Private guide options", "Comfortable transport available"]
@@ -4868,6 +4876,7 @@
         duration: "Full Day",
         from: "From Puerto Plata / Sosua",
         price: "US$95.00",
+        childPrice: null,
         image: "assets/tours-puerto-plata-sosua.webp",
         summary: "Explore the north coast with city views, beach time, local stops, and a relaxed Dominican Quest itinerary.",
         includes: ["North coast pickup", "Beach and city highlights", "Private group options available"]
@@ -4882,6 +4891,7 @@
         duration: "Half Day",
         from: "From Juan Dolio / Boca Chica",
         price: "US$75.00",
+        childPrice: null,
         image: "assets/tours-juan-dolio-boca-chica.webp",
         summary: "A simple beach-and-water day for guests staying close to Santo Domingo’s eastern coastline.",
         includes: ["Easy resort pickup", "Beach time", "Great for families and groups"]
@@ -5118,6 +5128,7 @@
         duration: row.duration,
         from: row.departure_label,
         price: row.price_text,
+        childPrice: row.child_price == null ? null : Number(row.child_price),
         image: row.image_url,
         summary: row.summary,
         includes
@@ -5126,7 +5137,7 @@
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -5225,9 +5236,13 @@
       wireTourGuestStepper(tour);
     }
 
-    function tourUnitPrice(tour) {
+    function tourAdultPrice(tour) {
       const match = String(tour.price || "").replace(/,/g, "").match(/(\d+(?:\.\d{1,2})?)/);
       return match ? Number(match[1]) : 0;
+    }
+
+    function tourChildPrice(tour) {
+      return tour.childPrice == null || Number.isNaN(Number(tour.childPrice)) ? tourAdultPrice(tour) : Number(tour.childPrice);
     }
 
     function moneyText(amount) {
@@ -5284,14 +5299,14 @@
         const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
         form.querySelector('[data-tour-output="adults"]').textContent = String(counts.adults);
         form.querySelector('[data-tour-output="children"]').textContent = String(counts.children);
-        const unit = tourUnitPrice(tour);
-        const totalPeople = counts.adults + counts.children;
-        const total = unit * totalPeople;
+        const adultUnit = tourAdultPrice(tour);
+        const childUnit = tourChildPrice(tour);
+        const total = (adultUnit * counts.adults) + (childUnit * counts.children);
         if (priceSummary) {
           const adultLabel = counts.adults === 1 ? "adult" : "adults";
           const childLabel = counts.children === 1 ? "child" : "children";
-          const childBreakdown = counts.children ? ` + ${counts.children} ${childLabel}` : "";
-          priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(unit)} × ${counts.adults} ${adultLabel}${childBreakdown})</span>`;
+          const childBreakdown = counts.children ? ` + ${moneyText(childUnit)} × ${counts.children} ${childLabel}` : "";
+          priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(adultUnit)} × ${counts.adults} ${adultLabel}${childBreakdown})</span>`;
         }
         if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, counts);
       };
