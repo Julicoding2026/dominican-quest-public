@@ -1010,6 +1010,8 @@
     }
 
     .tour-booking-card {
+      position: sticky;
+      top: 20px;
       display: grid;
       gap: 12px;
       padding: 16px;
@@ -1034,7 +1036,8 @@
       font-weight: 900;
     }
 
-    .tour-booking-card input {
+    .tour-booking-card input,
+    .tour-booking-card select {
       width: 100%;
       min-height: 44px;
       padding: 0 12px;
@@ -1044,6 +1047,16 @@
       color: var(--ink);
       font-size: 16px;
       font-weight: 850;
+    }
+
+    .tour-booking-card input[type="date"]:invalid {
+      color: #6f687d;
+    }
+
+    .tour-guest-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .tour-passenger-stepper {
@@ -1072,6 +1085,27 @@
       color: var(--ink);
       font-size: 16px;
       font-weight: 950;
+    }
+
+    .tour-price-summary {
+      display: grid;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 13%, #fff 87%);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .tour-price-summary strong {
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 950;
+    }
+
+    .tour-price-summary span {
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 850;
     }
 
     .tour-transition {
@@ -3789,6 +3823,14 @@
         width: 100%;
       }
 
+      .tour-booking-card {
+        position: static;
+      }
+
+      .tour-guest-row {
+        grid-template-columns: 1fr;
+      }
+
       .tour-detail-media {
         min-height: 210px;
       }
@@ -5107,7 +5149,8 @@
     function showTourDetail(tourId) {
       const tour = tours.find(item => item.id === tourId);
       if (!tour || !tourDetail) return;
-      const guestCount = activeTourGuestCounts[tour.id] || 2;
+      const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+      activeTourGuestCounts[tour.id] = counts;
       tourDetail.innerHTML = `
         <div class="tour-detail-layout">
           <div class="tour-detail-content">
@@ -5122,19 +5165,31 @@
           <form class="tour-booking-card" data-tour-booking="${tour.id}">
             <h3>Book this tour</h3>
             <label>Date
-              <input type="date" required aria-label="Tour date">
+              <input type="text" placeholder="Select Date" required aria-label="Tour date" data-tour-date>
             </label>
-            <label>Pickup time
-              <input type="time" required aria-label="Tour pickup time">
+            <div class="tour-guest-row">
+              <label>Adults
+                <span class="tour-passenger-stepper">
+                  <button type="button" data-tour-count="adults" data-tour-count-action="minus" aria-label="Remove adult">-</button>
+                  <output data-tour-output="adults" aria-live="polite">${counts.adults}</output>
+                  <button type="button" data-tour-count="adults" data-tour-count-action="plus" aria-label="Add adult">+</button>
+                </span>
+              </label>
+              <label>Children
+                <span class="tour-passenger-stepper">
+                  <button type="button" data-tour-count="children" data-tour-count-action="minus" aria-label="Remove child">-</button>
+                  <output data-tour-output="children" aria-live="polite">${counts.children}</output>
+                  <button type="button" data-tour-count="children" data-tour-count-action="plus" aria-label="Add child">+</button>
+                </span>
+              </label>
+            </div>
+            <label>Resort / Hotel Name
+              <select data-tour-hotel required aria-label="Resort or hotel name">
+                ${tourHotelOptions(tour).map(option => `<option value="${option.value}">${option.label}</option>`).join("")}
+              </select>
             </label>
-            <label>Guests
-              <span class="tour-passenger-stepper">
-                <button type="button" data-tour-guests="minus" aria-label="Remove guest">-</button>
-                <output aria-live="polite">${guestCount}</output>
-                <button type="button" data-tour-guests="plus" aria-label="Add guest">+</button>
-              </span>
-            </label>
-            <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, guestCount)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
+            <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
+            <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, counts)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
           </form>
         </div>
       `;
@@ -5144,30 +5199,81 @@
       wireTourGuestStepper(tour);
     }
 
-    function tourWhatsAppLink(tour, guests) {
-      const text = `Hi Dominican Quest, I would like to book ${tour.title} for ${guests} guests.`;
+    function tourUnitPrice(tour) {
+      const match = String(tour.price || "").replace(/,/g, "").match(/(\d+(?:\.\d{1,2})?)/);
+      return match ? Number(match[1]) : 0;
+    }
+
+    function moneyText(amount) {
+      return `US$${Number(amount || 0).toFixed(2)}`;
+    }
+
+    function compactSearchText(value) {
+      return normalizeSearchText(value).replace(/[^a-z0-9]/g, "");
+    }
+
+    function zoneMatchesHotel(place, zone) {
+      const placeZone = compactSearchText(place.destinationLabel);
+      const requestedZone = compactSearchText(zone);
+      return placeZone.includes(requestedZone) || requestedZone.includes(placeZone);
+    }
+
+    function tourHotelOptions(tour) {
+      const placeholder = [{ value: "", label: "Select resort / hotel" }];
+      const puntaCanaZones = ["Punta Cana/Bavaro", "Punta Cana/Cap Cana", "Punta Cana/Cabeza de Toro", "Punta Cana/Uvero Alto"];
+      const allowedZones = tour.zone === "punta-cana" ? puntaCanaZones : [tourZoneLabel(tour.zone)];
+      const hotels = (state.places || [])
+        .filter(place => isHotelPlace(place))
+        .filter(place => allowedZones.some(zone => zoneMatchesHotel(place, zone)))
+        .sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
+      const seen = new Set();
+      const options = hotels.filter(place => {
+        const key = normalizeSearchText(place.label);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).map(place => ({ value: place.label, label: place.label }));
+      return options.length ? [...placeholder, ...options] : [...placeholder, { value: "", label: "Hotels loading or unavailable" }];
+    }
+
+    function tourWhatsAppLink(tour, counts = { adults: 2, children: 0 }) {
+      const hotel = tourDetail?.querySelector("[data-tour-hotel]")?.value || "hotel to be confirmed";
+      const text = `Hi Dominican Quest, I would like to book ${tour.title} for ${counts.adults} adults and ${counts.children} children. Resort/Hotel: ${hotel}.`;
       return `https://wa.me/18497638642?text=${encodeURIComponent(text)}`;
     }
 
     function wireTourGuestStepper(tour) {
       const form = tourDetail?.querySelector(`[data-tour-booking="${tour.id}"]`);
       if (!form) return;
-      const output = form.querySelector("output");
       const whatsappLink = form.querySelector(".tour-detail-whatsapp");
+      const priceSummary = form.querySelector("[data-tour-price-summary]");
       const sync = () => {
-        const guests = activeTourGuestCounts[tour.id] || 2;
-        if (output) output.textContent = String(guests);
-        if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, guests);
+        const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+        form.querySelector('[data-tour-output="adults"]').textContent = String(counts.adults);
+        form.querySelector('[data-tour-output="children"]').textContent = String(counts.children);
+        const unit = tourUnitPrice(tour);
+        const totalPeople = counts.adults + counts.children;
+        const total = unit * totalPeople;
+        if (priceSummary) {
+          priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(unit)} × ${counts.adults} adults${counts.children ? ` + ${counts.children} children` : ""})</span>`;
+        }
+        if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, counts);
       };
-      form.querySelectorAll("[data-tour-guests]").forEach(button => {
+      form.querySelectorAll("[data-tour-count]").forEach(button => {
         button.addEventListener("click", () => {
-          const current = activeTourGuestCounts[tour.id] || 2;
-          activeTourGuestCounts[tour.id] = button.dataset.tourGuests === "plus"
-            ? Math.min(30, current + 1)
-            : Math.max(1, current - 1);
+          const kind = button.dataset.tourCount;
+          const action = button.dataset.tourCountAction;
+          const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+          const min = kind === "adults" ? 1 : 0;
+          counts[kind] = action === "plus" ? Math.min(30, counts[kind] + 1) : Math.max(min, counts[kind] - 1);
+          activeTourGuestCounts[tour.id] = counts;
           sync();
         });
       });
+      form.querySelector("[data-tour-hotel]")?.addEventListener("change", sync);
+      const dateInput = form.querySelector("[data-tour-date]");
+      dateInput?.addEventListener("focus", () => { dateInput.type = "date"; });
+      dateInput?.addEventListener("blur", () => { if (!dateInput.value) dateInput.type = "text"; });
       sync();
     }
 
