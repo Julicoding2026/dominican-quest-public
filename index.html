@@ -678,9 +678,11 @@
     }
 
     .zone-card-body {
-      display: grid;
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 8px;
-      align-content: start;
       padding: 16px;
     }
 
@@ -723,12 +725,11 @@
 
     .zone-card .tour-link {
       display: inline-flex;
-      align-self: end;
-      justify-self: start;
+      align-self: flex-start;
       min-height: 38px;
       align-items: center;
       justify-content: center;
-      margin-top: 8px;
+      margin-top: auto;
       padding: 0 14px;
       border: 1px solid color-mix(in srgb, var(--accent) 62%, #fff 38%);
       border-radius: 999px;
@@ -751,30 +752,6 @@
     .tours-results {
       display: grid;
       gap: 16px;
-    }
-
-    .tours-results-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      padding-top: 4px;
-    }
-
-    .tours-results-head h2 {
-      margin: 0;
-      color: var(--ink);
-      font-family: "Sora", "Manrope", sans-serif;
-      font-size: 28px;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    .tours-results-head p {
-      margin: 4px 0 0;
-      color: #5f586b;
-      font-size: 14px;
-      font-weight: 850;
     }
 
     .excursion-card {
@@ -3477,11 +3454,6 @@
         grid-template-rows: 180px 1fr;
       }
 
-      .tours-results-head {
-        display: grid;
-        align-items: start;
-      }
-
       .tour-price-row {
         display: grid;
       }
@@ -4003,13 +3975,6 @@
       <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
 
       <section class="tours-results" id="toursResults" hidden>
-        <div class="tours-results-head">
-          <div>
-            <h2 id="toursResultsTitle">All Dominican Quest tours</h2>
-            <p id="toursResultsCopy">Choose an excursion, then pick your date and group size.</p>
-          </div>
-          <a class="tour-link" href="#tours" id="backToZones">Browse zones →</a>
-        </div>
         <div class="excursion-grid" id="excursionGrid"></div>
         <section class="tour-detail" id="tourDetail" aria-live="polite"></section>
       </section>
@@ -4217,11 +4182,8 @@
     const zoneScrollHint = document.getElementById("zoneScrollHint");
     const zoneGrid = document.getElementById("zoneGrid");
     const toursResults = document.getElementById("toursResults");
-    const toursResultsTitle = document.getElementById("toursResultsTitle");
-    const toursResultsCopy = document.getElementById("toursResultsCopy");
     const excursionGrid = document.getElementById("excursionGrid");
     const tourDetail = document.getElementById("tourDetail");
-    const backToZones = document.getElementById("backToZones");
     let selectedTourZone = "";
     let activeTourGuestCounts = {};
 
@@ -4497,10 +4459,6 @@
         tourDetail.classList.remove("is-visible");
         tourDetail.replaceChildren();
       }
-      if (toursResultsTitle) toursResultsTitle.textContent = tourZoneLabel(zoneId);
-      if (toursResultsCopy) toursResultsCopy.textContent = zoneId === "all"
-        ? "A curated mix of our most requested local excursions."
-        : "Choose your favorite excursion in this region, then pick a date and group size.";
       renderTourCards(zoneId);
     }
 
@@ -4722,10 +4680,6 @@
     renderZoneCards();
     loadPublicTourZones();
     loadPublicTours();
-    backToZones?.addEventListener("click", event => {
-      event.preventDefault();
-      resetToursToZones();
-    });
     zoneFilter?.addEventListener("scroll", () => {
       if (zoneFilter.scrollLeft > 2) hideZoneScrollHint();
     }, { passive: true });
