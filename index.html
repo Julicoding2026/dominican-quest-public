@@ -1109,6 +1109,15 @@
       font-weight: 950;
     }
 
+    .tour-infant-note {
+      margin: -2px 0 0;
+      color: #6f687d;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
     .tour-price-summary {
       display: grid;
       gap: 4px;
@@ -5148,14 +5157,14 @@
               <input type="text" placeholder="Select Date" required aria-label="Tour date" data-tour-date>
             </label>
             <div class="tour-guest-row">
-              <label>Adults
+              <label>Adults (14+)
                 <span class="tour-passenger-stepper">
                   <button type="button" data-tour-count="adults" data-tour-count-action="minus" aria-label="Remove adult">-</button>
                   <output data-tour-output="adults" aria-live="polite">${counts.adults}</output>
                   <button type="button" data-tour-count="adults" data-tour-count-action="plus" aria-label="Add adult">+</button>
                 </span>
               </label>
-              <label>Children
+              <label>Children (3-13)
                 <span class="tour-passenger-stepper">
                   <button type="button" data-tour-count="children" data-tour-count-action="minus" aria-label="Remove child">-</button>
                   <output data-tour-output="children" aria-live="polite">${counts.children}</output>
@@ -5171,6 +5180,7 @@
                 ${tourHotelOptions(tour).map(option => `<option value="${escapeAttribute(option.value)}"></option>`).join("")}
               </datalist>
             </label>
+            <p class="tour-infant-note">Infants under 3 are free of charge.</p>
             <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
             <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, counts)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
           </form>
