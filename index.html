@@ -618,7 +618,7 @@
     }
 
     .zone-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -4424,9 +4424,9 @@
 
     function renderZoneCards() {
       if (!zoneGrid) return;
-      zoneGrid.replaceChildren(...tourZones.map(zone => {
+      zoneGrid.replaceChildren(...tourZones.map((zone, index) => {
         const card = document.createElement("article");
-        card.className = zone.id === "punta-cana" ? "zone-card is-featured" : "zone-card";
+        card.className = index < 2 ? "zone-card is-featured" : "zone-card";
         card.tabIndex = 0;
         card.setAttribute("role", "button");
         card.setAttribute("aria-label", zone.cta.replace("→", "").trim());
