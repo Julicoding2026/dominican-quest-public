@@ -2128,6 +2128,13 @@
       opacity: 0.72;
     }
 
+    .calendar-day.is-unavailable {
+      background: #f1eef5;
+      color: #b1a9bb;
+      text-decoration: line-through;
+      box-shadow: none;
+    }
+
     .calendar-day.is-today {
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, #fff 45%);
     }
@@ -4824,6 +4831,8 @@
         from: "From Punta Cana",
         price: "US$85.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/saona-island-tour-private.webp",
         summary: "A bright Caribbean day with beach time, natural pool stops, music, lunch, and postcard-blue water.",
         includes: ["Hotel pickup available", "Speedboat and catamaran experience", "Lunch and island time included"]
@@ -4839,6 +4848,8 @@
         from: "From Punta Cana",
         price: "US$65.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
         summary: "Ride through countryside trails, visit local stops, and finish near the wild Macao coastline.",
         includes: ["Morning and afternoon departures", "Helmet and guide included", "Great for couples and groups"]
@@ -4854,6 +4865,8 @@
         from: "Private from Punta Cana",
         price: "From US$420.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/saona-island-tour-private.webp",
         summary: "A private, flexible Saona day for families, wedding groups, and guests who want a quieter custom pace.",
         includes: ["Private transportation coordination", "Custom pickup timing", "Best for families and small groups"]
@@ -4869,6 +4882,8 @@
         from: "From La Romana / Bayahibe",
         price: "US$95.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/tours-bayahibe-la-romana.webp",
         summary: "Clear-water snorkeling, beach lounging, and an easy island day from the southeast coast.",
         includes: ["Snorkel stop included", "Beach lunch", "Private transfer options available"]
@@ -4884,6 +4899,8 @@
         from: "From Samaná / Las Terrenas",
         price: "US$110.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
         summary: "A lush mountain-and-waterfall experience with local guides and dramatic peninsula scenery.",
         includes: ["Local guide", "Waterfall visit", "Optional lunch coordination"]
@@ -4899,6 +4916,8 @@
         from: "From Samaná Bay",
         price: "US$89.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=82",
         summary: "Seasonal whale watching in Samaná Bay with a comfortable boat experience and local crew.",
         includes: ["Seasonal availability", "Boat tour", "Best for nature lovers"]
@@ -4914,6 +4933,8 @@
         from: "From Santo Domingo / Punta Cana",
         price: "US$99.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/tours-santo-domingo.webp",
         summary: "A cultural day through the Colonial Zone, historic landmarks, local flavors, and city highlights.",
         includes: ["Historic center visit", "Private guide options", "Comfortable transport available"]
@@ -4929,6 +4950,8 @@
         from: "From Puerto Plata / Sosua",
         price: "US$95.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/tours-puerto-plata-sosua.webp",
         summary: "Explore the north coast with city views, beach time, local stops, and a relaxed Dominican Quest itinerary.",
         includes: ["North coast pickup", "Beach and city highlights", "Private group options available"]
@@ -4944,6 +4967,8 @@
         from: "From Juan Dolio / Boca Chica",
         price: "US$75.00",
         childPrice: null,
+        operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
+        closedDates: [],
         image: "assets/tours-juan-dolio-boca-chica.webp",
         summary: "A simple beach-and-water day for guests staying close to Santo Domingo’s eastern coastline.",
         includes: ["Easy resort pickup", "Beach time", "Great for families and groups"]
@@ -5194,6 +5219,8 @@
         from: row.departure_label,
         price: row.price_text,
         childPrice: row.child_price == null ? null : Number(row.child_price),
+        operatingWeekdays: Array.isArray(row.operating_weekdays) && row.operating_weekdays.length ? row.operating_weekdays.map(Number) : [0, 1, 2, 3, 4, 5, 6],
+        closedDates: Array.isArray(row.closed_dates) ? row.closed_dates : [],
         image: row.image_url,
         summary: row.summary,
         includes
@@ -5202,7 +5229,7 @@
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -5389,6 +5416,14 @@
       return today;
     }
 
+    function tourRunsOnDate(tour, date) {
+      const weekdays = Array.isArray(tour.operatingWeekdays) && tour.operatingWeekdays.length
+        ? tour.operatingWeekdays.map(Number)
+        : [0, 1, 2, 3, 4, 5, 6];
+      const closedDates = new Set(Array.isArray(tour.closedDates) ? tour.closedDates : []);
+      return weekdays.includes(date.getDay()) && !closedDates.has(dateKey(date));
+    }
+
     function tourWhatsAppLink(tour, counts = { adults: 2, children: 0 }) {
       const hotel = tourDetail?.querySelector("[data-tour-hotel]")?.value || "hotel to be confirmed";
       const dateValue = tourDetail?.querySelector("[data-tour-date]")?.value || "date to be confirmed";
@@ -5451,10 +5486,13 @@
           button.type = "button";
           button.className = "calendar-day";
           button.textContent = String(day.getDate());
+          const unavailable = key >= minKey && !tourRunsOnDate(tour, day);
           button.classList.toggle("is-muted", day.getMonth() !== cursor.getMonth());
           button.classList.toggle("is-today", key === todayKey);
           button.classList.toggle("is-selected", key === selectedKey);
-          button.disabled = key < minKey;
+          button.classList.toggle("is-unavailable", unavailable);
+          button.disabled = key < minKey || unavailable;
+          if (unavailable) button.setAttribute("aria-label", `${tourDisplayDate(key)} unavailable`);
           button.addEventListener("click", () => {
             if (button.disabled) return;
             setTourDate(key);
