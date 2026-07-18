@@ -765,10 +765,18 @@
       gap: 16px;
     }
 
+    .tour-filter-bar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
     .tour-mode-toggle {
       position: relative;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-column: 2;
       justify-self: center;
       width: min(390px, 100%);
       padding: 4px;
@@ -811,6 +819,70 @@
 
     .tour-mode-toggle button.is-active {
       color: #fff;
+    }
+
+    .tour-duration-filter {
+      position: relative;
+      grid-column: 3;
+      justify-self: end;
+    }
+
+    .tour-duration-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid color-mix(in srgb, var(--line) 78%, #fff 22%);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.82);
+      color: #645d70;
+      font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 12px 24px rgb(62 48 32 / 0.05);
+      white-space: nowrap;
+    }
+
+    .tour-duration-button:hover,
+    .tour-duration-button:focus-visible {
+      border-color: color-mix(in srgb, var(--accent) 36%, #fff 64%);
+      color: var(--accent-dark);
+    }
+
+    .tour-duration-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 4;
+      display: grid;
+      min-width: 180px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 42px rgb(62 48 32 / 0.14);
+    }
+
+    .tour-duration-menu[hidden] {
+      display: none;
+    }
+
+    .tour-duration-menu button {
+      min-height: 38px;
+      padding: 0 10px;
+      border-radius: 6px;
+      background: transparent;
+      color: #514a5e;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .tour-duration-menu button:hover,
+    .tour-duration-menu button:focus-visible,
+    .tour-duration-menu button.is-active {
+      background: color-mix(in srgb, var(--accent) 9%, #fff 91%);
+      color: var(--accent-dark);
     }
 
     .excursion-card {
@@ -3694,7 +3766,25 @@
         grid-template-columns: 1fr;
       }
 
-      .tour-mode-toggle {
+      .tour-filter-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-mode-toggle,
+      .tour-duration-filter {
+        grid-column: auto;
+        width: 100%;
+      }
+
+      .tour-duration-filter,
+      .tour-duration-button {
+        justify-self: stretch;
+        width: 100%;
+      }
+
+      .tour-duration-menu {
+        right: auto;
+        left: 0;
         width: 100%;
       }
 
@@ -4210,9 +4300,19 @@
       <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
 
       <section class="tours-results" id="toursResults" hidden>
-        <div class="tour-mode-toggle" id="tourModeToggle" data-mode="regular" role="group" aria-label="Tour type">
-          <button class="is-active" type="button" data-tour-mode="regular" aria-pressed="true">Regular Tours</button>
-          <button type="button" data-tour-mode="private" aria-pressed="false">Private Tours</button>
+        <div class="tour-filter-bar">
+          <div class="tour-mode-toggle" id="tourModeToggle" data-mode="regular" role="group" aria-label="Tour type">
+            <button class="is-active" type="button" data-tour-mode="regular" aria-pressed="true">Regular Tours</button>
+            <button type="button" data-tour-mode="private" aria-pressed="false">Private Tours</button>
+          </div>
+          <div class="tour-duration-filter" id="tourDurationFilter">
+            <button class="tour-duration-button" id="tourDurationButton" type="button" aria-haspopup="menu" aria-expanded="false">Duration: All ▾</button>
+            <div class="tour-duration-menu" id="tourDurationMenu" role="menu" hidden>
+              <button class="is-active" type="button" role="menuitemradio" aria-checked="true" data-tour-duration="all">All Durations</button>
+              <button type="button" role="menuitemradio" aria-checked="false" data-tour-duration="full">Full Day</button>
+              <button type="button" role="menuitemradio" aria-checked="false" data-tour-duration="half">Half Day</button>
+            </div>
+          </div>
         </div>
         <div class="excursion-grid" id="excursionGrid"></div>
         <section class="tour-detail" id="tourDetail" aria-live="polite"></section>
@@ -4530,10 +4630,14 @@
     const zoneGrid = document.getElementById("zoneGrid");
     const toursResults = document.getElementById("toursResults");
     const tourModeToggle = document.getElementById("tourModeToggle");
+    const tourDurationFilter = document.getElementById("tourDurationFilter");
+    const tourDurationButton = document.getElementById("tourDurationButton");
+    const tourDurationMenu = document.getElementById("tourDurationMenu");
     const excursionGrid = document.getElementById("excursionGrid");
     const tourDetail = document.getElementById("tourDetail");
     let selectedTourZone = "";
     let selectedTourMode = "regular";
+    let selectedTourDuration = "all";
     let activeTourGuestCounts = {};
 
     const DEFAULT_TOUR_ZONES = [
@@ -4803,16 +4907,52 @@
       if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
     }
 
+    function tourDurationLabel(duration = selectedTourDuration) {
+      if (duration === "full") return "Full Day";
+      if (duration === "half") return "Half Day";
+      return "All";
+    }
+
+    function syncTourDurationFilter() {
+      if (tourDurationButton) tourDurationButton.textContent = `Duration: ${tourDurationLabel()} ▾`;
+      tourDurationMenu?.querySelectorAll("[data-tour-duration]").forEach(button => {
+        const isActive = button.dataset.tourDuration === selectedTourDuration;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-checked", String(isActive));
+      });
+    }
+
+    function setTourDuration(duration) {
+      selectedTourDuration = ["full", "half"].includes(duration) ? duration : "all";
+      syncTourDurationFilter();
+      setTourDurationMenuOpen(false);
+      if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
+    }
+
+    function setTourDurationMenuOpen(open) {
+      if (!tourDurationMenu || !tourDurationButton) return;
+      tourDurationMenu.hidden = !open;
+      tourDurationButton.setAttribute("aria-expanded", String(open));
+    }
+
+    function tourMatchesDuration(tour) {
+      if (selectedTourDuration === "all") return true;
+      const duration = String(tour.duration || "").toLowerCase();
+      if (selectedTourDuration === "full") return duration.includes("full");
+      if (selectedTourDuration === "half") return duration.includes("half");
+      return true;
+    }
+
     function renderTourCards(zoneId = "all") {
       if (!excursionGrid) return;
       const visibleTours = tours.filter(tour => {
         const zoneMatches = zoneId === "all" || tour.zone === zoneId;
-        return zoneMatches && (tour.type || "regular") === selectedTourMode;
+        return zoneMatches && (tour.type || "regular") === selectedTourMode && tourMatchesDuration(tour);
       });
       if (!visibleTours.length) {
         const empty = document.createElement("article");
         empty.className = "excursion-card tour-empty-card";
-        empty.innerHTML = `<div class="excursion-body"><span class="tour-kicker">${selectedTourMode === "private" ? "Private tours" : "Regular tours"}</span><h2>No ${selectedTourMode === "private" ? "private" : "regular"} tours yet</h2><p>We are adding more options for this zone. Message us and we can help arrange a custom experience.</p></div>`;
+        empty.innerHTML = `<div class="excursion-body"><span class="tour-kicker">${selectedTourMode === "private" ? "Private tours" : "Regular tours"}</span><h2>No matching tours yet</h2><p>Try another duration, or message us and we can help arrange a custom experience.</p></div>`;
         excursionGrid.replaceChildren(empty);
         return;
       }
@@ -4866,8 +5006,11 @@
     function resetToursToZones() {
       selectedTourZone = "";
       selectedTourMode = "regular";
+      selectedTourDuration = "all";
       syncTourZoneButtons();
       syncTourModeToggle();
+      syncTourDurationFilter();
+      setTourDurationMenuOpen(false);
       if (zoneGrid) zoneGrid.hidden = false;
       if (toursResults) toursResults.hidden = true;
       if (tourDetail) {
@@ -5090,7 +5233,19 @@
     tourModeToggle?.querySelectorAll("[data-tour-mode]").forEach(button => {
       button.addEventListener("click", () => setTourMode(button.dataset.tourMode));
     });
+    tourDurationButton?.addEventListener("click", () => setTourDurationMenuOpen(tourDurationMenu?.hidden !== false));
+    tourDurationMenu?.querySelectorAll("[data-tour-duration]").forEach(button => {
+      button.addEventListener("click", () => setTourDuration(button.dataset.tourDuration));
+    });
+    document.addEventListener("click", event => {
+      if (!tourDurationFilter || tourDurationFilter.contains(event.target)) return;
+      setTourDurationMenuOpen(false);
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") setTourDurationMenuOpen(false);
+    });
     syncTourModeToggle();
+    syncTourDurationFilter();
     window.addEventListener("hashchange", setSiteViewFromHash);
     setSiteViewFromHash();
 
