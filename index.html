@@ -4847,6 +4847,10 @@
     }
 
     function selectTourZone(zoneId) {
+      if (zoneId === "all") {
+        resetToursToZones();
+        return;
+      }
       selectedTourZone = zoneId;
       syncTourZoneButtons();
       syncTourModeToggle();
