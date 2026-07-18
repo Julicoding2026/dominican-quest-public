@@ -5368,6 +5368,16 @@
       wireTourGuestStepper(tour);
     }
 
+    function tourHighlightCopy(text) {
+      const highlights = ["spacious catamaran", "Palmilla Natural Pool", "delicious Dominican buffet lunch"];
+      let copy = escapeAttribute(text);
+      highlights.forEach(phrase => {
+        const escapedPhrase = escapeAttribute(phrase);
+        copy = copy.replace(new RegExp(`(${escapedPhrase})`, "gi"), "<strong>$1</strong>");
+      });
+      return copy;
+    }
+
     function tourSummaryParagraphs(summary) {
       const text = String(summary || "").replace(/\s+/g, " ").trim();
       if (!text) return [];
@@ -5375,11 +5385,11 @@
         .replace(/\s+(Before reaching the island,)/i, "\n$1")
         .replace(/\s+(Enjoy a delicious Dominican buffet lunch)/i, "\n$1");
       const directParagraphs = withBreaks.split("\n").map(item => item.trim()).filter(Boolean);
-      if (directParagraphs.length > 1) return directParagraphs;
+      if (directParagraphs.length > 1) return directParagraphs.map(tourHighlightCopy);
       const sentences = text.match(/[^.!?]+[.!?]+(?:[”"']+)?|[^.!?]+$/g)?.map(item => item.trim()).filter(Boolean) || [text];
       const paragraphs = [];
       for (let index = 0; index < sentences.length; index += 3) {
-        paragraphs.push(sentences.slice(index, index + 3).join(" "));
+        paragraphs.push(tourHighlightCopy(sentences.slice(index, index + 3).join(" ")));
       }
       return paragraphs;
     }
