@@ -3525,10 +3525,13 @@
       }
 
       .tour-promo::before {
-        width: auto;
-        min-height: 0;
+        display: block;
+        width: calc(100% + 36px);
+        min-height: clamp(220px, 64vw, 360px);
         aspect-ratio: 4 / 3;
+        margin: -18px -18px 2px;
         background-position: center;
+        background-size: cover;
       }
 
       .faq-section {
