@@ -916,13 +916,28 @@
 
     .excursion-card {
       display: grid;
-      grid-template-rows: 190px 1fr;
+      grid-template-rows: auto 1fr;
+      isolation: isolate;
+    }
+
+    .excursion-card > img {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
     }
 
     .excursion-body {
+      position: relative;
+      z-index: 1;
+      grid-column: 1;
+      grid-row: 2;
       display: grid;
       gap: 10px;
       padding: 16px;
+      background: rgb(255 255 255 / 0.98);
     }
 
     .tour-rating {
@@ -3991,7 +4006,12 @@
       }
 
       .excursion-card {
-        grid-template-rows: 180px 1fr;
+        grid-template-rows: auto 1fr;
+      }
+
+      .excursion-card > img {
+        aspect-ratio: 16 / 9;
+        height: auto;
       }
 
       .tour-price-row {
