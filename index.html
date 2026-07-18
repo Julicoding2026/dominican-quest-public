@@ -633,7 +633,7 @@
 
     .zone-card {
       display: grid;
-      grid-template-rows: 170px 1fr;
+      grid-template-rows: auto 1fr;
       min-height: 320px;
       cursor: pointer;
       transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
@@ -666,6 +666,8 @@
     }
 
     .zone-card img {
+      aspect-ratio: 16 / 9;
+      height: auto;
       transition: transform 260ms ease;
     }
 
@@ -720,9 +722,12 @@
     }
 
     .zone-card .tour-link {
+      display: inline-flex;
       align-self: end;
       justify-self: start;
       min-height: 38px;
+      align-items: center;
+      justify-content: center;
       margin-top: 8px;
       padding: 0 14px;
       border: 1px solid color-mix(in srgb, var(--accent) 62%, #fff 38%);
@@ -731,6 +736,8 @@
       color: #fff;
       font-size: 13px;
       font-weight: 950;
+      line-height: 1;
+      text-align: center;
       box-shadow: 0 12px 24px rgb(103 61 230 / 0.16);
     }
 
@@ -3398,7 +3405,7 @@
 
       .zone-scroll-hint {
         position: absolute;
-        top: 50%;
+        top: 26px;
         right: 2px;
         z-index: 2;
         display: grid;
@@ -3462,7 +3469,7 @@
       .zone-card,
       .zone-card.is-featured {
         grid-column: auto;
-        grid-template-rows: 170px 1fr;
+        grid-template-rows: auto 1fr;
         min-height: 330px;
       }
 
@@ -4475,8 +4482,9 @@
     }
 
     function syncTourZoneButtons() {
+      const activeZone = selectedTourZone || "all";
       zoneFilter?.querySelectorAll("[data-tour-zone]").forEach(button => {
-        button.classList.toggle("is-active", button.dataset.tourZone === selectedTourZone);
+        button.classList.toggle("is-active", button.dataset.tourZone === activeZone);
       });
     }
 
