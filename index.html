@@ -5592,7 +5592,7 @@
         return card;
       }));
       excursionGrid.querySelectorAll("[data-tour-id]").forEach(button => {
-        button.addEventListener("click", () => showTourDetail(button.dataset.tourId));
+        button.addEventListener("click", () => showTourDetail(button.dataset.tourId, true));
       });
     }
 
@@ -5603,12 +5603,38 @@
       });
     }
 
+    function tourDetailIdFromHash() {
+      const match = window.location.hash.match(/^#tours\/tour\/([^/?#]+)/);
+      return match ? decodeURIComponent(match[1]) : "";
+    }
+
+    function setTourDetailHash(tourId) {
+      const nextHash = `#tours/tour/${encodeURIComponent(tourId)}`;
+      if (window.location.hash !== nextHash) history.pushState(null, "", nextHash);
+    }
+
+    function restoreTourDetailFromHash() {
+      const tourId = tourDetailIdFromHash();
+      if (!tourId) return false;
+      const tour = tours.find(item => item.id === tourId);
+      if (!tour) return false;
+      selectedTourZone = tour.zone;
+      selectedTourMode = tour.type || "regular";
+      syncTourZoneButtons();
+      syncTourModeToggle();
+      if (zoneGrid) zoneGrid.hidden = true;
+      if (toursResults) toursResults.hidden = false;
+      showTourDetail(tourId, false);
+      return true;
+    }
+
     function selectTourZone(zoneId) {
       if (zoneId === "all") {
         resetToursToZones();
         return;
       }
       selectedTourZone = zoneId;
+      if (window.location.hash.startsWith("#tours/tour/")) history.pushState(null, "", "#tours");
       syncTourZoneButtons();
       syncTourModeToggle();
       if (zoneGrid) zoneGrid.hidden = true;
@@ -5622,6 +5648,7 @@
     }
 
     function resetToursToZones() {
+      if (window.location.hash.startsWith("#tours/tour/")) history.pushState(null, "", "#tours");
       selectedTourZone = "";
       selectedTourMode = "regular";
       selectedTourDuration = "all";
@@ -5764,7 +5791,11 @@
         console.warn("Using fallback tours", error);
         tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])], bringItems: [...(tour.bringItems || [])] }));
       }
-      if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
+      if (tourDetailIdFromHash()) {
+        restoreTourDetailFromHash();
+      } else if (toursResults && !toursResults.hidden) {
+        renderTourCards(selectedTourZone || "all");
+      }
     }
 
     async function loadPublicTourZones() {
@@ -5830,9 +5861,14 @@
       `;
     }
 
-    function showTourDetail(tourId) {
+    function showTourDetail(tourId, updateHash = false) {
       const tour = tours.find(item => item.id === tourId);
       if (!tour || !tourDetail) return;
+      if (updateHash) setTourDetailHash(tour.id);
+      selectedTourZone = tour.zone;
+      selectedTourMode = tour.type || "regular";
+      syncTourZoneButtons();
+      syncTourModeToggle();
       if (activeTourDateCleanup) activeTourDateCleanup();
       const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
       const adultUnitLabel = moneyText(tourAdultPrice(tour));
@@ -6256,7 +6292,10 @@
         if (shouldActivate) link.setAttribute("aria-current", "page");
         else link.removeAttribute("aria-current");
       });
-      if (isToursView && !selectedTourZone) resetToursToZones();
+      if (isToursView) {
+        const restoredDetail = restoreTourDetailFromHash();
+        if (!restoredDetail && !selectedTourZone) resetToursToZones();
+      }
       if (enteredNewView || isToursView) resetPageScroll();
     }
 
