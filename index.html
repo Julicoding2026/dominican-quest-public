@@ -1357,6 +1357,15 @@
       gap: 10px;
     }
 
+    .tour-price-micro {
+      display: block;
+      margin-top: -3px;
+      color: #81798d;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
     .tour-passenger-stepper {
       display: grid;
       grid-template-columns: 44px minmax(0, 1fr) 44px;
@@ -5358,7 +5367,7 @@
       }
     ];
 
-    let tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])] }));
+    let tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])], bringItems: [...(tour.bringItems || [])] }));
 
     function tourZoneLabel(zoneId) {
       if (zoneId === "all") return "All Dominican Quest tours";
@@ -5660,6 +5669,9 @@
       const includes = Array.isArray(row.included_items)
         ? row.included_items
         : String(row.included_items || "").split("\n").map(item => item.trim()).filter(Boolean);
+      const bringItems = Array.isArray(row.bring_items)
+        ? row.bring_items
+        : String(row.bring_items || "").split("\n").map(item => item.trim()).filter(Boolean);
       return {
         id: row.slug,
         zone: row.zone_slug,
@@ -5676,13 +5688,14 @@
         image: row.image_url,
         galleryImages: normalizeTourGalleryImages(row.image_url, row.gallery_images),
         summary: row.summary,
-        includes
+        includes,
+        bringItems
       };
     }
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,gallery_images,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,gallery_images,summary,included_items,bring_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -5695,7 +5708,7 @@
         }
       } catch (error) {
         console.warn("Using fallback tours", error);
-        tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])] }));
+        tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])], bringItems: [...(tour.bringItems || [])] }));
       }
       if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
     }
@@ -5753,6 +5766,8 @@
       if (!tour || !tourDetail) return;
       if (activeTourDateCleanup) activeTourDateCleanup();
       const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+      const adultUnitLabel = moneyText(tourAdultPrice(tour));
+      const childUnitLabel = moneyText(tourChildPrice(tour));
       activeTourGuestCounts[tour.id] = counts;
       tourDetail.innerHTML = `
         <div class="tour-detail-layout">
@@ -5796,6 +5811,7 @@
             </label>
             <div class="tour-guest-row">
               <label>Adults (14+)
+                <span class="tour-price-micro">${adultUnitLabel} / adult</span>
                 <span class="tour-passenger-stepper">
                   <button type="button" data-tour-count="adults" data-tour-count-action="minus" aria-label="Remove adult">-</button>
                   <output data-tour-output="adults" aria-live="polite">${counts.adults}</output>
@@ -5803,6 +5819,7 @@
                 </span>
               </label>
               <label>Children (3-13)
+                <span class="tour-price-micro">${childUnitLabel} / child</span>
                 <span class="tour-passenger-stepper">
                   <button type="button" data-tour-count="children" data-tour-count-action="minus" aria-label="Remove child">-</button>
                   <output data-tour-output="children" aria-live="polite">${counts.children}</output>
