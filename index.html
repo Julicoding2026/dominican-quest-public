@@ -1011,16 +1011,124 @@
     }
 
     .tour-detail-media {
+      position: relative;
       overflow: hidden;
-      min-height: 280px;
+      aspect-ratio: 16 / 9;
+      min-height: 0;
       border-radius: 8px;
+      background: #f4efff;
     }
 
-    .tour-detail-media img {
+    .tour-carousel-track,
+    .tour-carousel-track img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .tour-carousel-track img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    .tour-carousel-track img.is-active {
+      opacity: 1;
+    }
+
+    .tour-carousel-button {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgb(255 255 255 / 0.72);
+      border-radius: 999px;
+      color: #3f26bd;
+      background: rgb(255 255 255 / 0.72);
+      box-shadow: 0 12px 28px rgb(25 18 45 / 0.18);
+      backdrop-filter: blur(8px);
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+    }
+
+    .tour-carousel-button:hover {
+      background: rgb(255 255 255 / 0.92);
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    .tour-detail-media:hover .tour-carousel-button,
+    .tour-detail-media:focus-within .tour-carousel-button {
+      opacity: 1;
+    }
+
+    .tour-carousel-button svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tour-carousel-button.is-prev {
+      left: 12px;
+    }
+
+    .tour-carousel-button.is-next {
+      right: 12px;
+    }
+
+    .tour-carousel-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgb(25 18 45 / 0.32);
+      backdrop-filter: blur(8px);
+      transform: translateX(-50%);
+    }
+
+    .tour-carousel-dot {
+      width: 7px;
+      height: 7px;
+      border: 0;
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.72);
+      padding: 0;
+      transition: width 180ms ease, background 180ms ease;
+    }
+
+    .tour-carousel-dot.is-active {
+      width: 18px;
+      background: #ffffff;
+    }
+
+    .tour-carousel-count {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgb(25 18 45 / 0.42);
+      font-size: 0.78rem;
+      font-weight: 900;
+      backdrop-filter: blur(8px);
     }
 
     .tour-detail-content {
@@ -3961,7 +4069,7 @@
       }
 
       .tour-detail-media {
-        min-height: 210px;
+        min-height: 0;
       }
     }
 
@@ -4859,6 +4967,7 @@
         operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
         closedDates: [],
         image: "assets/saona-island-tour-private.webp",
+        galleryImages: ["https://res.cloudinary.com/julipac/image/upload/v1784378988/Backgrounds/Saona_Catamaran.png"],
         summary: "A bright Caribbean day with beach time, natural pool stops, music, lunch, and postcard-blue water.",
         includes: ["Hotel pickup available", "Speedboat and catamaran experience", "Lunch and island time included"]
       },
@@ -5229,6 +5338,45 @@
       };
     }
 
+    function normalizeTourGalleryImages(primaryImage, galleryImages = []) {
+      const images = [primaryImage, ...(Array.isArray(galleryImages) ? galleryImages : [])];
+      const seen = new Set();
+      return images
+        .map(image => String(image || "").trim())
+        .filter(Boolean)
+        .filter(image => {
+          const key = image.toLowerCase();
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+    }
+
+    function tourCarouselImages(tour) {
+      return normalizeTourGalleryImages(tour.image, tour.galleryImages);
+    }
+
+    function tourDetailCarouselMarkup(tour) {
+      const images = tourCarouselImages(tour);
+      const imageMarkup = images.map((image, index) => `
+        <img src="${escapeAttribute(image)}" alt="${escapeAttribute(tour.title)}${images.length > 1 ? ` image ${index + 1}` : ""}" class="${index === 0 ? "is-active" : ""}" data-tour-carousel-image="${index}">
+      `).join("");
+      const controls = images.length > 1 ? `
+        <button class="tour-carousel-button is-prev" type="button" data-tour-carousel-prev aria-label="Previous tour photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="tour-carousel-button is-next" type="button" data-tour-carousel-next aria-label="Next tour photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        <span class="tour-carousel-dots" aria-label="Tour photo progress">
+          ${images.map((_, index) => `<button class="tour-carousel-dot ${index === 0 ? "is-active" : ""}" type="button" data-tour-carousel-dot="${index}" aria-label="Show photo ${index + 1}"></button>`).join("")}
+        </span>
+        <span class="tour-carousel-count" data-tour-carousel-count>Photo 1 / ${images.length}</span>
+      ` : "";
+      return `
+        <div class="tour-detail-media" data-tour-carousel data-carousel-index="0">
+          <div class="tour-carousel-track">${imageMarkup}</div>
+          ${controls}
+        </div>
+      `;
+    }
+
     function publicTourFromRow(row) {
       const includes = Array.isArray(row.included_items)
         ? row.included_items
@@ -5247,6 +5395,7 @@
         operatingWeekdays: Array.isArray(row.operating_weekdays) && row.operating_weekdays.length ? row.operating_weekdays.map(Number) : [0, 1, 2, 3, 4, 5, 6],
         closedDates: Array.isArray(row.closed_dates) ? row.closed_dates : [],
         image: row.image_url,
+        galleryImages: normalizeTourGalleryImages(row.image_url, row.gallery_images),
         summary: row.summary,
         includes
       };
@@ -5254,7 +5403,7 @@
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,gallery_images,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -5306,7 +5455,7 @@
       tourDetail.innerHTML = `
         <div class="tour-detail-layout">
           <div class="tour-detail-content">
-            <div class="tour-detail-media"><img src="${tour.image}" alt="${tour.title}"></div>
+            ${tourDetailCarouselMarkup(tour)}
             <span class="tour-kicker">${tourZoneLabel(tour.zone)}</span>
             <h2>${tour.title}</h2>
             <div class="tour-detail-copy">${tourSummaryParagraphs(tour.summary).map(paragraph => `<p>${paragraph}</p>`).join("")}</div>
@@ -5373,7 +5522,59 @@
       if (excursionGrid) excursionGrid.hidden = true;
       tourDetail.classList.add("is-visible");
       tourDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+      wireTourCarousel();
       wireTourGuestStepper(tour);
+    }
+
+    function wireTourCarousel() {
+      const carousel = tourDetail?.querySelector("[data-tour-carousel]");
+      if (!carousel) return;
+      const images = Array.from(carousel.querySelectorAll("[data-tour-carousel-image]"));
+      if (images.length <= 1) return;
+      const dots = Array.from(carousel.querySelectorAll("[data-tour-carousel-dot]"));
+      const count = carousel.querySelector("[data-tour-carousel-count]");
+      let activeIndex = 0;
+      let pointerStartX = null;
+
+      const sync = () => {
+        images.forEach((image, index) => image.classList.toggle("is-active", index === activeIndex));
+        dots.forEach((dot, index) => dot.classList.toggle("is-active", index === activeIndex));
+        if (count) count.textContent = `Photo ${activeIndex + 1} / ${images.length}`;
+        carousel.dataset.carouselIndex = String(activeIndex);
+      };
+      const show = nextIndex => {
+        activeIndex = (nextIndex + images.length) % images.length;
+        sync();
+      };
+
+      carousel.querySelector("[data-tour-carousel-prev]")?.addEventListener("click", event => {
+        event.preventDefault();
+        show(activeIndex - 1);
+      });
+      carousel.querySelector("[data-tour-carousel-next]")?.addEventListener("click", event => {
+        event.preventDefault();
+        show(activeIndex + 1);
+      });
+      dots.forEach(dot => {
+        dot.addEventListener("click", event => {
+          event.preventDefault();
+          show(Number(dot.dataset.tourCarouselDot || 0));
+        });
+      });
+      carousel.addEventListener("pointerdown", event => {
+        pointerStartX = event.clientX;
+      });
+      carousel.addEventListener("pointerup", event => {
+        if (pointerStartX == null) return;
+        const delta = event.clientX - pointerStartX;
+        pointerStartX = null;
+        if (Math.abs(delta) < 42) return;
+        show(activeIndex + (delta < 0 ? 1 : -1));
+      });
+      carousel.addEventListener("pointercancel", () => {
+        pointerStartX = null;
+      });
+      sync();
     }
 
     function tourHighlightCopy(text) {
