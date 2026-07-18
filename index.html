@@ -3384,9 +3384,10 @@
       position: absolute;
       top: 16px;
       left: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: calc(100% - 32px);
       padding: 8px 14px;
       border: 1px solid rgb(255 255 255 / 0.34);
       border-radius: 8px;
@@ -3394,6 +3395,7 @@
       color: #1a1a1a;
       box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
       backdrop-filter: blur(8px);
+      white-space: nowrap;
     }
 
     .review-badge .stars {
