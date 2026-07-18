@@ -1093,7 +1093,8 @@
       padding: 12px;
       border: 1px solid color-mix(in srgb, var(--accent) 13%, #fff 87%);
       border-radius: 8px;
-      background: #fff;
+      background: color-mix(in srgb, var(--accent) 5%, #fff 95%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
     }
 
     .tour-price-summary strong {
@@ -5184,9 +5185,10 @@
               </label>
             </div>
             <label>Resort / Hotel Name
-              <select data-tour-hotel required aria-label="Resort or hotel name">
-                ${tourHotelOptions(tour).map(option => `<option value="${option.value}">${option.label}</option>`).join("")}
-              </select>
+              <input type="text" list="tour-hotel-options-${tour.id}" data-tour-hotel required autocomplete="off" placeholder="Type resort / hotel name" aria-label="Resort or hotel name">
+              <datalist id="tour-hotel-options-${tour.id}">
+                ${tourHotelOptions(tour).map(option => `<option value="${escapeAttribute(option.value)}"></option>`).join("")}
+              </datalist>
             </label>
             <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
             <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, counts)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
@@ -5208,6 +5210,14 @@
       return `US$${Number(amount || 0).toFixed(2)}`;
     }
 
+    function escapeAttribute(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
     function compactSearchText(value) {
       return normalizeSearchText(value).replace(/[^a-z0-9]/g, "");
     }
@@ -5219,7 +5229,6 @@
     }
 
     function tourHotelOptions(tour) {
-      const placeholder = [{ value: "", label: "Select resort / hotel" }];
       const puntaCanaZones = ["Punta Cana/Bavaro", "Punta Cana/Cap Cana", "Punta Cana/Cabeza de Toro", "Punta Cana/Uvero Alto"];
       const allowedZones = tour.zone === "punta-cana" ? puntaCanaZones : [tourZoneLabel(tour.zone)];
       const hotels = (state.places || [])
@@ -5233,7 +5242,7 @@
         seen.add(key);
         return true;
       }).map(place => ({ value: place.label, label: place.label }));
-      return options.length ? [...placeholder, ...options] : [...placeholder, { value: "", label: "Hotels loading or unavailable" }];
+      return options;
     }
 
     function tourWhatsAppLink(tour, counts = { adults: 2, children: 0 }) {
@@ -5255,7 +5264,10 @@
         const totalPeople = counts.adults + counts.children;
         const total = unit * totalPeople;
         if (priceSummary) {
-          priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(unit)} × ${counts.adults} adults${counts.children ? ` + ${counts.children} children` : ""})</span>`;
+          const adultLabel = counts.adults === 1 ? "adult" : "adults";
+          const childLabel = counts.children === 1 ? "child" : "children";
+          const childBreakdown = counts.children ? ` + ${counts.children} ${childLabel}` : "";
+          priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(unit)} × ${counts.adults} ${adultLabel}${childBreakdown})</span>`;
         }
         if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, counts);
       };
@@ -5270,7 +5282,7 @@
           sync();
         });
       });
-      form.querySelector("[data-tour-hotel]")?.addEventListener("change", sync);
+      form.querySelector("[data-tour-hotel]")?.addEventListener("input", sync);
       const dateInput = form.querySelector("[data-tour-date]");
       dateInput?.addEventListener("focus", () => { dateInput.type = "date"; });
       dateInput?.addEventListener("blur", () => { if (!dateInput.value) dateInput.type = "text"; });
