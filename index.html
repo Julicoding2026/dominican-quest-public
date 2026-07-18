@@ -3246,6 +3246,10 @@
       background: #fff;
     }
 
+    .transfer-story-mobile-caption {
+      display: none;
+    }
+
     .empty-state-trust-strip {
       grid-column: 1 / -1;
       display: flex;
@@ -3546,10 +3550,75 @@
         grid-template-columns: 1fr;
       }
 
-      .empty-state-image-wrap,
+      .empty-state-image-wrap {
+        aspect-ratio: 4 / 3;
+        min-height: 0;
+        max-height: none;
+      }
+
       .empty-state-image {
-        min-height: 180px;
-        max-height: 220px;
+        min-height: 0;
+        max-height: none;
+      }
+
+      .review-badge {
+        top: 12px;
+        left: 12px;
+        max-width: calc(100% - 24px);
+        gap: 5px;
+        padding: 7px 10px;
+        border-radius: 999px;
+      }
+
+      .review-badge .stars {
+        font-size: 11px;
+        letter-spacing: 0.8px;
+      }
+
+      .review-badge .badge-text {
+        font-size: 0;
+        letter-spacing: 0.02em;
+      }
+
+      .review-badge .badge-text::before {
+        content: "Verified Ride";
+        font-size: 10px;
+      }
+
+      .transfer-story-caption {
+        display: none;
+      }
+
+      .transfer-story-dots {
+        bottom: 10px;
+        padding: 5px 7px;
+      }
+
+      .transfer-story-mobile-caption {
+        display: grid;
+        gap: 3px;
+        padding: 12px 14px 14px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .transfer-story-mobile-caption strong,
+      .transfer-story-mobile-caption span {
+        overflow-wrap: anywhere;
+      }
+
+      .transfer-story-mobile-caption strong {
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 950;
+        line-height: 1.2;
+      }
+
+      .transfer-story-mobile-caption span {
+        color: #5f586b;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.3;
       }
 
       .empty-state.is-featured .empty-state-content {
@@ -6829,6 +6898,11 @@
       badge.className = "review-badge";
       badge.innerHTML = '<span class="stars">★★★★★</span><span class="badge-text"></span>';
       badge.querySelector(".badge-text").textContent = slides[0]?.badge || "Verified Ride — Dominican Quest";
+      const mobileCaption = document.createElement("div");
+      mobileCaption.className = "transfer-story-mobile-caption";
+      mobileCaption.innerHTML = '<strong data-transfer-mobile-badge></strong><span data-transfer-mobile-caption></span>';
+      mobileCaption.querySelector("[data-transfer-mobile-badge]").textContent = slides[0]?.badge || "Verified Ride — Dominican Quest";
+      mobileCaption.querySelector("[data-transfer-mobile-caption]").textContent = slides[0]?.caption || "📍 Dominican Quest private transfer";
       if (slides.length > 1) {
         const dots = document.createElement("div");
         dots.className = "transfer-story-dots";
@@ -6869,16 +6943,18 @@
         line.append(iconNode, textNode);
         content.appendChild(line);
       });
-      empty.append(imageWrap, content, trustStrip);
-      wireTransferStoryCarousel(imageWrap, slides, badge);
+      empty.append(imageWrap, mobileCaption, content, trustStrip);
+      wireTransferStoryCarousel(imageWrap, slides, badge, mobileCaption);
       return empty;
     }
 
-    function wireTransferStoryCarousel(imageWrap, slides, badge) {
+    function wireTransferStoryCarousel(imageWrap, slides, badge, mobileCaption) {
       const slideNodes = Array.from(imageWrap.querySelectorAll("[data-transfer-story-slide]"));
       if (slideNodes.length <= 1) return;
       const dots = Array.from(imageWrap.querySelectorAll("[data-transfer-story-dot]"));
       const badgeText = badge?.querySelector(".badge-text");
+      const mobileBadge = mobileCaption?.querySelector("[data-transfer-mobile-badge]");
+      const mobileRoute = mobileCaption?.querySelector("[data-transfer-mobile-caption]");
       let activeIndex = 0;
       let timer = null;
       const shouldAutoPlay = !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -6887,6 +6963,8 @@
         slideNodes.forEach((slide, index) => slide.classList.toggle("is-active", index === activeIndex));
         dots.forEach((dot, index) => dot.classList.toggle("is-active", index === activeIndex));
         if (badgeText) badgeText.textContent = slides[activeIndex]?.badge || "Verified Ride — Dominican Quest";
+        if (mobileBadge) mobileBadge.textContent = slides[activeIndex]?.badge || "Verified Ride — Dominican Quest";
+        if (mobileRoute) mobileRoute.textContent = slides[activeIndex]?.caption || "📍 Dominican Quest private transfer";
       };
       const schedule = () => {
         if (!shouldAutoPlay) return;
