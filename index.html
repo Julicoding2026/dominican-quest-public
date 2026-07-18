@@ -5914,7 +5914,7 @@
       if (excursionGrid) excursionGrid.hidden = true;
       document.getElementById("toursPage")?.classList.add("is-detail-open");
       tourDetail.classList.add("is-visible");
-      tourDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+      resetPageScroll();
       tourDetail.querySelector("[data-breadcrumb-tours]")?.addEventListener("click", resetToursToZones);
       tourDetail.querySelector("[data-breadcrumb-zone]")?.addEventListener("click", event => selectTourZone(event.currentTarget.dataset.breadcrumbZone));
       wireTourCarousel();
