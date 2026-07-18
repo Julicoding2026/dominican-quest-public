@@ -1168,6 +1168,33 @@
       font-weight: 950;
     }
 
+    .tour-detail-logistics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .tour-logistics-card {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, var(--accent) 12%, #fff 88%);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 3%, #fff 97%);
+    }
+
+    .tour-logistics-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
     .tour-detail-list {
       display: grid;
       gap: 8px;
@@ -1180,8 +1207,15 @@
       line-height: 1.4;
     }
 
+    .tour-detail-list li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 7px;
+      align-items: start;
+    }
+
     .tour-detail-list strong {
-      color: var(--ink);
+      color: var(--accent-dark);
       font-weight: 950;
     }
 
@@ -4172,6 +4206,10 @@
         grid-template-columns: 1fr;
       }
 
+      .tour-detail-logistics {
+        grid-template-columns: 1fr;
+      }
+
       .zone-card,
       .zone-card.is-featured {
         grid-column: auto;
@@ -5687,6 +5725,29 @@
       }
     }
 
+    function tourBringItems(tour) {
+      const defaults = ["Swimsuit & towel", "Biodegradable sunscreen", "Sunglasses & sun hat", "Cash for tips or souvenirs"];
+      return Array.isArray(tour.bringItems) && tour.bringItems.length ? tour.bringItems : defaults;
+    }
+
+    function tourLogisticsMarkup(tour) {
+      const included = Array.isArray(tour.includes) && tour.includes.length ? tour.includes : ["Hotel pickup available"];
+      const bring = tourBringItems(tour);
+      const list = items => items.map(item => `<li><strong>✓</strong><span>${escapeAttribute(item)}</span></li>`).join("");
+      return `
+        <div class="tour-detail-logistics" aria-label="Tour details and logistics">
+          <section class="tour-logistics-card">
+            <h3><span aria-hidden="true">✅</span> What's Included</h3>
+            <ul class="tour-detail-list">${list(included)}</ul>
+          </section>
+          <section class="tour-logistics-card">
+            <h3><span aria-hidden="true">🎒</span> What to Bring</h3>
+            <ul class="tour-detail-list">${list(bring)}</ul>
+          </section>
+        </div>
+      `;
+    }
+
     function showTourDetail(tourId) {
       const tour = tours.find(item => item.id === tourId);
       if (!tour || !tourDetail) return;
@@ -5700,9 +5761,7 @@
             <span class="tour-kicker">${tourZoneLabel(tour.zone)}</span>
             <h2>${tour.title}</h2>
             <div class="tour-detail-copy">${tourSummaryParagraphs(tour.summary).map(paragraph => `<p>${paragraph}</p>`).join("")}</div>
-            <ul class="tour-detail-list">
-              ${tour.includes.map(item => `<li><strong>✓</strong> ${item}</li>`).join("")}
-            </ul>
+            ${tourLogisticsMarkup(tour)}
           </div>
           <form class="tour-booking-card" data-tour-booking="${tour.id}">
             <h3>Book this tour</h3>
