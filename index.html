@@ -677,10 +677,38 @@
       background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
     }
 
-    .zone-card img {
+    .zone-card-media {
+      position: relative;
+      overflow: hidden;
       aspect-ratio: 16 / 9;
-      height: auto;
+      background: color-mix(in srgb, var(--accent) 8%, #fff 92%);
+    }
+
+    .zone-card img {
+      height: 100%;
       transition: transform 260ms ease;
+    }
+
+    .zone-variety-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border: 1px solid rgb(255 255 255 / 0.72);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.82);
+      color: #2b2536;
+      font-size: 11px;
+      font-weight: 950;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 12px 28px rgb(25 20 35 / 0.14);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .zone-card:hover img,
@@ -4890,6 +4918,16 @@
       zoneFilterWrap.classList.remove("has-more");
     }
 
+    function zoneTourCount(zoneId) {
+      return tours.filter(tour => tour.zone === zoneId).length;
+    }
+
+    function zoneVarietyText(zoneId) {
+      const count = zoneTourCount(zoneId);
+      const noun = count === 1 ? "Tour" : "Tours";
+      return `✨ ${count} ${noun} Available`;
+    }
+
     function renderZoneCards() {
       if (!zoneGrid) return;
       zoneGrid.replaceChildren(...tourZones.map((zone, index) => {
@@ -4900,7 +4938,10 @@
         card.setAttribute("aria-label", zone.cta.replace("→", "").trim());
         card.dataset.zoneCard = zone.id;
         card.innerHTML = `
-          <img src="${zone.image}" alt="${zone.label} tours" loading="lazy">
+          <div class="zone-card-media">
+            <img src="${zone.image}" alt="${zone.label} tours" loading="lazy">
+            <span class="zone-variety-badge">${zoneVarietyText(zone.id)}</span>
+          </div>
           <div class="zone-card-body">
             <span class="tour-kicker">${zone.kicker}</span>
             <h2>${zone.label}</h2>
