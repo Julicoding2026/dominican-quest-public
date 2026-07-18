@@ -765,6 +765,54 @@
       gap: 16px;
     }
 
+    .tour-mode-toggle {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-self: center;
+      width: min(390px, 100%);
+      padding: 4px;
+      border: 1px solid color-mix(in srgb, var(--line) 78%, #fff 22%);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 0.78);
+      box-shadow: 0 14px 30px rgb(62 48 32 / 0.07);
+    }
+
+    .tour-mode-toggle::before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 12px 24px rgb(103 61 230 / 0.16);
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .tour-mode-toggle[data-mode="private"]::before {
+      transform: translateX(100%);
+    }
+
+    .tour-mode-toggle button {
+      position: relative;
+      z-index: 1;
+      min-height: 38px;
+      border-radius: 999px;
+      background: transparent;
+      color: #645d70;
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+      transition: color 160ms ease;
+      touch-action: manipulation;
+    }
+
+    .tour-mode-toggle button.is-active {
+      color: #fff;
+    }
+
     .excursion-card {
       display: grid;
       grid-template-rows: 190px 1fr;
@@ -3646,6 +3694,10 @@
         grid-template-columns: 1fr;
       }
 
+      .tour-mode-toggle {
+        width: 100%;
+      }
+
       .tour-detail-media {
         min-height: 210px;
       }
@@ -4158,6 +4210,10 @@
       <section class="zone-grid" id="zoneGrid" aria-label="Choose a tour region"></section>
 
       <section class="tours-results" id="toursResults" hidden>
+        <div class="tour-mode-toggle" id="tourModeToggle" data-mode="regular" role="group" aria-label="Tour type">
+          <button class="is-active" type="button" data-tour-mode="regular" aria-pressed="true">Regular Tours</button>
+          <button type="button" data-tour-mode="private" aria-pressed="false">Private Tours</button>
+        </div>
         <div class="excursion-grid" id="excursionGrid"></div>
         <section class="tour-detail" id="tourDetail" aria-live="polite"></section>
       </section>
@@ -4473,9 +4529,11 @@
     const zoneScrollHint = document.getElementById("zoneScrollHint");
     const zoneGrid = document.getElementById("zoneGrid");
     const toursResults = document.getElementById("toursResults");
+    const tourModeToggle = document.getElementById("tourModeToggle");
     const excursionGrid = document.getElementById("excursionGrid");
     const tourDetail = document.getElementById("tourDetail");
     let selectedTourZone = "";
+    let selectedTourMode = "regular";
     let activeTourGuestCounts = {};
 
     const DEFAULT_TOUR_ZONES = [
@@ -4535,6 +4593,7 @@
       {
         id: "saona-paradise",
         zone: "punta-cana",
+        type: "regular",
         title: "Saona Island Paradise Tour",
         rating: "4.9",
         reviews: "120 Reviews",
@@ -4548,6 +4607,7 @@
       {
         id: "buggy-macao",
         zone: "punta-cana",
+        type: "regular",
         title: "Macao Buggy Adventure",
         rating: "4.8",
         reviews: "96 Reviews",
@@ -4559,8 +4619,23 @@
         includes: ["Morning and afternoon departures", "Helmet and guide included", "Great for couples and groups"]
       },
       {
+        id: "private-saona-punta-cana",
+        zone: "punta-cana",
+        type: "private",
+        title: "Private Saona Island Experience",
+        rating: "5.0",
+        reviews: "18 Reviews",
+        duration: "Full Day",
+        from: "Private from Punta Cana",
+        price: "From US$420.00",
+        image: "assets/saona-island-tour-private.webp",
+        summary: "A private, flexible Saona day for families, wedding groups, and guests who want a quieter custom pace.",
+        includes: ["Private transportation coordination", "Custom pickup timing", "Best for families and small groups"]
+      },
+      {
         id: "catalina-snorkel",
         zone: "bayahibe-la-romana",
+        type: "regular",
         title: "Catalina Island Snorkel Day",
         rating: "4.9",
         reviews: "88 Reviews",
@@ -4574,6 +4649,7 @@
       {
         id: "samana-waterfall",
         zone: "samana",
+        type: "regular",
         title: "El Limón Waterfall & Samaná Day",
         rating: "4.9",
         reviews: "74 Reviews",
@@ -4587,6 +4663,7 @@
       {
         id: "whale-watch",
         zone: "samana",
+        type: "regular",
         title: "Samaná Whale Watching",
         rating: "4.8",
         reviews: "62 Reviews",
@@ -4600,6 +4677,7 @@
       {
         id: "colonial-city",
         zone: "santo-domingo",
+        type: "regular",
         title: "Santo Domingo Colonial City Tour",
         rating: "4.9",
         reviews: "105 Reviews",
@@ -4613,6 +4691,7 @@
       {
         id: "puerto-plata-coast",
         zone: "puerto-plata-sosua",
+        type: "regular",
         title: "Puerto Plata City & Sosua Beach Day",
         rating: "4.8",
         reviews: "54 Reviews",
@@ -4626,6 +4705,7 @@
       {
         id: "boca-chica-reef",
         zone: "juan-dolio-boca-chica",
+        type: "regular",
         title: "Boca Chica Reef & Juan Dolio Escape",
         rating: "4.8",
         reviews: "47 Reviews",
@@ -4708,9 +4788,34 @@
       });
     }
 
+    function syncTourModeToggle() {
+      tourModeToggle?.setAttribute("data-mode", selectedTourMode);
+      tourModeToggle?.querySelectorAll("[data-tour-mode]").forEach(button => {
+        const isActive = button.dataset.tourMode === selectedTourMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    function setTourMode(mode) {
+      selectedTourMode = mode === "private" ? "private" : "regular";
+      syncTourModeToggle();
+      if (toursResults && !toursResults.hidden) renderTourCards(selectedTourZone || "all");
+    }
+
     function renderTourCards(zoneId = "all") {
       if (!excursionGrid) return;
-      const visibleTours = zoneId === "all" ? tours : tours.filter(tour => tour.zone === zoneId);
+      const visibleTours = tours.filter(tour => {
+        const zoneMatches = zoneId === "all" || tour.zone === zoneId;
+        return zoneMatches && (tour.type || "regular") === selectedTourMode;
+      });
+      if (!visibleTours.length) {
+        const empty = document.createElement("article");
+        empty.className = "excursion-card tour-empty-card";
+        empty.innerHTML = `<div class="excursion-body"><span class="tour-kicker">${selectedTourMode === "private" ? "Private tours" : "Regular tours"}</span><h2>No ${selectedTourMode === "private" ? "private" : "regular"} tours yet</h2><p>We are adding more options for this zone. Message us and we can help arrange a custom experience.</p></div>`;
+        excursionGrid.replaceChildren(empty);
+        return;
+      }
       excursionGrid.replaceChildren(...visibleTours.map(tour => {
         const card = document.createElement("article");
         card.className = "excursion-card";
@@ -4744,6 +4849,7 @@
     function selectTourZone(zoneId) {
       selectedTourZone = zoneId;
       syncTourZoneButtons();
+      syncTourModeToggle();
       if (zoneGrid) zoneGrid.hidden = true;
       if (toursResults) toursResults.hidden = false;
       if (tourDetail) {
@@ -4755,7 +4861,9 @@
 
     function resetToursToZones() {
       selectedTourZone = "";
+      selectedTourMode = "regular";
       syncTourZoneButtons();
+      syncTourModeToggle();
       if (zoneGrid) zoneGrid.hidden = false;
       if (toursResults) toursResults.hidden = true;
       if (tourDetail) {
@@ -4782,6 +4890,7 @@
       return {
         id: row.slug,
         zone: row.zone_slug,
+        type: row.tour_type || "regular",
         title: row.title,
         rating: row.rating || "4.9",
         reviews: row.reviews || "0 Reviews",
@@ -4796,7 +4905,7 @@
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,title,rating,reviews,duration,departure_label,price_text,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,image_url,summary,included_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -4974,6 +5083,10 @@
     zoneFilter?.addEventListener("scroll", () => {
       if (zoneFilter.scrollLeft > 2) hideZoneScrollHint();
     }, { passive: true });
+    tourModeToggle?.querySelectorAll("[data-tour-mode]").forEach(button => {
+      button.addEventListener("click", () => setTourMode(button.dataset.tourMode));
+    });
+    syncTourModeToggle();
     window.addEventListener("hashchange", setSiteViewFromHash);
     setSiteViewFromHash();
 
