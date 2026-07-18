@@ -1028,6 +1028,15 @@
       gap: 12px;
     }
 
+    .tour-detail-copy {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tour-detail-copy p {
+      margin: 0;
+    }
+
     .tour-detail-list {
       display: grid;
       gap: 8px;
@@ -5292,7 +5301,7 @@
             <div class="tour-detail-media"><img src="${tour.image}" alt="${tour.title}"></div>
             <span class="tour-kicker">${tourZoneLabel(tour.zone)}</span>
             <h2>${tour.title}</h2>
-            <p>${tour.summary}</p>
+            <div class="tour-detail-copy">${tourSummaryParagraphs(tour.summary).map(paragraph => `<p>${paragraph}</p>`).join("")}</div>
             <ul class="tour-detail-list">
               ${tour.includes.map(item => `<li><strong>✓</strong> ${item}</li>`).join("")}
             </ul>
@@ -5357,6 +5366,22 @@
       tourDetail.classList.add("is-visible");
       tourDetail.scrollIntoView({ behavior: "smooth", block: "start" });
       wireTourGuestStepper(tour);
+    }
+
+    function tourSummaryParagraphs(summary) {
+      const text = String(summary || "").replace(/\s+/g, " ").trim();
+      if (!text) return [];
+      const withBreaks = text
+        .replace(/\s+(Before reaching the island,)/i, "\n$1")
+        .replace(/\s+(Enjoy a delicious Dominican buffet lunch)/i, "\n$1");
+      const directParagraphs = withBreaks.split("\n").map(item => item.trim()).filter(Boolean);
+      if (directParagraphs.length > 1) return directParagraphs;
+      const sentences = text.match(/[^.!?]+[.!?]+(?:[”"']+)?|[^.!?]+$/g)?.map(item => item.trim()).filter(Boolean) || [text];
+      const paragraphs = [];
+      for (let index = 0; index < sentences.length; index += 3) {
+        paragraphs.push(sentences.slice(index, index + 3).join(" "));
+      }
+      return paragraphs;
     }
 
     function tourAdultPrice(tour) {
