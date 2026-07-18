@@ -4943,8 +4943,15 @@
       return true;
     }
 
+    function tourPriceLabel(priceText) {
+      const text = String(priceText || "").trim();
+      if (!text) return "Contact us";
+      return /^from\b/i.test(text) ? text : `From ${text}`;
+    }
+
     function renderTourCards(zoneId = "all") {
       if (!excursionGrid) return;
+      excursionGrid.hidden = false;
       const visibleTours = tours.filter(tour => {
         const zoneMatches = zoneId === "all" || tour.zone === zoneId;
         return zoneMatches && (tour.type || "regular") === selectedTourMode && tourMatchesDuration(tour);
@@ -4967,7 +4974,7 @@
             <div class="tour-meta"><span>⏱️ ${tour.duration}</span><span>📍 ${tour.from}</span></div>
             <p>${tour.summary}</p>
             <div class="tour-price-row">
-              <strong class="tour-price">From ${tour.price}</strong>
+              <strong class="tour-price">${tourPriceLabel(tour.price)}</strong>
               <button class="tour-card-button" type="button" data-tour-id="${tour.id}">View Details &amp; Book</button>
             </div>
           </div>
@@ -5013,6 +5020,7 @@
       setTourDurationMenuOpen(false);
       if (zoneGrid) zoneGrid.hidden = false;
       if (toursResults) toursResults.hidden = true;
+      if (excursionGrid) excursionGrid.hidden = false;
       if (tourDetail) {
         tourDetail.classList.remove("is-visible");
         tourDetail.replaceChildren();
@@ -5129,6 +5137,7 @@
           </form>
         </div>
       `;
+      if (excursionGrid) excursionGrid.hidden = true;
       tourDetail.classList.add("is-visible");
       tourDetail.scrollIntoView({ behavior: "smooth", block: "start" });
       wireTourGuestStepper(tour);
