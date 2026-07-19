@@ -1056,6 +1056,29 @@
       box-shadow: 0 14px 28px rgb(103 61 230 / 0.18);
     }
 
+    .tour-detail-whatsapp:disabled {
+      cursor: wait;
+      opacity: 0.72;
+      transform: none;
+    }
+
+    .tour-payment-status {
+      min-height: 18px;
+      margin: 0;
+      color: #5f586b;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .tour-payment-status.error {
+      color: #b42318;
+    }
+
+    .tour-payment-status.ok {
+      color: #087443;
+    }
+
     .tour-detail {
       display: none;
       gap: 16px;
@@ -5933,6 +5956,12 @@
                 </span>
               </label>
             </div>
+            <label>Name
+              <input type="text" data-tour-customer-name required autocomplete="name" placeholder="Your full name">
+            </label>
+            <label>Email Address
+              <input type="email" data-tour-customer-email required autocomplete="email" placeholder="you@example.com">
+            </label>
             <label>Resort / Hotel Name
               <span class="tour-hotel-search">
                 <input type="text" list="tour-hotel-options-${tour.id}" data-tour-hotel required autocomplete="off" placeholder="Type resort / hotel name" aria-label="Resort or hotel name">
@@ -5943,7 +5972,8 @@
             </label>
             <p class="tour-infant-note">Infants under 3 are free of charge.</p>
             <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
-            <a class="tour-detail-whatsapp" href="${tourWhatsAppLink(tour, counts)}" target="_blank" rel="noopener">Request this tour on WhatsApp</a>
+            <button class="tour-detail-whatsapp" type="submit" data-tour-paypal-button>Continue to PayPal</button>
+            <p class="tour-payment-status" data-tour-payment-status aria-live="polite"></p>
           </form>
         </div>
       `;
@@ -5953,6 +5983,7 @@
       resetPageScroll();
       tourDetail.querySelector("[data-breadcrumb-tours]")?.addEventListener("click", resetToursToZones);
       tourDetail.querySelector("[data-breadcrumb-zone]")?.addEventListener("click", event => selectTourZone(event.currentTarget.dataset.breadcrumbZone));
+      applyPendingTourPaymentNotice(tour.id);
       wireTourCarousel();
       wireTourGuestStepper(tour);
     }
@@ -6239,7 +6270,8 @@
     function wireTourGuestStepper(tour) {
       const form = tourDetail?.querySelector(`[data-tour-booking="${tour.id}"]`);
       if (!form) return;
-      const whatsappLink = form.querySelector(".tour-detail-whatsapp");
+      const paypalButton = form.querySelector("[data-tour-paypal-button]");
+      const paymentStatus = form.querySelector("[data-tour-payment-status]");
       const priceSummary = form.querySelector("[data-tour-price-summary]");
       const sync = () => {
         const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
@@ -6254,7 +6286,6 @@
           const childBreakdown = counts.children ? ` + ${moneyText(childUnit)} × ${counts.children} ${childLabel}` : "";
           priceSummary.innerHTML = `<strong>Total Price: ${moneyText(total)}</strong><span>(${moneyText(adultUnit)} × ${counts.adults} ${adultLabel}${childBreakdown})</span>`;
         }
-        if (whatsappLink) whatsappLink.href = tourWhatsAppLink(tour, counts);
       };
       form.querySelectorAll("[data-tour-count]").forEach(button => {
         button.addEventListener("click", () => {
@@ -6269,7 +6300,133 @@
       });
       form.querySelector("[data-tour-hotel]")?.addEventListener("input", sync);
       wireTourDatePicker(form, tour, sync);
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        await startTourPayPalCheckout(tour, form, paypalButton, paymentStatus);
+      });
       sync();
+    }
+
+    function tourPaymentNoticeKey() {
+      return "dq_tour_payment_notice";
+    }
+
+    function saveTourPaymentNotice(tourId, message, type = "ok") {
+      try {
+        sessionStorage.setItem(tourPaymentNoticeKey(), JSON.stringify({ tourId, message, type }));
+      } catch {}
+    }
+
+    function takeTourPaymentNotice(tourId) {
+      try {
+        const raw = sessionStorage.getItem(tourPaymentNoticeKey());
+        if (!raw) return null;
+        const notice = JSON.parse(raw);
+        if (!notice || notice.tourId !== tourId) return null;
+        sessionStorage.removeItem(tourPaymentNoticeKey());
+        return notice;
+      } catch {
+        return null;
+      }
+    }
+
+    function applyPendingTourPaymentNotice(tourId) {
+      const notice = takeTourPaymentNotice(tourId);
+      if (!notice) return;
+      const status = tourDetail?.querySelector("[data-tour-payment-status]");
+      if (!status) return;
+      setStatus(status, notice.message, notice.type === "error" ? "error" : "ok");
+    }
+
+    function tourReturnUrl(tourId, result) {
+      const base = currentPageBaseUrl();
+      if (!base) return "";
+      return `${base}?tour_paypal=${encodeURIComponent(result)}&tour=${encodeURIComponent(tourId)}#tours/tour/${encodeURIComponent(tourId)}`;
+    }
+
+    async function startTourPayPalCheckout(tour, form, paypalButton, paymentStatus) {
+      const pageBaseUrl = currentPageBaseUrl();
+      if (!pageBaseUrl) {
+        setStatus(paymentStatus, "PayPal checkout needs this page opened from a web URL, not directly from a file.", "error");
+        return;
+      }
+      const dateValue = form.querySelector("[data-tour-date]")?.value || "";
+      const customerName = form.querySelector("[data-tour-customer-name]")?.value.trim() || "";
+      const customerEmail = form.querySelector("[data-tour-customer-email]")?.value.trim() || "";
+      const hotelName = form.querySelector("[data-tour-hotel]")?.value.trim() || "";
+      if (!dateValue) {
+        setStatus(paymentStatus, "Choose your tour date.", "error");
+        return;
+      }
+      if (!customerName) {
+        setStatus(paymentStatus, "Enter your name.", "error");
+        form.querySelector("[data-tour-customer-name]")?.focus();
+        return;
+      }
+      if (!customerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)) {
+        setStatus(paymentStatus, "Enter a valid email address.", "error");
+        form.querySelector("[data-tour-customer-email]")?.focus();
+        return;
+      }
+      if (!hotelName) {
+        setStatus(paymentStatus, "Enter your resort or hotel name.", "error");
+        form.querySelector("[data-tour-hotel]")?.focus();
+        return;
+      }
+      const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+      if (paypalButton) paypalButton.disabled = true;
+      setStatus(paymentStatus, "Creating secure PayPal checkout...");
+      try {
+        const data = await functionRequest("create-tour-paypal-order", {
+          tour_id: tour.id,
+          service_date: dateValue,
+          customer_name: customerName,
+          customer_email: customerEmail,
+          hotel_name: hotelName,
+          adults: counts.adults,
+          children: counts.children,
+          return_url: tourReturnUrl(tour.id, "success"),
+          cancel_url: tourReturnUrl(tour.id, "cancelled")
+        });
+        if (data.approval_url) {
+          location.href = data.approval_url;
+          return;
+        }
+        setStatus(paymentStatus, `Booking saved. PayPal did not start: ${data.message || "configuration is incomplete"}.`, "error");
+      } catch (error) {
+        setStatus(paymentStatus, checkoutErrorMessage(error), "error");
+      } finally {
+        if (paypalButton) paypalButton.disabled = false;
+      }
+    }
+
+    async function handleTourPayPalReturn() {
+      const params = new URLSearchParams(location.search);
+      const result = params.get("tour_paypal");
+      if (!result) return;
+      const tourId = params.get("tour") || tourDetailIdFromHash();
+      const cleanUrl = `${location.origin}${location.pathname}#tours/tour/${encodeURIComponent(tourId || "")}`;
+      if (result === "cancelled") {
+        if (tourId) saveTourPaymentNotice(tourId, "PayPal payment was cancelled. You can try again when ready.", "error");
+        history.replaceState(null, "", cleanUrl);
+        setSiteViewFromHash();
+        return;
+      }
+      const token = params.get("token");
+      if (!token) {
+        if (tourId) saveTourPaymentNotice(tourId, "PayPal returned without an order token. Please contact Dominican Quest.", "error");
+        history.replaceState(null, "", cleanUrl);
+        setSiteViewFromHash();
+        return;
+      }
+      try {
+        const data = await functionRequest("capture-tour-paypal-order", { token });
+        if (tourId) saveTourPaymentNotice(tourId, `Payment confirmed. Reference ${data.booking_reference}. A confirmation email will arrive shortly.`, "ok");
+      } catch (error) {
+        if (tourId) saveTourPaymentNotice(tourId, `We could not confirm the PayPal payment automatically: ${error.message}`, "error");
+      }
+      history.replaceState(null, "", cleanUrl);
+      setSiteViewFromHash();
     }
 
     function resetPageScroll() {
@@ -8305,6 +8462,7 @@
       }
     }
 
+    handleTourPayPalReturn();
     handlePayPalReturn();
     loadDestinations().catch(error => {
       setPlaceLoadingFailed();
