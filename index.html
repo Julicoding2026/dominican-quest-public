@@ -4581,7 +4581,37 @@
       }
     }
   </style>
-  <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="c785cede-88b3-45b5-8a16-4c8b9508d7d3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+  <script type="text/javascript">
+    window.$crisp = [];
+    window.CRISP_WEBSITE_ID = "c785cede-88b3-45b5-8a16-4c8b9508d7d3";
+    (function() {
+      const script = document.createElement("script");
+      script.src = "https://client.crisp.chat/l.js";
+      script.async = true;
+      document.head.appendChild(script);
+    })();
+
+    function insetMobileChatLauncher() {
+      if (!window.matchMedia("(max-width: 860px)").matches) return;
+      document.querySelectorAll(".crisp-client *").forEach(element => {
+        const style = getComputedStyle(element);
+        if (style.position !== "fixed") return;
+        const rect = element.getBoundingClientRect();
+        const isLauncher = rect.width >= 44 && rect.width <= 100
+          && rect.height >= 44 && rect.height <= 100
+          && rect.right >= window.innerWidth - 32
+          && rect.bottom >= window.innerHeight - 32;
+        if (!isLauncher) return;
+        element.style.setProperty("right", "22px", "important");
+        element.style.setProperty("bottom", "22px", "important");
+      });
+    }
+
+    const crispPositionObserver = new MutationObserver(insetMobileChatLauncher);
+    crispPositionObserver.observe(document.documentElement, { childList: true, subtree: true });
+    window.addEventListener("resize", insetMobileChatLauncher);
+    window.addEventListener("load", insetMobileChatLauncher);
+  </script>
 </head>
 <body>
   <header class="site-header">
