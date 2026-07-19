@@ -6469,6 +6469,12 @@
         list.hidden = false;
         input.setAttribute("aria-expanded", "true");
       };
+      const refreshWhenPlacesReady = () => {
+        if (document.activeElement === input || !list.hidden) render();
+      };
+      if (!(state.places || []).length) {
+        document.addEventListener("dq:places-ready", refreshWhenPlacesReady, { once: true });
+      }
       input.addEventListener("focus", () => {
         if (window.matchMedia("(max-width: 767px)").matches) {
           document.body.classList.add("is-search-focused");
@@ -8621,6 +8627,7 @@
       state.locations = data.locations || [];
       state.airlines = data.airlines || [];
       buildPlaces();
+      document.dispatchEvent(new CustomEvent("dq:places-ready"));
       populateAirlines();
       renderDrinkOptions();
       initializePlaceCombo("origin");
