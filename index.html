@@ -1430,6 +1430,10 @@
       background: no-repeat center / 16px 16px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236f687d' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
     }
 
+    .tour-hotel-close {
+      display: none;
+    }
+
     .tour-hotel-suggestions {
       position: absolute;
       top: calc(100% + 7px);
@@ -4580,6 +4584,78 @@
         width: auto;
       }
     }
+
+    @media (max-width: 767px) {
+      body.is-search-focused {
+        overflow: hidden;
+      }
+
+      body.is-search-focused .tour-hotel-search {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 44px;
+        grid-template-rows: auto minmax(0, 1fr);
+        align-content: start;
+        gap: 12px;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+        background: #fff;
+      }
+
+      body.is-search-focused .tour-hotel-search input {
+        grid-column: 1;
+        min-width: 0;
+        min-height: 48px;
+        padding-right: 40px;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgb(103 61 230 / 0.12);
+      }
+
+      body.is-search-focused .tour-hotel-search::after {
+        top: calc(max(18px, env(safe-area-inset-top)) + 24px);
+        right: calc(max(16px, env(safe-area-inset-right)) + 56px);
+      }
+
+      body.is-search-focused .tour-hotel-close {
+        display: grid;
+        grid-column: 2;
+        place-items: center;
+        min-width: 44px;
+        min-height: 48px;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--ink);
+        background: #fff;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      body.is-search-focused .tour-hotel-suggestions {
+        position: static;
+        grid-column: 1 / -1;
+        min-height: 0;
+        max-height: none;
+        padding: 4px 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overscroll-behavior: contain;
+      }
+
+      body.is-search-focused .tour-hotel-option,
+      body.is-search-focused .tour-hotel-empty {
+        min-height: 58px;
+        padding: 10px 8px;
+        border-bottom: 1px solid #eee9f5;
+        border-radius: 0;
+      }
+    }
   </style>
   <script type="text/javascript">
     window.$crisp = [];
@@ -5856,6 +5932,7 @@
     }
 
     function selectTourZone(zoneId) {
+      document.body.classList.remove("is-search-focused");
       if (zoneId === "all") {
         resetToursToZones();
         return;
@@ -5875,6 +5952,7 @@
     }
 
     function resetToursToZones() {
+      document.body.classList.remove("is-search-focused");
       if (window.location.hash.startsWith("#tours/tour/")) history.pushState(null, "", "#tours");
       selectedTourZone = "";
       selectedTourMode = "regular";
@@ -6089,6 +6167,7 @@
     }
 
     function showTourDetail(tourId, updateHash = false) {
+      document.body.classList.remove("is-search-focused");
       const tour = tours.find(item => item.id === tourId);
       if (!tour || !tourDetail) return;
       if (updateHash) setTourDetailHash(tour.id);
@@ -6173,6 +6252,7 @@
             <label>Resort / Hotel Name
               <span class="tour-hotel-search">
                 <input type="text" data-tour-hotel required autocomplete="off" placeholder="Type resort / hotel name" aria-label="Resort or hotel name" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="tour-hotel-suggestions-${tour.id}">
+                <button class="tour-hotel-close" type="button" data-tour-hotel-close aria-label="Close hotel search">×</button>
                 <span class="tour-hotel-suggestions" id="tour-hotel-suggestions-${tour.id}" data-tour-hotel-suggestions role="listbox" hidden></span>
               </span>
             </label>
@@ -6349,14 +6429,17 @@
     function wireTourHotelAutocomplete(form, tour, onChange) {
       const input = form.querySelector("[data-tour-hotel]");
       const list = form.querySelector("[data-tour-hotel-suggestions]");
+      const closeButton = form.querySelector("[data-tour-hotel-close]");
       if (!input || !list) return;
       const close = () => {
         list.hidden = true;
         input.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("is-search-focused");
       };
       const selectOption = option => {
         input.value = option.value;
         close();
+        input.blur();
         onChange?.();
       };
       const render = () => {
@@ -6386,7 +6469,12 @@
         list.hidden = false;
         input.setAttribute("aria-expanded", "true");
       };
-      input.addEventListener("focus", render);
+      input.addEventListener("focus", () => {
+        if (window.matchMedia("(max-width: 767px)").matches) {
+          document.body.classList.add("is-search-focused");
+        }
+        render();
+      });
       input.addEventListener("input", () => {
         onChange?.();
         render();
@@ -6394,6 +6482,7 @@
       input.addEventListener("keydown", event => {
         if (event.key === "Escape") {
           close();
+          input.blur();
           return;
         }
         if (event.key === "Enter" && !list.hidden) {
@@ -6408,6 +6497,11 @@
         if (!form.contains(event.target)) close();
       }, { once: true });
       input.addEventListener("blur", () => window.setTimeout(close, 120));
+      closeButton?.addEventListener("pointerdown", event => event.preventDefault());
+      closeButton?.addEventListener("click", () => {
+        close();
+        input.blur();
+      });
     }
 
     function tourDisplayDate(value) {
