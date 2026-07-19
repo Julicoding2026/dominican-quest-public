@@ -4358,11 +4358,31 @@
         grid-template-columns: 1fr;
       }
 
+      .tours-page,
+      .tours-results,
+      .tour-detail,
+      .tour-detail-layout {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+      }
+
       .tour-detail-content {
         display: contents;
       }
 
+      .tour-detail-media,
+      .tour-detail-content > .tour-kicker,
+      .tour-detail-content > h2,
+      .tour-detail-copy,
+      .tour-description-toggle,
+      .tour-detail-logistics {
+        min-width: 0;
+        max-width: 100%;
+      }
+
       .tour-detail-media {
+        width: 100%;
         order: 1;
       }
 
@@ -4376,6 +4396,10 @@
 
       .tour-booking-card {
         order: 4;
+        justify-self: center;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
       }
 
       .tour-detail-copy {
@@ -4459,6 +4483,15 @@
 
       .tour-booking-card {
         position: static;
+      }
+
+      .tour-booking-card > *,
+      .tour-booking-card label,
+      .tour-date-picker,
+      .tour-guest-row,
+      .tour-passenger-stepper {
+        min-width: 0;
+        max-width: 100%;
       }
 
       .tour-detail-copy.has-collapsible-copy p:nth-of-type(n + 2) {
