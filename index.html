@@ -1243,8 +1243,7 @@
       font-weight: 950;
     }
 
-    .tour-description-toggle,
-    .tour-mobile-action {
+    .tour-description-toggle {
       display: none;
     }
 
@@ -4359,6 +4358,38 @@
         grid-template-columns: 1fr;
       }
 
+      .tour-detail-content {
+        display: contents;
+      }
+
+      .tour-detail-media {
+        order: 1;
+      }
+
+      .tour-detail-content > .tour-kicker {
+        order: 2;
+      }
+
+      .tour-detail-content > h2 {
+        order: 3;
+      }
+
+      .tour-booking-card {
+        order: 4;
+      }
+
+      .tour-detail-copy {
+        order: 5;
+      }
+
+      .tour-description-toggle {
+        order: 6;
+      }
+
+      .tour-detail-logistics {
+        order: 7;
+      }
+
       .tour-detail-logistics {
         grid-template-columns: 1fr;
       }
@@ -4463,59 +4494,6 @@
         transform: rotate(180deg);
       }
 
-      .tour-mobile-action {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 90;
-        display: grid;
-        grid-template-columns: max-content minmax(0, 1fr);
-        align-items: center;
-        gap: 14px;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        padding: 10px max(14px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
-        border-top: 1px solid rgb(47 22 143 / 0.1);
-        background: rgb(255 255 255 / 0.97);
-        box-shadow: 0 -10px 28px rgb(35 24 54 / 0.14);
-        backdrop-filter: blur(12px);
-        transform: translateY(110%);
-        visibility: hidden;
-        transition: transform 220ms ease, visibility 220ms ease;
-      }
-
-      .tour-mobile-action.is-visible {
-        transform: translateY(0);
-        visibility: visible;
-      }
-
-      .tour-mobile-price {
-        min-width: 0;
-        max-width: 38vw;
-        overflow: hidden;
-        color: var(--ink);
-        font-size: 13px;
-        font-weight: 950;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .tour-mobile-book-button {
-        width: 100%;
-        min-width: 0;
-        min-height: 46px;
-        padding: 0 22px;
-        border: 0;
-        border-radius: 8px;
-        color: #fff;
-        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-        box-shadow: 0 9px 20px rgb(97 49 222 / 0.24);
-        font-size: 15px;
-        font-weight: 950;
-      }
-
       .tour-calendar-popover {
         position: absolute;
         top: calc(100% + 8px);
@@ -4545,10 +4523,6 @@
     }
 
     @media (max-width: 420px) {
-      .tour-mobile-action {
-        grid-template-columns: max-content minmax(0, 1fr);
-        gap: 10px;
-      }
       .nav-link {
         gap: 5px;
         padding: 0 6px;
@@ -5373,7 +5347,6 @@
     let selectedTourDuration = "all";
     let activeTourGuestCounts = {};
     let activeTourDateCleanup = null;
-    let activeTourMobileCleanup = null;
     let currentSiteView = "transfers";
 
     const DEFAULT_TRANSFER_STORY_SLIDES = [
@@ -5823,7 +5796,6 @@
       if (zoneGrid) zoneGrid.hidden = true;
       if (toursResults) toursResults.hidden = false;
       document.getElementById("toursPage")?.classList.remove("is-detail-open");
-      if (activeTourMobileCleanup) activeTourMobileCleanup();
       if (tourDetail) {
         tourDetail.classList.remove("is-visible");
         tourDetail.replaceChildren();
@@ -5841,7 +5813,6 @@
       syncTourDurationFilter();
       setTourDurationMenuOpen(false);
       document.getElementById("toursPage")?.classList.remove("is-detail-open");
-      if (activeTourMobileCleanup) activeTourMobileCleanup();
       if (zoneGrid) zoneGrid.hidden = false;
       if (toursResults) toursResults.hidden = true;
       if (excursionGrid) excursionGrid.hidden = false;
@@ -6055,7 +6026,6 @@
       syncTourZoneButtons();
       syncTourModeToggle();
       if (activeTourDateCleanup) activeTourDateCleanup();
-      if (activeTourMobileCleanup) activeTourMobileCleanup();
       const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
       const adultUnitLabel = moneyText(tourAdultPrice(tour));
       const childUnitLabel = moneyText(tourChildPrice(tour));
@@ -6141,10 +6111,6 @@
             <p class="tour-payment-status" data-tour-payment-status aria-live="polite"></p>
           </form>
         </div>
-        <div class="tour-mobile-action" data-tour-mobile-action aria-hidden="true">
-          <span class="tour-mobile-price">From ${escapeAttribute(String(tour.price || "").replace(/^From\s+/i, ""))}</span>
-          <button class="tour-mobile-book-button" type="button" data-tour-mobile-book>Book Now</button>
-        </div>
       `;
       if (excursionGrid) excursionGrid.hidden = true;
       document.getElementById("toursPage")?.classList.add("is-detail-open");
@@ -6155,17 +6121,13 @@
       applyPendingTourPaymentNotice(tour.id);
       wireTourCarousel();
       wireTourGuestStepper(tour);
-      wireTourMobileActions();
+      wireTourDescriptionToggle();
     }
 
-    function wireTourMobileActions() {
+    function wireTourDescriptionToggle() {
       const copy = tourDetail?.querySelector("[data-tour-description]");
       const toggle = tourDetail?.querySelector("[data-tour-description-toggle]");
       const toggleLabel = toggle?.querySelector("[data-tour-description-toggle-label]");
-      const hero = tourDetail?.querySelector("[data-tour-carousel]");
-      const form = tourDetail?.querySelector("[data-tour-booking]");
-      const action = tourDetail?.querySelector("[data-tour-mobile-action]");
-      const bookButton = action?.querySelector("[data-tour-mobile-book]");
 
       if (copy && toggle && copy.querySelectorAll("p").length > 1) {
         copy.classList.add("has-collapsible-copy");
@@ -6177,27 +6139,6 @@
           if (toggleLabel) toggleLabel.textContent = expanded ? "Read less" : "Read more";
         });
       }
-
-      const syncActionVisibility = () => {
-        if (!hero || !action) return;
-        const isMobile = window.matchMedia("(max-width: 860px)").matches;
-        const heroHasPassed = hero.getBoundingClientRect().bottom <= 0;
-        action.classList.toggle("is-visible", isMobile && heroHasPassed);
-        action.setAttribute("aria-hidden", String(!(isMobile && heroHasPassed)));
-      };
-
-      bookButton?.addEventListener("click", () => {
-        form?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-      window.addEventListener("scroll", syncActionVisibility, { passive: true });
-      window.addEventListener("resize", syncActionVisibility);
-      syncActionVisibility();
-
-      activeTourMobileCleanup = () => {
-        window.removeEventListener("scroll", syncActionVisibility);
-        window.removeEventListener("resize", syncActionVisibility);
-        activeTourMobileCleanup = null;
-      };
     }
 
     function wireTourCarousel() {
