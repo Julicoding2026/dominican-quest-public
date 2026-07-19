@@ -5365,6 +5365,7 @@
       tripType: "one_way"
     };
     let destinationsReadyPromise = null;
+    let destinationsLoadError = "";
 
     const originSelect = document.getElementById("originSelect");
     const originSearch = document.getElementById("originSearch");
@@ -6401,11 +6402,53 @@
       return placeZone.includes(requestedZone) || requestedZone.includes(placeZone);
     }
 
+    const FALLBACK_TOUR_HOTELS = [
+      ["Art Villa Dominicana", "Punta Cana/Bavaro"],
+      ["Bahia Principe Escape Ambar", "Punta Cana/Bavaro"],
+      ["Bahia Principe Escape Aquamarine", "Punta Cana/Bavaro"],
+      ["Barceló Bávaro Beach - Adults only", "Punta Cana/Bavaro"],
+      ["Breathless Punta Cana Resort & Spa", "Punta Cana/Bavaro"],
+      ["Caribe Deluxe Princess", "Punta Cana/Bavaro"],
+      ["Catalonia Punta Cana", "Punta Cana/Cabeza de Toro"],
+      ["Catalonia Royal Bavaro - Adults Only", "Punta Cana/Cabeza de Toro"],
+      ["Club Med Punta Cana", "Punta Cana/Cap Cana"],
+      ["Dreams Cap Cana Resort & Spa", "Punta Cana/Cap Cana"],
+      ["Dreams Flora", "Punta Cana/Cabeza de Toro"],
+      ["Dreams Onyx Resort And Spa", "Punta Cana/Uvero Alto"],
+      ["Dreams Royal Beach Punta Cana", "Punta Cana/Bavaro"],
+      ["Eden Roc Cap Cana", "Punta Cana/Cap Cana"],
+      ["Excellence El Carmen", "Punta Cana/Uvero Alto"],
+      ["Excellence Punta Cana", "Punta Cana/Uvero Alto"],
+      ["Grand Bavaro Princess", "Punta Cana/Bavaro"],
+      ["Grand Palladium Punta Cana", "Punta Cana/Bavaro"],
+      ["Hard Rock Hotel & Casino Punta Cana", "Punta Cana/Bavaro"],
+      ["Hyatt Ziva Cap Cana", "Punta Cana/Cap Cana"],
+      ["Iberostar Selection Bavaro", "Punta Cana/Bavaro"],
+      ["Lopesan Costa Bávaro Resort, Spa & Casino", "Punta Cana/Bavaro"],
+      ["Majestic Mirage", "Punta Cana/Bavaro"],
+      ["Melia Caribe Beach", "Punta Cana/Bavaro"],
+      ["Nickelodeon Hotel", "Punta Cana/Uvero Alto"],
+      ["Paradisus Grand Cana", "Punta Cana/Bavaro"],
+      ["Punta Cana Princess", "Punta Cana/Bavaro"],
+      ["RIU Palace Bavaro", "Punta Cana/Bavaro"],
+      ["Riu Republica", "Punta Cana/Bavaro"],
+      ["Secrets Royal Beach", "Punta Cana/Bavaro"]
+    ].map(([label, destinationLabel], index) => ({
+      key: `fallback-tour-hotel-${index}`,
+      label,
+      detail: `Zone: ${destinationLabel}`,
+      type: "hotel",
+      destinationLabel
+    }));
+
     function tourHotelOptions(tour) {
       const puntaCanaZones = ["Punta Cana/Bavaro", "Punta Cana/Cap Cana", "Punta Cana/Cabeza de Toro", "Punta Cana/Uvero Alto"];
       const allowedZones = tour.zone === "punta-cana" ? puntaCanaZones : [tourZoneLabel(tour.zone)];
-      const hotels = (state.places || [])
+      const liveHotels = (state.places || [])
         .filter(place => isHotelPlace(place))
+        .filter(place => allowedZones.some(zone => zoneMatchesHotel(place, zone)));
+      const hotelSource = liveHotels.length ? liveHotels : FALLBACK_TOUR_HOTELS;
+      const hotels = hotelSource
         .filter(place => allowedZones.some(zone => zoneMatchesHotel(place, zone)))
         .sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
       const seen = new Set();
@@ -6449,7 +6492,9 @@
         if (!matches.length) {
           const empty = document.createElement("span");
           empty.className = "tour-hotel-empty";
-          empty.textContent = tourHotelOptions(tour).length ? "No matching resort or hotel found" : "Hotels are still loading";
+          empty.textContent = tourHotelOptions(tour).length
+            ? "No matching resort or hotel found"
+            : destinationsLoadError || "Hotels are still loading";
           list.appendChild(empty);
         } else {
           matches.forEach(option => {
@@ -6481,9 +6526,13 @@
           document.body.classList.add("is-search-focused");
         }
         render();
-        if (!(state.places || []).length && destinationsReadyPromise) {
-          await destinationsReadyPromise;
-          if (document.activeElement === input || !list.hidden) render();
+        if (!(state.places || []).length) {
+          try {
+            await ensureDestinationsReady();
+          } catch {}
+          if (document.activeElement === input || !list.hidden) {
+            render();
+          }
         }
       });
       input.addEventListener("input", () => {
@@ -8646,6 +8695,23 @@
       setStatus(searchStatus, "");
     }
 
+    function ensureDestinationsReady() {
+      if ((state.places || []).length) return Promise.resolve();
+      if (destinationsReadyPromise) return destinationsReadyPromise;
+      destinationsLoadError = "";
+      destinationsReadyPromise = loadDestinations()
+        .catch(error => {
+          destinationsLoadError = "Hotels could not load. Click the field to retry.";
+          setPlaceLoadingFailed();
+          setStatus(searchStatus, error.message, "error");
+          throw error;
+        })
+        .finally(() => {
+          destinationsReadyPromise = null;
+        });
+      return destinationsReadyPromise;
+    }
+
     searchForm.addEventListener("submit", async event => {
       event.preventDefault();
       if (!originSelect.value) {
@@ -8867,10 +8933,7 @@
 
     handleTourPayPalReturn();
     handlePayPalReturn();
-    destinationsReadyPromise = loadDestinations().catch(error => {
-      setPlaceLoadingFailed();
-      setStatus(searchStatus, error.message, "error");
-    });
+    ensureDestinationsReady().catch(() => {});
   </script>
 </body>
 </html>
