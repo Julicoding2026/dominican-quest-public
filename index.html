@@ -4539,25 +4539,6 @@
         transform: rotate(180deg);
       }
 
-      .tour-calendar-popover {
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 0;
-        bottom: auto;
-        left: auto;
-        z-index: 20;
-        width: min(328px, calc(100vw - 48px));
-        max-height: none;
-        overflow: visible;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        opacity: 1;
-        transform: none;
-        transition: none;
-        box-shadow: 0 18px 44px rgb(38 23 61 / 0.2);
-      }
-
       .tour-guest-row {
         grid-template-columns: 1fr;
       }
@@ -5496,6 +5477,7 @@
     let selectedTourDuration = "all";
     let activeTourGuestCounts = {};
     let activeTourDateCleanup = null;
+    let activeTourCalendarClose = null;
     let currentSiteView = "transfers";
 
     const DEFAULT_TRANSFER_STORY_SLIDES = [
@@ -6624,9 +6606,13 @@
       let cursor = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
 
       const setOpen = open => {
-        popover.hidden = !open;
-        trigger.setAttribute("aria-expanded", String(open));
+        if (open) {
+          setCalendarOpen(false);
+          setReturnCalendarOpen(false);
+        }
+        setCalendarSheet(popover, trigger, open, "tourCalendar");
       };
+      activeTourCalendarClose = () => setOpen(false);
 
       const setTourDate = value => {
         input.value = value || "";
@@ -6711,8 +6697,10 @@
       document.addEventListener("click", handleDocumentClick);
       document.addEventListener("keydown", handleKeydown);
       activeTourDateCleanup = () => {
+        setOpen(false);
         document.removeEventListener("click", handleDocumentClick);
         document.removeEventListener("keydown", handleKeydown);
+        activeTourCalendarClose = null;
         activeTourDateCleanup = null;
       };
       render();
@@ -7090,7 +7078,8 @@
 
     const calendarSheetTimers = {
       calendar: null,
-      returnCalendar: null
+      returnCalendar: null,
+      tourCalendar: null
     };
 
     function isMobileCalendarSheet() {
@@ -7098,7 +7087,9 @@
     }
 
     function syncCalendarSheetState() {
-      document.body.classList.toggle("calendar-sheet-open", !calendarPopover.hidden || !returnCalendarPopover.hidden);
+      const tourCalendarPopover = tourDetail?.querySelector("[data-tour-calendar-popover]");
+      const tourCalendarOpen = Boolean(tourCalendarPopover && !tourCalendarPopover.hidden);
+      document.body.classList.toggle("calendar-sheet-open", !calendarPopover.hidden || !returnCalendarPopover.hidden || tourCalendarOpen);
     }
 
     function setCalendarSheet(popover, trigger, open, timerKey) {
@@ -7563,6 +7554,7 @@
     calendarSheetBackdrop.addEventListener("click", () => {
       setCalendarOpen(false);
       setReturnCalendarOpen(false);
+      activeTourCalendarClose?.();
     });
     oneWayTrip.addEventListener("click", () => setTripType("one_way"));
     roundTrip.addEventListener("click", () => setTripType("round_trip"));
