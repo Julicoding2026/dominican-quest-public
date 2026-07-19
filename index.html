@@ -5364,6 +5364,7 @@
       mobilePlaceSide: null,
       tripType: "one_way"
     };
+    let destinationsReadyPromise = null;
 
     const originSelect = document.getElementById("originSelect");
     const originSearch = document.getElementById("originSearch");
@@ -6475,11 +6476,15 @@
       if (!(state.places || []).length) {
         document.addEventListener("dq:places-ready", refreshWhenPlacesReady, { once: true });
       }
-      input.addEventListener("focus", () => {
+      input.addEventListener("focus", async () => {
         if (window.matchMedia("(max-width: 767px)").matches) {
           document.body.classList.add("is-search-focused");
         }
         render();
+        if (!(state.places || []).length && destinationsReadyPromise) {
+          await destinationsReadyPromise;
+          if (document.activeElement === input || !list.hidden) render();
+        }
       });
       input.addEventListener("input", () => {
         onChange?.();
@@ -6695,13 +6700,13 @@
           sync();
         });
       });
+      sync();
       wireTourHotelAutocomplete(form, tour, sync);
       wireTourDatePicker(form, tour, sync);
       form.addEventListener("submit", async event => {
         event.preventDefault();
         await startTourPayPalCheckout(tour, form, paypalButton, paymentStatus);
       });
-      sync();
     }
 
     function tourPaymentNoticeKey() {
@@ -8862,7 +8867,7 @@
 
     handleTourPayPalReturn();
     handlePayPalReturn();
-    loadDestinations().catch(error => {
+    destinationsReadyPromise = loadDestinations().catch(error => {
       setPlaceLoadingFailed();
       setStatus(searchStatus, error.message, "error");
     });
