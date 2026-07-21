@@ -1504,6 +1504,45 @@
       line-height: 1.2;
     }
 
+    .tour-package-options {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .tour-package-options legend {
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .tour-package-option {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 10px 12px;
+      border: 1px solid #d8cfbf;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .tour-package-option:has(input:checked) {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 7%, #fff 93%);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .tour-package-option input { accent-color: var(--accent); }
+    .tour-package-option span { display: grid; gap: 2px; }
+    .tour-package-option strong, .tour-package-option b { color: var(--ink); font-size: 13px; }
+    .tour-package-option small { color: #81798d; font-size: 11px; font-weight: 800; }
+
     .tour-passenger-stepper {
       display: grid;
       grid-template-columns: 44px minmax(0, 1fr) 44px;
@@ -5577,8 +5616,15 @@
         reviews: "96 Reviews",
         duration: "Half Day",
         from: "From Punta Cana",
-        price: "US$65.00",
+        price: "From US$100.00",
         childPrice: null,
+        pricingType: "vehicle_package",
+        vehiclePricingOptions: [
+          { id: "single", label: "Single buggy", participants: 1, total: 100 },
+          { id: "double", label: "Double buggy", participants: 2, total: 110 },
+          { id: "triple", label: "Triple buggy", participants: 3, total: 160 },
+          { id: "quadruple", label: "Quadruple buggy", participants: 4, total: 180 }
+        ],
         operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
         closedDates: [],
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82",
@@ -6069,6 +6115,12 @@
           max: Number(tier.max),
           total: Number(tier.total)
         })).filter(tier => tier.min > 0 && tier.max >= tier.min && tier.total > 0) : [],
+        vehiclePricingOptions: Array.isArray(row.vehicle_pricing_options) ? row.vehicle_pricing_options.map(option => ({
+          id: String(option.id || "").trim(),
+          label: String(option.label || "").trim(),
+          participants: Number(option.participants),
+          total: Number(option.total)
+        })).filter(option => option.id && option.label && option.participants > 0 && option.total > 0) : [],
         operatingWeekdays: Array.isArray(row.operating_weekdays) && row.operating_weekdays.length ? row.operating_weekdays.map(Number) : [0, 1, 2, 3, 4, 5, 6],
         closedDates: Array.isArray(row.closed_dates) ? row.closed_dates : [],
         image: row.image_url,
@@ -6177,7 +6229,11 @@
       syncTourModeToggle();
       if (activeTourDateCleanup) activeTourDateCleanup();
       const privateGroup = isPrivateGroupTour(tour);
-      const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+      const vehiclePackage = isVehiclePackageTour(tour);
+      const firstVehicleOption = vehiclePackageOptions(tour)[0];
+      const counts = activeTourGuestCounts[tour.id] || (vehiclePackage
+        ? { vehicleOptionId: firstVehicleOption?.id || "" }
+        : privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
       const adultUnitLabel = moneyText(tourAdultPrice(tour));
       const childUnitLabel = moneyText(tourChildPrice(tour));
       activeTourGuestCounts[tour.id] = counts;
@@ -6226,7 +6282,14 @@
                 </span>
               </span>
             </label>
-            ${privateGroup ? `<div class="tour-guest-row">
+            ${vehiclePackage ? `<fieldset class="tour-package-options">
+              <legend>Choose your buggy</legend>
+              ${vehiclePackageOptions(tour).map((option, index) => `<label class="tour-package-option">
+                <input type="radio" name="tour-vehicle-package" value="${escapeAttribute(option.id)}" ${counts.vehicleOptionId === option.id || (!counts.vehicleOptionId && index === 0) ? "checked" : ""}>
+                <span><strong>${escapeAttribute(option.label)}</strong><small>${option.participants} ${option.participants === 1 ? "participant" : "participants"}</small></span>
+                <b>${moneyText(option.total)} total</b>
+              </label>`).join("")}
+            </fieldset>` : privateGroup ? `<div class="tour-guest-row">
               <label>Number of participants
                 <span class="tour-price-micro">Maximum ${tour.maxParticipants || 20} guests</span>
                 <span class="tour-passenger-stepper">
@@ -6266,7 +6329,9 @@
                 <span class="tour-hotel-suggestions" id="tour-hotel-suggestions-${tour.id}" data-tour-hotel-suggestions role="listbox" hidden></span>
               </span>
             </label>
-            ${privateGroup
+            ${vehiclePackage
+              ? `<p class="tour-infant-note">Your buggy selection determines the number of participants. Driver age and safety requirements apply separately.</p>`
+              : privateGroup
               ? `<p class="tour-infant-note">This is the private-tour price for your entire group. Every passenger counts toward capacity.</p>`
               : `<p class="tour-infant-note">Infants under 3 are free of charge.</p>`}
             <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
@@ -6392,6 +6457,19 @@
 
     function isPrivateGroupTour(tour) {
       return tour.pricingType === "private_group" || (tour.type === "private" && tour.pricingType !== "per_person");
+    }
+
+    function isVehiclePackageTour(tour) {
+      return tour.pricingType === "vehicle_package";
+    }
+
+    function vehiclePackageOptions(tour) {
+      return Array.isArray(tour.vehiclePricingOptions) ? tour.vehiclePricingOptions : [];
+    }
+
+    function selectedVehiclePackage(tour, selection) {
+      const options = vehiclePackageOptions(tour);
+      return options.find(option => option.id === selection?.vehicleOptionId) || options[0] || null;
     }
 
     function privateGroupTier(tour, participants) {
@@ -6755,7 +6833,21 @@
       const priceSummary = form.querySelector("[data-tour-price-summary]");
       const sync = () => {
         const privateGroup = isPrivateGroupTour(tour);
-        const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+        const vehiclePackage = isVehiclePackageTour(tour);
+        const firstVehicleOption = vehiclePackageOptions(tour)[0];
+        const counts = activeTourGuestCounts[tour.id] || (vehiclePackage
+          ? { vehicleOptionId: firstVehicleOption?.id || "" }
+          : privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+        if (vehiclePackage) {
+          const option = selectedVehiclePackage(tour, counts);
+          if (priceSummary) {
+            priceSummary.innerHTML = option
+              ? `<strong>Booking total: ${moneyText(option.total)}</strong><span>${escapeAttribute(option.label)} · ${option.participants} ${option.participants === 1 ? "participant" : "participants"}</span>`
+              : `<strong>Buggy pricing unavailable</strong><span>Please contact Dominican Quest for assistance.</span>`;
+          }
+          if (paypalButton) paypalButton.disabled = !option;
+          return;
+        }
         if (privateGroup) {
           form.querySelector('[data-tour-output="participants"]').textContent = String(counts.participants);
           const total = privateGroupTotal(tour, counts.participants);
@@ -6790,6 +6882,12 @@
           const max = kind === "participants" ? Number(tour.maxParticipants || 20) : 30;
           counts[kind] = action === "plus" ? Math.min(max, counts[kind] + 1) : Math.max(min, counts[kind] - 1);
           activeTourGuestCounts[tour.id] = counts;
+          sync();
+        });
+      });
+      form.querySelectorAll('input[name="tour-vehicle-package"]').forEach(input => {
+        input.addEventListener("change", () => {
+          activeTourGuestCounts[tour.id] = { vehicleOptionId: input.value };
           sync();
         });
       });
@@ -6869,7 +6967,16 @@
         return;
       }
       const privateGroup = isPrivateGroupTour(tour);
-      const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+      const vehiclePackage = isVehiclePackageTour(tour);
+      const firstVehicleOption = vehiclePackageOptions(tour)[0];
+      const counts = activeTourGuestCounts[tour.id] || (vehiclePackage
+        ? { vehicleOptionId: firstVehicleOption?.id || "" }
+        : privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+      const vehicleOption = vehiclePackage ? selectedVehiclePackage(tour, counts) : null;
+      if (vehiclePackage && !vehicleOption) {
+        setStatus(paymentStatus, "Choose an available buggy configuration.", "error");
+        return;
+      }
       if (privateGroup && !privateGroupTotal(tour, counts.participants)) {
         setStatus(paymentStatus, "A private-tour price is not configured for this group size.", "error");
         return;
@@ -6883,9 +6990,10 @@
           customer_name: customerName,
           customer_email: customerEmail,
           hotel_name: hotelName,
-          adults: privateGroup ? counts.participants : counts.adults,
-          children: privateGroup ? 0 : counts.children,
+          adults: vehiclePackage ? vehicleOption.participants : privateGroup ? counts.participants : counts.adults,
+          children: vehiclePackage || privateGroup ? 0 : counts.children,
           participants: privateGroup ? counts.participants : undefined,
+          vehicle_option_id: vehiclePackage ? vehicleOption.id : undefined,
           return_url: tourReturnUrl(tour.id, "success"),
           cancel_url: tourReturnUrl(tour.id, "cancelled")
         });
