@@ -5596,6 +5596,15 @@
         from: "Private from Punta Cana",
         price: "From US$420.00",
         childPrice: null,
+        pricingType: "private_group",
+        maxParticipants: 20,
+        groupPricingTiers: [
+          { min: 1, max: 4, total: 840 },
+          { min: 5, max: 8, total: 1100 },
+          { min: 9, max: 12, total: 1350 },
+          { min: 13, max: 16, total: 1600 },
+          { min: 17, max: 20, total: 1850 }
+        ],
         operatingWeekdays: [0, 1, 2, 3, 4, 5, 6],
         closedDates: [],
         image: "assets/saona-island-tour-private.webp",
@@ -6053,6 +6062,13 @@
         from: row.departure_label,
         price: row.price_text,
         childPrice: row.child_price == null ? null : Number(row.child_price),
+        pricingType: row.pricing_type || (row.tour_type === "private" ? "private_group" : "per_person"),
+        maxParticipants: Math.max(1, Number(row.max_participants || (row.tour_type === "private" ? 20 : 30))),
+        groupPricingTiers: Array.isArray(row.group_pricing_tiers) ? row.group_pricing_tiers.map(tier => ({
+          min: Number(tier.min),
+          max: Number(tier.max),
+          total: Number(tier.total)
+        })).filter(tier => tier.min > 0 && tier.max >= tier.min && tier.total > 0) : [],
         operatingWeekdays: Array.isArray(row.operating_weekdays) && row.operating_weekdays.length ? row.operating_weekdays.map(Number) : [0, 1, 2, 3, 4, 5, 6],
         closedDates: Array.isArray(row.closed_dates) ? row.closed_dates : [],
         image: row.image_url,
@@ -6065,7 +6081,7 @@
 
     async function loadPublicTours() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=slug,zone_slug,tour_type,title,rating,reviews,duration,departure_label,price_text,child_price,operating_weekdays,closed_dates,image_url,gallery_images,summary,included_items,bring_items,sort_order,is_active&is_active=eq.true&order=sort_order.asc,title.asc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/public_tours?select=*&is_active=eq.true&order=sort_order.asc,title.asc`, {
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`
@@ -6160,7 +6176,8 @@
       syncTourZoneButtons();
       syncTourModeToggle();
       if (activeTourDateCleanup) activeTourDateCleanup();
-      const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+      const privateGroup = isPrivateGroupTour(tour);
+      const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
       const adultUnitLabel = moneyText(tourAdultPrice(tour));
       const childUnitLabel = moneyText(tourChildPrice(tour));
       activeTourGuestCounts[tour.id] = counts;
@@ -6209,7 +6226,16 @@
                 </span>
               </span>
             </label>
-            <div class="tour-guest-row">
+            ${privateGroup ? `<div class="tour-guest-row">
+              <label>Number of participants
+                <span class="tour-price-micro">Maximum ${tour.maxParticipants || 20} guests</span>
+                <span class="tour-passenger-stepper">
+                  <button type="button" data-tour-count="participants" data-tour-count-action="minus" aria-label="Remove participant">-</button>
+                  <output data-tour-output="participants" aria-live="polite">${counts.participants}</output>
+                  <button type="button" data-tour-count="participants" data-tour-count-action="plus" aria-label="Add participant">+</button>
+                </span>
+              </label>
+            </div>` : `<div class="tour-guest-row">
               <label>Adults (14+)
                 <span class="tour-price-micro">${adultUnitLabel} / adult</span>
                 <span class="tour-passenger-stepper">
@@ -6226,7 +6252,7 @@
                   <button type="button" data-tour-count="children" data-tour-count-action="plus" aria-label="Add child">+</button>
                 </span>
               </label>
-            </div>
+            </div>`}
             <label>Name
               <input type="text" data-tour-customer-name required autocomplete="name" placeholder="Your full name">
             </label>
@@ -6240,7 +6266,9 @@
                 <span class="tour-hotel-suggestions" id="tour-hotel-suggestions-${tour.id}" data-tour-hotel-suggestions role="listbox" hidden></span>
               </span>
             </label>
-            <p class="tour-infant-note">Infants under 3 are free of charge.</p>
+            ${privateGroup
+              ? `<p class="tour-infant-note">This is the private-tour price for your entire group. Every passenger counts toward capacity.</p>`
+              : `<p class="tour-infant-note">Infants under 3 are free of charge.</p>`}
             <div class="tour-price-summary" data-tour-price-summary aria-live="polite"></div>
             <button class="tour-detail-whatsapp" type="submit" data-tour-paypal-button>Continue to PayPal</button>
             <p class="tour-payment-status" data-tour-payment-status aria-live="polite"></p>
@@ -6360,6 +6388,19 @@
 
     function tourChildPrice(tour) {
       return tour.childPrice == null || Number.isNaN(Number(tour.childPrice)) ? tourAdultPrice(tour) : Number(tour.childPrice);
+    }
+
+    function isPrivateGroupTour(tour) {
+      return tour.pricingType === "private_group" || (tour.type === "private" && tour.pricingType !== "per_person");
+    }
+
+    function privateGroupTier(tour, participants) {
+      const tiers = Array.isArray(tour.groupPricingTiers) ? tour.groupPricingTiers : [];
+      return tiers.find(tier => participants >= Number(tier.min) && participants <= Number(tier.max)) || null;
+    }
+
+    function privateGroupTotal(tour, participants) {
+      return Number(privateGroupTier(tour, participants)?.total || 0);
     }
 
     function moneyText(amount) {
@@ -6713,7 +6754,20 @@
       const paymentStatus = form.querySelector("[data-tour-payment-status]");
       const priceSummary = form.querySelector("[data-tour-price-summary]");
       const sync = () => {
-        const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+        const privateGroup = isPrivateGroupTour(tour);
+        const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+        if (privateGroup) {
+          form.querySelector('[data-tour-output="participants"]').textContent = String(counts.participants);
+          const total = privateGroupTotal(tour, counts.participants);
+          const perPerson = total / counts.participants;
+          if (priceSummary) {
+            priceSummary.innerHTML = total
+              ? `<strong>Private tour total: ${moneyText(total)}</strong><span>(${moneyText(perPerson)} per person × ${counts.participants} participants)</span>`
+              : `<strong>Price unavailable for ${counts.participants} participants</strong><span>Please contact Dominican Quest for assistance.</span>`;
+          }
+          if (paypalButton) paypalButton.disabled = !total;
+          return;
+        }
         form.querySelector('[data-tour-output="adults"]').textContent = String(counts.adults);
         form.querySelector('[data-tour-output="children"]').textContent = String(counts.children);
         const adultUnit = tourAdultPrice(tour);
@@ -6730,9 +6784,11 @@
         button.addEventListener("click", () => {
           const kind = button.dataset.tourCount;
           const action = button.dataset.tourCountAction;
-          const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
-          const min = kind === "adults" ? 1 : 0;
-          counts[kind] = action === "plus" ? Math.min(30, counts[kind] + 1) : Math.max(min, counts[kind] - 1);
+          const privateGroup = isPrivateGroupTour(tour);
+          const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+          const min = kind === "children" ? 0 : 1;
+          const max = kind === "participants" ? Number(tour.maxParticipants || 20) : 30;
+          counts[kind] = action === "plus" ? Math.min(max, counts[kind] + 1) : Math.max(min, counts[kind] - 1);
           activeTourGuestCounts[tour.id] = counts;
           sync();
         });
@@ -6812,7 +6868,12 @@
         form.querySelector("[data-tour-hotel]")?.focus();
         return;
       }
-      const counts = activeTourGuestCounts[tour.id] || { adults: 2, children: 0 };
+      const privateGroup = isPrivateGroupTour(tour);
+      const counts = activeTourGuestCounts[tour.id] || (privateGroup ? { participants: 2 } : { adults: 2, children: 0 });
+      if (privateGroup && !privateGroupTotal(tour, counts.participants)) {
+        setStatus(paymentStatus, "A private-tour price is not configured for this group size.", "error");
+        return;
+      }
       if (paypalButton) paypalButton.disabled = true;
       setStatus(paymentStatus, "Creating secure PayPal checkout...");
       try {
@@ -6822,8 +6883,9 @@
           customer_name: customerName,
           customer_email: customerEmail,
           hotel_name: hotelName,
-          adults: counts.adults,
-          children: counts.children,
+          adults: privateGroup ? counts.participants : counts.adults,
+          children: privateGroup ? 0 : counts.children,
+          participants: privateGroup ? counts.participants : undefined,
           return_url: tourReturnUrl(tour.id, "success"),
           cancel_url: tourReturnUrl(tour.id, "cancelled")
         });
