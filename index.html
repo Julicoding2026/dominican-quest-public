@@ -1093,6 +1093,15 @@
       display: grid;
     }
 
+    .tour-detail-loading {
+      display: grid;
+      min-height: 420px;
+      margin: 0;
+      place-items: center;
+      color: #6f687d;
+      font-weight: 850;
+    }
+
     .tour-detail-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
@@ -6158,9 +6167,7 @@
         console.warn("Using fallback tours", error);
         tours = DEFAULT_TOURS.map(tour => ({ ...tour, includes: [...(tour.includes || [])], bringItems: [...(tour.bringItems || [])] }));
       }
-      if (tourDetailIdFromHash()) {
-        restoreTourDetailFromHash();
-      } else if (toursResults && !toursResults.hidden) {
+      if (!tourDetailIdFromHash() && toursResults && !toursResults.hidden) {
         renderTourCards(selectedTourZone || "all");
       }
     }
@@ -7054,8 +7061,9 @@
       });
     }
 
-    function setSiteViewFromHash() {
+    function setSiteViewFromHash(options = {}) {
       const isToursView = window.location.hash.startsWith("#tours");
+      const deferTourDetail = options?.deferTourDetail === true && Boolean(tourDetailIdFromHash());
       const nextView = isToursView ? "tours" : "transfers";
       const enteredNewView = currentSiteView !== nextView;
       currentSiteView = nextView;
@@ -7069,8 +7077,17 @@
         else link.removeAttribute("aria-current");
       });
       if (isToursView) {
-        const restoredDetail = restoreTourDetailFromHash();
-        if (!restoredDetail && !selectedTourZone) resetToursToZones();
+        if (deferTourDetail) {
+          if (zoneGrid) zoneGrid.hidden = true;
+          if (toursResults) toursResults.hidden = false;
+          if (tourDetail) {
+            tourDetail.innerHTML = `<p class="tour-detail-loading" role="status">Loading tour details…</p>`;
+            tourDetail.classList.add("is-visible");
+          }
+        } else {
+          const restoredDetail = restoreTourDetailFromHash();
+          if (!restoredDetail && !selectedTourZone) resetToursToZones();
+        }
       }
       if (enteredNewView || isToursView) resetPageScroll();
     }
@@ -7126,8 +7143,8 @@
     renderZoneFilters();
     renderZoneCards();
     loadPublicTransferSlides();
-    loadPublicTourZones();
-    loadPublicTours();
+    const publicTourZonesReady = loadPublicTourZones();
+    const publicToursReady = loadPublicTours();
     zoneFilter?.addEventListener("scroll", () => {
       if (zoneFilter.scrollLeft > 2) hideZoneScrollHint();
     }, { passive: true });
@@ -7148,7 +7165,12 @@
     syncTourModeToggle();
     syncTourDurationFilter();
     window.addEventListener("hashchange", setSiteViewFromHash);
-    setSiteViewFromHash();
+    if (tourDetailIdFromHash()) {
+      setSiteViewFromHash({ deferTourDetail: true });
+      Promise.allSettled([publicTourZonesReady, publicToursReady]).then(setSiteViewFromHash);
+    } else {
+      setSiteViewFromHash();
+    }
 
     function setStatus(element, message, type = "") {
       element.textContent = message || "";
