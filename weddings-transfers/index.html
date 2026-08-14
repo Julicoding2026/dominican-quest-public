@@ -4957,6 +4957,13 @@
 
     function syncAirportBookingFields() {
       const required = originIsAirport();
+      const isDepartureTransfer = !required && Boolean(selectedPlace("destination") && isAirportPlace(selectedPlace("destination")));
+      document.querySelector("#airlineCompanyLabel .label-text").firstChild.nodeValue = isDepartureTransfer
+        ? "Departure Airline "
+        : "Arrival airline ";
+      document.querySelector("#flightNumberLabel .label-text").firstChild.nodeValue = isDepartureTransfer
+        ? "Departure Flight Number "
+        : "Arrival flight number ";
       airlineCompany.required = required;
       flightNumber.required = required;
       document.getElementById("airlineCompanyLabel").classList.toggle("is-required", required);
