@@ -2256,14 +2256,14 @@
       max-width: calc(100% - 32px);
       margin: 0 auto;
       padding: 8px 12px;
-      border: 1px solid color-mix(in srgb, var(--accent) 18%, #fff 82%);
+      border: 1px solid color-mix(in srgb, var(--accent) 12%, #fff 88%);
       border-radius: 999px;
-      background: color-mix(in srgb, var(--accent) 6%, #fff 94%);
-      color: #5f586b;
+      background: color-mix(in srgb, var(--accent) 3%, #fff 97%);
+      color: #716b79;
       font-size: 12px;
-      font-weight: 850;
+      font-weight: 700;
       line-height: 1.35;
-      box-shadow: 0 12px 28px rgb(103 61 230 / 0.08);
+      box-shadow: none;
     }
 
     .vehicle-list > .empty-state-live-status {
@@ -2273,46 +2273,16 @@
     .live-status-dot {
       position: relative;
       flex: 0 0 auto;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: #18b86b;
-      box-shadow: 0 0 0 4px rgb(24 184 107 / 0.12);
-    }
-
-    .live-status-dot::after {
-      content: "";
-      position: absolute;
-      inset: -6px;
-      border: 2px solid rgb(24 184 107 / 0.34);
-      border-radius: inherit;
-      animation: live-status-pulse 2.2s ease-out infinite;
-    }
-
-    @keyframes live-status-pulse {
-      0% {
-        opacity: 0.72;
-        transform: scale(0.78);
-      }
-      78% {
-        opacity: 0;
-        transform: scale(1.9);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.9);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .live-status-dot::after {
-        animation: none;
-      }
+      box-shadow: 0 0 0 3px rgb(24 184 107 / 0.08);
     }
 
     .empty-state-live-status strong {
-      color: var(--accent-dark);
-      font-weight: 950;
+      color: #5f586b;
+      font-weight: 800;
     }
 
     .trust-logo {
@@ -4519,14 +4489,8 @@
       "Private ride from Santo Domingo Airport booked 1 hour ago",
       "Hotel-to-airport return transfer booked 1 hour ago"
     ];
-    const LIVE_STATUS_DELAYS = [9000, 13000, 17000, 24000, 31000, 39000];
-
-    function randomLiveStatusDelay() {
-      return LIVE_STATUS_DELAYS[Math.floor(Math.random() * LIVE_STATUS_DELAYS.length)];
-    }
-
     function liveStatusText(index) {
-      return `<strong>Live Status:</strong> Last booked: ${LIVE_STATUS_MESSAGES[index % LIVE_STATUS_MESSAGES.length]}`;
+      return `<strong>Recent booking:</strong> ${LIVE_STATUS_MESSAGES[index % LIVE_STATUS_MESSAGES.length]}`;
     }
 
     function liveStatusIndicator() {
@@ -4537,15 +4501,6 @@
       textNode.innerHTML = liveStatusText(messageIndex);
       liveStatus.innerHTML = '<span class="live-status-dot" aria-hidden="true"></span>';
       liveStatus.appendChild(textNode);
-      const scheduleNextUpdate = () => {
-        window.setTimeout(() => {
-          if (!document.body.contains(liveStatus)) return;
-          messageIndex = (messageIndex + 1) % LIVE_STATUS_MESSAGES.length;
-          textNode.innerHTML = liveStatusText(messageIndex);
-          scheduleNextUpdate();
-        }, randomLiveStatusDelay());
-      };
-      scheduleNextUpdate();
       return liveStatus;
     }
 
