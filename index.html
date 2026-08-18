@@ -4282,6 +4282,8 @@
         font-size: 13px;
       }
 
+      .nav-link.guides-link { display: none; }
+
       .nav-link svg {
         width: 14px;
         height: 14px;
@@ -4800,6 +4802,143 @@
         border-radius: 0;
       }
     }
+
+    .home-guides {
+      padding: 72px 20px;
+      border-top: 1px solid #eadfce;
+      background: linear-gradient(180deg, #fffaf3, #f7f2ea);
+    }
+
+    .home-guides-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .home-guides-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .home-guides-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .home-guides h2 {
+      margin: 0 0 8px;
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+    }
+
+    .home-guides-head p {
+      max-width: 670px;
+      margin: 0;
+      color: #625b6d;
+      font-size: 15px;
+      font-weight: 750;
+      line-height: 1.6;
+    }
+
+    .home-guides-all {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid #cdbefa;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .home-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .home-guide-card {
+      display: grid;
+      overflow: hidden;
+      border: 1px solid #ded8ec;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 16px 34px rgb(62 48 32 / 0.08);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .home-guide-card:hover,
+    .home-guide-card:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 20px 42px rgb(72 46 142 / 0.14);
+      transform: translateY(-3px);
+    }
+
+    .home-guide-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .home-guide-card-copy {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      padding: 22px;
+    }
+
+    .home-guide-card small {
+      color: #777080;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .home-guide-card h3 {
+      margin: 0;
+      font-family: "Sora", "Manrope", sans-serif;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .home-guide-card p {
+      margin: 0;
+      color: #625b6d;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .home-guide-card strong {
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    @media (max-width: 860px) {
+      .home-guides { padding: 52px 16px; }
+      .home-guides-head { grid-template-columns: 1fr; align-items: start; }
+      .home-guides-all { justify-self: start; }
+      .home-guide-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -4834,6 +4973,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M6 6l2 14h8l2-14"/><path d="M9 10h6M10 14h4"/></svg>
           <span>Tours</span>
         </a>
+        <a class="nav-link guides-link" href="/blog/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg>
+          <span>Travel Guide</span>
+        </a>
       </nav>
       <span class="header-actions">
         <a class="booking-lookup" href="https://wa.me/18497638642?text=Hi%20Dominican%20Quest%2C%20I%20would%20like%20to%20find%20my%20booking.">Find My Booking</a>
@@ -4855,6 +4998,7 @@
         <a href="/airport-transfers/">Airport Transfer Guide</a>
         <a href="/weddings-transfers/">Wedding Transfers</a>
         <a href="/tours/">Tour Guide</a>
+        <a href="/blog/">Travel Guide</a>
         <a href="https://wa.me/18497638642?text=Hi%20Dominican%20Quest%2C%20I%20would%20like%20to%20find%20my%20booking.">Find My Booking</a>
         <a href="https://wa.me/18497638642">WhatsApp Support</a>
         <a href="mailto:reservations@bookdominicanquest.com">Email Support</a>
@@ -5415,6 +5559,17 @@
         </section>
       </section>
     </section>
+
+    <section class="home-guides" aria-labelledby="homeGuidesTitle">
+      <div class="home-guides-inner">
+        <div class="home-guides-head"><div><span class="home-guides-kicker">Travel Guide</span><h2 id="homeGuidesTitle">Plan with local insight</h2><p>Practical answers for airport arrivals, island excursions, and first visits—written to help you make confident choices before you book.</p></div><a class="home-guides-all" href="/blog/">View all travel guides →</a></div>
+        <div class="home-guide-grid">
+          <a class="home-guide-card" href="/blog/punta-cana-airport-transfer-guide/"><img src="assets/cooper-family-dominican-quest.webp" alt="Travelers beginning a private transfer in the Dominican Republic" width="1200" height="800"><div class="home-guide-card-copy"><small>Airport transfers · 7 min read</small><h3>Punta Cana Airport Transfer Guide</h3><p>Plan your resort pickup, share the right flight details, and make arrival day easier.</p><strong>Read the guide →</strong></div></a>
+          <a class="home-guide-card" href="/blog/saona-island-day-trip-guide/"><img src="assets/saona-island-tour-private.webp" alt="Turquoise water and a boat near Saona Island" width="1200" height="800"><div class="home-guide-card-copy"><small>Tours · 7 min read</small><h3>Saona Island Day Trip Guide</h3><p>Compare pickup zones, boats, inclusions, and common itinerary choices.</p><strong>Read the guide →</strong></div></a>
+          <a class="home-guide-card" href="/blog/santo-domingo-travel-guide/"><img src="assets/tours-santo-domingo.webp" alt="Historic architecture in Santo Domingo" width="1200" height="800"><div class="home-guide-card-copy"><small>Destinations · 8 min read</small><h3>Santo Domingo: A Practical First-Visit Guide</h3><p>Build a relaxed day around the Colonial City and coordinate transportation.</p><strong>Read the guide →</strong></div></a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -5434,6 +5589,7 @@
           <li><a href="/airport-transfers/">Airport Transfers</a></li>
           <li><a href="/weddings-transfers/">Wedding Transfers</a></li>
           <li><a href="/tours/">Tour Guide</a></li>
+          <li><a href="/blog/">Travel Guide</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/#cookie-settings" data-dq-cookie-settings>Cookie Settings</a></li>
